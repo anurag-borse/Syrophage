@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Syrophage.Models;
+using Syrophage.Repository.IRepository;
 using System.Diagnostics;
 
 namespace Syrophage.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IUnitofWorks unitofworks;
+        public HomeController(IUnitofWorks unitofworks)
         {
-            _logger = logger;
+            this.unitofworks = unitofworks;
         }
 
         public IActionResult Index()
@@ -33,6 +33,25 @@ namespace Syrophage.Controllers
         {
             return View();
         }
+
+
+        [HttpPost]
+        public IActionResult Contact(Contact obj)
+        {
+
+            if (ModelState.IsValid)
+            {
+                unitofworks.Contact.Add(obj);
+                unitofworks.Save();
+
+                TempData["Success"] = "Details Sent";
+                return RedirectToAction("Index", "Home");
+            }
+
+            TempData["Error"] = "Error occured";
+            return RedirectToAction("Index", "Home");
+        }
+
 
 
 
