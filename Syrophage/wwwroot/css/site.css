@@ -35,3 +35,12 @@ body {
 #CommingSoon {
     background-image: url('../assets/images/home/coming-soon.jpg');
 }
+
+#LoginPage {
+    background-image: url('../assets/images/home/bg-login.jpg');
+
+}
+
+#SignUp {
+    background-image: url('../assets/images/home/bg-login.jpg');
+}
