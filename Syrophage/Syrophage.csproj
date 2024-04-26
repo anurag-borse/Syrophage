@@ -10,4 +10,8 @@
     <Content Remove="wwwroot\assets\js\_Layout.cshtml.css" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repository\" />
+  </ItemGroup>
+
 </Project>

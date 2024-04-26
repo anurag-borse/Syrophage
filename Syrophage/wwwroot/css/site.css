@@ -28,3 +28,10 @@ body {
 #HomePage {
     background-image: url('../assets/images/home/bg-home.jpg');
 }
+#ContactUs {
+    background-image: url('../assets/images/home/bg-pages.jpg');
+}
+
+#CommingSoon {
+    background-image: url('../assets/images/home/coming-soon.jpg');
+}

@@ -29,6 +29,29 @@ namespace Syrophage.Controllers
             return View();
         }
 
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public IActionResult Services()
+        {
+            return View();
+        }
+        
 
 
 
