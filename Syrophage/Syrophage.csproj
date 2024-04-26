@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\assets\" />
+    <Content Remove="wwwroot\assets\js\_Layout.cshtml.css" />
   </ItemGroup>
 
 </Project>

@@ -4,32 +4,154 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Syrophage</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Syrophage.styles.css" asp-append-version="true" />
+
+    <link href="~/assets/css/menu-small.css" rel="stylesheet" />
+    <link href="~/assets/css/owl.theme.css" rel="stylesheet" />
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/css/menu.css" rel="stylesheet" />
+    <link href="~/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link href="~/assets/css/owl.transitions.css" rel="stylesheet" />
+    <link href="~/assets/css/slick-theme.css" rel="stylesheet" />
+    <link href="~/assets/css/owl.carousel.min.css" rel="stylesheet" />
+    <link type="text/css" href="~/assets/css/magnific-popup.css" rel="stylesheet" />
+    <link href="~/assets/css/slick.css" rel="stylesheet" />
+    <link href="~/assets/css/style.css" rel="stylesheet" />
+    <link href="~/assets/css/fontawesome.css" rel="stylesheet" />
+    <link href="~/assets/css/default.css" rel="stylesheet" />
+    <link href="~/assets/css/materialdesignicons.min.css" rel="stylesheet" />
+
+
+    <link rel="stylesheet"  href="css/magnific-popup.css">
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Syrophage</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
+        <!-- Navigation Bar-->
+        <div class="tagline hidden-md">
+            <div class="container">
+                <div class="float-left">
+                    <div class="phone">
+                        <i class="fas fa-phone"></i> +1 123 456 78 90
+                    </div>
+                </div>
+                <div class="float-right">
+                    <ul class="top_socials">
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fab fa-pinterest"></i></a></li>
                     </ul>
                 </div>
+                <div class="clear"></div>
             </div>
-        </nav>
+        </div>
+
+        <!-- Navigation Bar-->
+        <header id="topnav" class="defaultscroll fixed-top navbar-sticky sticky">
+            <div class="container">
+                <!-- Logo container-->
+                <div>
+                    <a href="index-2.html" class="logo">
+                        <img src="images/logo.png" alt="missing_logo" height="20">
+                    </a>
+                </div>
+                <!-- End Logo container-->
+                <div class="menu-extras">
+                    <div class="menu-item">
+                        <!-- Mobile menu toggle-->
+                        <a class="navbar-toggle">
+                            <div class="lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </a>
+                        <!-- End mobile menu toggle-->
+                    </div>
+                </div>
+
+                <div id="navigation">
+                    <!-- Navigation Menu-->
+                    <ul class="navigation-menu">
+                        <li class="has-submenu">
+                            <a href="#">Home</a>
+                        </li>
+
+                        <li class="has-submenu">
+                            <a href="javascript:void(0)">About</a>
+                        </li>
+
+                        <li class="has-submenu">
+                            <a href="javascript:void(0)">Pages</a>
+                        </li>
+
+                        <li class="has-submenu">
+                            <a href="javascript:void(0)">Blog</a>
+                        </li>
+
+                        <li class="has-submenu">
+                            <a href="javascript:void(0)">Elements</a>
+                            <span class="menu-arrow"></span>
+                            <ul class="submenu megamenu">
+                                <li>
+                                    <ul>
+                                        <li><a href="elements-accordions.html"><b class="mdi mdi-chevron-right"></b> Accordion</a></li>
+                                        <li><a href="elements-alert.html"><b class="mdi mdi-chevron-right"></b> Alert</a></li>
+                                        <li><a href="elements-button.html"><b class="mdi mdi-chevron-right"></b> Button</a></li>
+                                        <li><a href="elements-blockquote.html"><b class="mdi mdi-chevron-right"></b> Blockquote</a></li>
+                                        <li><a href="elements-bg.html"><b class="mdi mdi-chevron-right"></b> Backgroud Color</a></li>
+                                        <li><a href="elements-breadcrumbs.html"><b class="mdi mdi-chevron-right"></b> Breadcrumbs</a></li>
+                                        <li><a href="elements-boxed.html"><b class="mdi mdi-chevron-right"></b> Boxed</a></li>
+                                        <li><a href="elements-cta.html"><b class="mdi mdi-chevron-right"></b> Call To Action</a></li>
+                                        <li><a href="elements-dropcap.html"><b class="mdi mdi-chevron-right"></b> Dropcap</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <ul>
+                                        <li><a href="elements-dropdown.html"><b class="mdi mdi-chevron-right"></b> Dropdown</a></li>
+                                        <li><a href="elements-funfactors.html"><b class="mdi mdi-chevron-right"></b> Fun Factors</a></li>
+                                        <li><a href="elements-form-inputs.html"><b class="mdi mdi-chevron-right"></b> Form Inputs</a></li>
+                                        <li><a href="elements-grid-structure.html"><b class="mdi mdi-chevron-right"></b> Grid Structure</a></li>
+                                        <li><a href="elements-gallery.html"><b class="mdi mdi-chevron-right"></b> Gallery</a></li>
+                                        <li><a href="elements-highlights.html"><b class="mdi mdi-chevron-right"></b> Highlights</a></li>
+                                        <li><a href="elements-material-icons.html"><b class="mdi mdi-chevron-right"></b> Material Icons</a></li>
+                                        <li><a href="elements-pe-7-icons.html"><b class="mdi mdi-chevron-right"></b> Pe-7 Icons </a></li>
+                                        <li><a href="elements-fontawesome.html"><b class="mdi mdi-chevron-right"></b> Font Awesome Icons </a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <ul>
+                                        <li><a href="elements-images.html"><b class="mdi mdi-chevron-right"></b> Images</a></li>
+                                        <li><a href="elements-labels.html"><b class="mdi mdi-chevron-right"></b> Labels</a></li>
+                                        <li><a href="elements-lightbox.html"><b class="mdi mdi-chevron-right"></b> Lightbox</a></li>
+                                        <li><a href="elements-modals.html"><b class="mdi mdi-chevron-right"></b> Modals</a></li>
+                                        <li><a href="elements-progress-bar.html"><b class="mdi mdi-chevron-right"></b> Progress Bar</a></li>
+                                        <li><a href="elements-parallax.html"><b class="mdi mdi-chevron-right"></b> Parallax</a></li>
+                                        <li><a href="elements-pagination.html"><b class="mdi mdi-chevron-right"></b> Pagination</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <ul>
+                                        <li><a href="elements-tab.html"><b class="mdi mdi-chevron-right"></b> Tab</a></li>
+                                        <li><a href="elements-tooltip-popovers.html"><b class="mdi mdi-chevron-right"></b> Tooltip &amp; Popovers</a></li>
+                                        <li><a href="elements-typography.html"><b class="mdi mdi-chevron-right"></b> Typography</a></li>
+                                        <li><a href="elements-tables.html"><b class="mdi mdi-chevron-right"></b> Tables</a></li>
+                                        <li><a href="elements-timeline.html"><b class="mdi mdi-chevron-right"></b> Timeline</a></li>
+                                        <li><a href="elements-testimonials.html"><b class="mdi mdi-chevron-right"></b> Testimonials</a></li>
+                                        <li><a href="elements-video.html"><b class="mdi mdi-chevron-right"></b> Video</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- End navigation menu-->
+                </div>
+            </div>
     </header>
+
+
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -37,13 +159,128 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Syrophage - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+            <footer class="footer">
+                <div class="section-two">
+                    <div class="container">
+                        <!--Footer Info -->
+                        <div class="row footer-info">
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <div class="">
+                                    <a href="index-2.html" class="logo">
+                                        <img src="images/logo-white.png" alt="missing_logo" height="20">
+                                    </a>
+                                </div>
+                                <p class="text-footer-clr mt-3">These cases are perfectly simple and easy to free hour, when nothing prevents distinguish.</p>
+                                <div>
+                                    <ul class="list-unstyled social-icon">
+                                        <li class="list-inline-item"><a href="#"><i class="fab fa-apple"></i></a></li>
+                                        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li class="list-inline-item"><a href="#"><i class="fab fa-dribbble"></i></a></li>
+                                        <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-4">
+                                <div class="footer-head">
+                                    <h5 class="text-light">Company</h5>
+                                </div>
+                                <div class="footer-item mt-3">
+                                    <ul class="list-unstyled">
+                                        <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> About us</a></li>
+                                        <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Services</a></li>
+                                        <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Portfolio</a></li>
+                                        <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> News</a></li>
+                                        <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> FAQ</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-4">
+                                <div class="footer-head">
+                                    <h5 class="text-light">Useful</h5>
+                                </div>
+                                <div class="footer-item mt-3">
+                                    <ul class="list-unstyled">
+                                        <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Accounts</a></li>
+                                        <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Sales & Support</a></li>
+                                        <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Orders Track</a></li>
+                                        <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Download Center</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-4">
+                                <div class="footer-head">
+                                    <h5 class="text-light">Additional</h5>
+                                </div>
+                                <div class="footer-item mt-3">
+                                    <ul class="list-unstyled">
+                                        <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Portfolio</a></li>
+                                        <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Contact Us</a></li>
+                                        <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Blog</a></li>
+                                        <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Help Center</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                <div class="footer-head">
+                                    <h5 class="text-light">Newsletter</h5>
+                                </div>
+                                <div class="footer-news mt-3">
+                                    <p class="text-footer-clr">Subscribe to our email newsletter to receive useful articles and special offers.</p>
+                                    <div class="subscribed-form">
+                                        <div class="subcribed-form">
+                                            <form action="#">
+                                                <input name="email" type="email" placeholder="Your Email" id="email" required="">
+                                                <button type="submit" class=""><span class="fab fa-telegram-plane"></span></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Footer Info -->
+                    </div>
+                </div>
+                <hr>
+
+                <!-- Copyright Bar -->
+                <section class="section-30">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <p class="copy-rights text-white mb-0"><a href="https://www.templateshub.net" target="_blank">Templates Hub</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Copyright Bar -->
+            </footer>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/assets/js/jquery.easypiechart.min.js"></script>
+        <script src="~/assets/js/jquery.countdown.js"></script>
+        <script src="~/assets/js/owl.carousel.min.js"></script>
+        <script src="~/assets/js/jquery.easing.min.js"></script>
+        <script src="~/assets/js/typed.js"></script>
+        <script src="~/assets/js/bootstrap.min.js"></script>
+        <script src="~/assets/js/portfolio-filter.js"></script>
+        <script src="~/assets/js/slick.init.js"></script>
+        <script src="~/assets/js/magnific.init.js"></script>
+        <script src="~/assets/js/owlcarousel.init.js"></script>
+        <script src="~/assets/js/slick.min.js"></script>
+        <script src="~/assets/js/contact.js"></script>
+        <script src="~/assets/js/app.js"></script>
+        <script src="~/assets/js/jquery.simple-text-rotator.js"></script>
+        <script src="~/assets/js/parallax.js"></script>
+        <script src="~/assets/js/jquery.mb.ytplayer.js"></script>
+        <script src="~/assets/js/typed.init.js"></script>
+        <script src="~/assets/js/popper.min.js"></script>
+        <script src="~/assets/js/jquery.magnific-popup.min.js"></script>
+        <script src="~/assets/js/counter.init.js"></script>
+        <script src="~/assets/js/isotope.js"></script>
+        <script src="~/assets/js/jquery.min.js"></script>
+        <script src="~/assets/js/scrollspy.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
