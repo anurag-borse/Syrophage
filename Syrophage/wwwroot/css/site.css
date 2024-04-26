@@ -28,3 +28,12 @@ body {
 #HomePage {
     background-image: url('../assets/images/home/bg-home.jpg');
 }
+
+#LoginPage {
+    background-image: url('../assets/images/home/bg-login.jpg');
+
+}
+
+#SignUp {
+    background-image: url('../assets/images/home/bg-login.jpg');
+}
