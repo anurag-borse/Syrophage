@@ -44,3 +44,8 @@ body {
 #SignUp {
     background-image: url('../assets/images/home/bg-login.jpg');
 }
+
+
+#bg-token {
+    background-image: url('../assets/images/home/bg-elements.jpg');
+}

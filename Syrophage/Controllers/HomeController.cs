@@ -36,7 +36,10 @@ namespace Syrophage.Controllers
 
 
 
-
+        public IActionResult Token()
+        {
+            return View();
+        }
 
 
 
