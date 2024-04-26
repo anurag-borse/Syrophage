@@ -10,5 +10,7 @@ namespace Syrophage.Data
         }
         public DbSet<Users> Users { get; set; }
 
+        public DbSet<Contact> contacttb { get; set; }
+
     }
 }

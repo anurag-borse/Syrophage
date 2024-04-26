@@ -1,12 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Syrophage.Data;
+using Syrophage.Repository.IRepository;
+using Syrophage.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Defaultconnection")));
-
+builder.Services.AddScoped<IUnitofWorks, Unitofworks>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
