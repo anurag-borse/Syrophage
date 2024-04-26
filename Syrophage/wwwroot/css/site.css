@@ -20,3 +20,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+#About {
+    background-image: url('../assets/images/home/bg-about.jpg');
+}
