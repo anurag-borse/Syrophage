@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Syrophage.Data;
 using Syrophage.Models;
+using Microsoft.AspNetCore.Authentication;
 using Syrophage.Models.ViewModel;
 
 namespace Syrophage.Controllers
@@ -8,7 +9,7 @@ namespace Syrophage.Controllers
     public class LoginController : Controller
     {
         public readonly ApplicationDbContext _db;
-       
+
         public LoginController(ApplicationDbContext _db)
         {
             this._db = _db;
@@ -37,11 +38,11 @@ namespace Syrophage.Controllers
             {
                 if (existingUser.Password == vm.Password)
                 {
-                    HttpContext.Session.SetInt32("UserId", existingUser.Id);
+                    HttpContext.Session.SetInt32("UserId",existingUser.Id);
                     HttpContext.Session.SetString("UserEmail", existingUser.Email);
-                    HttpContext.Session.SetString("UserName", existingUser.Name);
 
-                    TempData["Login"] = "Login Successfully";
+
+                    TempData["Success"] = "Login Successfully";
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -67,7 +68,7 @@ namespace Syrophage.Controllers
 
 
         [HttpPost]
-        public IActionResult Register(Users model )
+        public IActionResult Register(Users model)
         {
             //var existingEmailUser = unitOfWorks.Users.GetByEmail(usr.User.Email);
             var existingEmail = _db.Users.FirstOrDefault(r => r.Email == model.Email);
@@ -97,5 +98,19 @@ namespace Syrophage.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+
+
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            TempData["Success"] = "Logout Successfully";
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
+
     }
 }
