@@ -56,7 +56,7 @@
             <div class="col-md-6">
                 <div class="custom-form mt-30">
                     <div id="message"></div>
-                    <form method="post" action="https://alita.netlify.com/layouts/php/contact.php" name="contact-form" id="contact-form">
+                    <form method="post" asp-action="GContact" asp-controller="Home" name="contact-form" id="contact-form">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group app-label">
@@ -65,17 +65,17 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group app-label">
-                                    <input name="email" id="email" type="email" class="form-control" placeholder="Your email :">
+                                    <input name="Email" id="email" type="email" class="form-control" placeholder="Your email :">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group app-label">
-                                    <input name="subject" id="subject" class="form-control" placeholder="Your subject :">
+                                    <input name="phone" id="subject" class="form-control" placeholder="Your Phoneno :">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group app-label">
-                                    <textarea name="comments" id="comments" rows="3" class="form-control" placeholder="Enter message :"></textarea>
+                                    <textarea name="message" id="comments" rows="3" class="form-control" placeholder="Enter message :"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -145,3 +145,67 @@
         </div>
     </div>
 </section>
+
+
+
+@if (TempData["Success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Success"]');
+    </script>
+}
+
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Error"]');
+    </script>
+}

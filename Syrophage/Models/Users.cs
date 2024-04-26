@@ -31,5 +31,7 @@ namespace Syrophage.Models
         public string? ConfirmPassword { get; set; }
 
         public bool? IsActivated { get; set; }
+
+        public string RegId { get; set; }
     }
 }

@@ -86,8 +86,19 @@ namespace Syrophage.Controllers
             }
             if (model != null)
             {
+
+
+                var reg = new Users
+                {
+                    Name = model.Name,
+                    Email = model.Email,
+                    Password = model.Password,
+                    Phone = model.Phone,
+                    IsActivated = false,
+                    RegId = GenerateRegId()
+                };
                 model.IsActivated = false; // Set IsActivated to false when a new user is registered
-                _db.Users.Add(model);
+                _db.Users.Add(reg);
                 _db.SaveChanges();
                 //service.SendRegistrationEmail(RL.Registration.Email);
 
@@ -97,6 +108,16 @@ namespace Syrophage.Controllers
             TempData["Success"] = "Your account has been registered successfully. Please wait for account verification.";
             return RedirectToAction("Index", "Home");
 
+        }
+
+        public string GenerateRegId()
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(0, 10000000);
+            string formattedNumber = randomNumber.ToString("D7");
+            string regId = "SRE" + formattedNumber;
+
+            return regId;
         }
 
 

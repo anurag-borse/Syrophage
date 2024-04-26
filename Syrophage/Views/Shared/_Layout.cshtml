@@ -38,7 +38,7 @@
         <div class="container">
             <div class="float-left">
                 <div class="phone">
-                    <i class="fas fa-phone"></i> +1 123 456 78 90
+                    <i class="fas fa-phone"></i> +91 7447508124
                 </div>
             </div>
             <div class="float-right">
@@ -104,7 +104,7 @@
                             <li class="has-submenu">
                                 <a>Profile</a>
                                 <ul class="submenu">
-                                    <li><a >Profile</a></li>
+                                    <li><a>Profile</a></li>
                                     <li><a asp-action="Logout" asp-controller="Login">Logout</a></li>
 
                                 </ul>
@@ -117,12 +117,6 @@
                                 <ul class="submenu">
                                     <li><a asp-action="Register" asp-controller="Login">Register</a></li>
                                     <li><a asp-action="Login" asp-controller="Login">Login</a></li>
-                    <li class="has-submenu">
-                        <a asp-action="Login" asp-controller="Login">Login</a>
-                        <ul class="submenu">
-                            <li><a asp-action="Register" asp-controller="Login">Register</a></li>
-                            <li><a asp-action="Login" asp-controller="Login">Login</a></li>
-
                                 </ul>
                             </li>
                         }
@@ -203,7 +197,7 @@
                                 <p class="text-footer-clr">Subscribe to our email newsletter to receive useful articles and special offers.</p>
                                 <div class="subscribed-form">
                                     <div class="subcribed-form">
-                                        <form action="#">
+                                        <form asp-action="Newsletter" asp-controller="">
                                             <input name="email" type="email" placeholder="Your Email" id="email" required="">
                                             <button type="submit" class=""><span class="fab fa-telegram-plane"></span></button>
                                         </form>

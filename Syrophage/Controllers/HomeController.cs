@@ -52,6 +52,23 @@ namespace Syrophage.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
+        public IActionResult GContact(Contact obj)
+        {
+
+            if (ModelState.IsValid)
+            {
+                unitofworks.Contact.Add(obj);
+                unitofworks.Save();
+
+                TempData["Success"] = "Details Sent";
+                return RedirectToAction("Contact", "Home");
+            }
+
+            TempData["Error"] = "Error occured";
+            return RedirectToAction("Contact", "Home");
+        }
+
 
 
 
