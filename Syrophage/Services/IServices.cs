@@ -9,5 +9,7 @@
 
 
         public bool SendActivationEmail(string email, string password);
+
+ 
     }
 }

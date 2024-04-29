@@ -3,21 +3,30 @@ using Syrophage.Data;
 using Syrophage.Models;
 using Microsoft.AspNetCore.Authentication;
 using Syrophage.Models.ViewModel;
+using Syrophage.Repository;
+using Syrophage.Repository.IRepository;
+using Syrophage.Services;
 
 namespace Syrophage.Controllers
 {
     public class LoginController : Controller
     {
         public readonly ApplicationDbContext _db;
-
-        public LoginController(ApplicationDbContext _db)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUnitofWorks unitofworks;
+        private readonly IServices services;
+        public LoginController(ApplicationDbContext _db, IUnitofWorks unitofworks, IServices services, IHttpContextAccessor _httpContextAccessor)
         {
             this._db = _db;
+            this.unitofworks = unitofworks;
+            this.services = services;
+            this._httpContextAccessor = _httpContextAccessor;
         }
 
         [HttpGet]
         public IActionResult Login()
         {
+            SetLayoutModel();
             return View();
         }
 
@@ -60,6 +69,7 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            SetLayoutModel();
             return View();
         }
 
@@ -99,7 +109,7 @@ namespace Syrophage.Controllers
                     IsActivated = false,
                     RegId = GenerateRegId(),
                     Address = "",
-                    ProfileImageUrl = ""
+                    ProfileImageUrl = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                 };
                 model.IsActivated = false; // Set IsActivated to false when a new user is registered
                 _db.Users.Add(reg);
@@ -137,12 +147,34 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult Logout()
         {
+
             HttpContext.Session.Clear();
             TempData["Success"] = "Logout Successfully";
             return RedirectToAction("Index", "Home");
         }
 
+        public void SetLayoutModel()
+        {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var user = unitofworks.User.GetById(userId);
 
+
+            if (userId != 0)
+            {
+
+
+                var layoutModel = new LayoutVM
+                {
+
+                    FirstName = user.Name,
+                    LastName = user.Email,
+                    profilepic = user.ProfileImageUrl // Use the null-conditional operator to avoid NullReferenceException
+                };
+                // If Profilepic is null, set a default image or leave it as null
+
+                _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
+            }
+        }
 
 
     }

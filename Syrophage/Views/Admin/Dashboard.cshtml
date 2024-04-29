@@ -1,0 +1,203 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+
+    <title>Admin Dashboard</title>
+
+
+
+
+    <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
+
+
+
+
+
+</head>
+
+<body>
+
+    <div id="main-wrapper"
+         data-layout="vertical"
+         data-navbarbg="skin5"
+         data-sidebartype="full"
+         data-sidebar-position="absolute"
+         data-header-position="absolute"
+         data-boxed-layout="full">
+
+
+        <partial name="AdminNavbar" />
+
+
+
+
+        <partial name="AdminSidebar" />
+
+
+
+
+
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Admin Dashboard</h4>
+                        <div class="ms-auto text-end">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Sales Cards  -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-2 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-cyan text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-view-dashboard"></i>
+                                </h1>
+                                <h6 class="text-white">Dashboard</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-4 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-success text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-chart-areaspline"></i>
+                                </h1>
+                                <h6 class="text-white">Charts</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-2 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-warning text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-collage"></i>
+                                </h1>
+                                <h6 class="text-white">Widgets</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-2 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-danger text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-border-outside"></i>
+                                </h1>
+                                <h6 class="text-white">Tables</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-2 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-info text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-arrow-all"></i>
+                                </h1>
+                                <h6 class="text-white">Full Width</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-4 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-danger text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-receipt"></i>
+                                </h1>
+                                <h6 class="text-white">Forms</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-2 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-info text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-relative-scale"></i>
+                                </h1>
+                                <h6 class="text-white">Buttons</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-2 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-cyan text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-pencil"></i>
+                                </h1>
+                                <h6 class="text-white">Elements</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-2 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-success text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-calendar-check"></i>
+                                </h1>
+                                <h6 class="text-white">Calnedar</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-2 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-warning text-center">
+                                <h1 class="font-light text-white">
+                                    <i class="mdi mdi-alert"></i>
+                                </h1>
+                                <h6 class="text-white">Errors</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                </div>
+                <!-- ============================================================== -->
+                <!-- Sales chart -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Recent comment and chats -->
+                <!-- ============================================================== -->
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <script src="~/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/admin/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/admin/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/admin/assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="~/admin/dist/js/waves.js"></script>
+    <script src="~/admin/dist/js/sidebarmenu.js"></script>
+    <script src="~/admin/dist/js/custom.min.js"></script>
+    <script src="~/admin/dist/js/pages/dashboards/dashboard1.js"></script>
+
+</body>
+</html>

@@ -1,8 +1,15 @@
-﻿@{
+﻿@using Syrophage.Models.ViewModel
+@{
     var userEmail = Context.Session.GetString("UserEmail");
     var userId = Context.Session.GetInt32("UserId");
     var username = Context.Session.GetString("UserName");
 }
+
+@{
+    var layoutModel = Context.Items["LayoutModel"] as LayoutVM; var firstname =
+        layoutModel?.FirstName; var lastName = layoutModel?.LastName;string profileimg = layoutModel?.profilepic;
+}
+
 
 
 
@@ -111,7 +118,7 @@
                                 </ul>
                             </li>
                             <li>
-                            <img src="https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg" style="width: 40px; height: 40px; border-radius:40px; margin-top:15px" alt="Profile Image" />
+                            <img src="@profileimg" style="width: 40px; height: 40px; border-radius:40px; margin-top:15px" alt="Profile Image" />
 
                             </li>
                             

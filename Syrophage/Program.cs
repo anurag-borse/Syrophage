@@ -30,6 +30,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddScoped<IUnitofWorks, Unitofworks>();
 builder.Services.AddScoped<IServices, Services>();
+
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

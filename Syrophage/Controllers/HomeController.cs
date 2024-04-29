@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Syrophage.Models;
+using Syrophage.Models.ViewModel;
+using Syrophage.Repository;
 using Syrophage.Repository.IRepository;
 using Syrophage.Services;
 using System.Diagnostics;
@@ -8,16 +10,20 @@ namespace Syrophage.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUnitofWorks unitofworks;
         private readonly IServices services;
-        public HomeController(IUnitofWorks unitofworks, IServices services)
+        public HomeController(IUnitofWorks unitofworks, IServices services, IHttpContextAccessor _httpContextAccessor)
         {
             this.unitofworks = unitofworks;
             this.services = services;
+            this._httpContextAccessor = _httpContextAccessor;
         }
 
         public IActionResult Index()
         {
+            SetLayoutModel();
             return View();
         }
 
@@ -29,11 +35,14 @@ namespace Syrophage.Controllers
 
         public IActionResult About()
         {
+
+            SetLayoutModel();
             return View();
         }
 
         public IActionResult Contact()
         {
+            SetLayoutModel();
             return View();
         }
 
@@ -79,7 +88,7 @@ namespace Syrophage.Controllers
 
             if (ModelState.IsValid)
             {
-                
+
                 services.SendThanksEmail(obj.email);
 
                 unitofworks.Newsletter.Add(obj);
@@ -92,23 +101,12 @@ namespace Syrophage.Controllers
             TempData["Error"] = "Email Falied to Send";
             return RedirectToAction("Index", "Home");
         }
-        
-
-
-
-
-
-
-
-
-
-
-
         public IActionResult Services()
         {
+            SetLayoutModel();
             return View();
         }
-        
+
 
 
 
@@ -116,6 +114,30 @@ namespace Syrophage.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+        public void SetLayoutModel()
+        {
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var user = unitofworks.User.GetById(userId);
+
+
+            if (userId != 0)
+            {
+
+
+                var layoutModel = new LayoutVM
+                {
+
+                    FirstName = user.Name,
+                    LastName = user.Email,
+                    profilepic = user.ProfileImageUrl // Use the null-conditional operator to avoid NullReferenceException
+                };
+                // If Profilepic is null, set a default image or leave it as null
+
+                _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
+            }
         }
     }
 }
