@@ -104,14 +104,14 @@ namespace Syrophage.Controllers
                 model.IsActivated = false; // Set IsActivated to false when a new user is registered
                 _db.Users.Add(reg);
                 _db.SaveChanges();
-                
-                
-                //service.SendRegistrationEmail(RL.Registration.Email);
 
+
+                //service.SendRegistrationEmail(RL.Registration.Email);
+                TempData["Success"] = "Your account has been registered successfully. Please wait for account verification.";
                 return RedirectToAction("Index", "Home");
             }
 
-            TempData["Success"] = "Your account has been registered successfully. Please wait for account verification.";
+            TempData["Error"] = "Registration Failed";
             return RedirectToAction("Index", "Home");
 
         }

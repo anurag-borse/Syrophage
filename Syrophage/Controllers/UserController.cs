@@ -62,7 +62,6 @@ namespace Syrophage.Controllers
                 unitofworks.User.Update(user);
                 unitofworks.Save();
 
-                ViewBag["ProfileImage"] = user.ProfileImageUrl;
 
 
                 TempData["Success"] = "user updated Successfully";
