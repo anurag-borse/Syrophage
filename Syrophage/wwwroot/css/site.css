@@ -46,6 +46,13 @@ body {
 }
 
 
-#bg-token {
-    background-image: url('../assets/images/home/bg-elements.jpg');
+
+
+#Profile2 {
+    background-image: url('../assets/images/home/bg-home-2.jpg');
+}
+
+.FormSection{
+    display:block;
+    margin:40px;
 }

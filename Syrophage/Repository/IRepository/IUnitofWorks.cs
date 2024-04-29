@@ -3,7 +3,14 @@
     public interface IUnitofWorks
     {
         IContactRepository Contact { get; }
-        public void Save();
+      
 
+        INewsletterRepository Newsletter { get; }
+
+
+        IUserRepository User { get; }
+
+
+        public void Save();
     }
 }

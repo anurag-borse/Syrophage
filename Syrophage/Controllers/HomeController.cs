@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Syrophage.Models;
 using Syrophage.Repository.IRepository;
+using Syrophage.Services;
 using System.Diagnostics;
 
 namespace Syrophage.Controllers
@@ -8,9 +9,11 @@ namespace Syrophage.Controllers
     public class HomeController : Controller
     {
         private readonly IUnitofWorks unitofworks;
-        public HomeController(IUnitofWorks unitofworks)
+        private readonly IServices services;
+        public HomeController(IUnitofWorks unitofworks, IServices services)
         {
             this.unitofworks = unitofworks;
+            this.services = services;
         }
 
         public IActionResult Index()
@@ -52,13 +55,45 @@ namespace Syrophage.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
-
-
-        public IActionResult Token()
+        [HttpPost]
+        public IActionResult GContact(Contact obj)
         {
-            return View();
+
+            if (ModelState.IsValid)
+            {
+                unitofworks.Contact.Add(obj);
+                unitofworks.Save();
+
+                TempData["Success"] = "Details Sent";
+                return RedirectToAction("Contact", "Home");
+            }
+
+            TempData["Error"] = "Error occured";
+            return RedirectToAction("Contact", "Home");
         }
+
+
+        [HttpPost]
+        public IActionResult Newsletter(Newsletter obj)
+        {
+
+            if (ModelState.IsValid)
+            {
+                
+                services.SendThanksEmail(obj.email);
+
+                unitofworks.Newsletter.Add(obj);
+                unitofworks.Save();
+
+                TempData["Success"] = "Email Suscribed";
+                return RedirectToAction("Index", "Home");
+            }
+
+            TempData["Error"] = "Email Falied to Send";
+            return RedirectToAction("Index", "Home");
+        }
+        
+
 
 
 
