@@ -25,35 +25,55 @@ namespace Syrophage.Controllers
         [HttpPost]
         public IActionResult Login(LoginViewModel vm)
         {
-            var existingUser = _db.Users.SingleOrDefault(u => u.Email == vm.Email);
 
-            if (existingUser != null && existingUser.IsActivated == false)
+            var role = _db.Roles.FirstOrDefault(r => r.email == vm.Email)?.role;
+
+            if (role == null)
             {
-                TempData["Error"] = "Not Authorized to Login !!!";
-                return RedirectToAction("Login", "Login");
-
+                TempData["failed"] = "Login Failed: Invalid Email";
+                return View();
             }
 
-            if (existingUser != null)
+
+            if (role == "Admin")
             {
-                if (existingUser.Password == vm.Password)
+                // Retrieve the admin based on the email
+                var existingAdmin = _db.Admins.SingleOrDefault(u => u.Email == vm.Email);
+
+                if (existingAdmin != null && existingAdmin.Password == vm.Password)
                 {
-                    HttpContext.Session.SetInt32("UserId",existingUser.Id);
+                    // Redirect to admin dashboard
+                    return RedirectToAction("Services", "Home");
+                }
+            }
+            else if (role == "User")
+            {
+                // Retrieve the user based on the email
+                var existingUser = _db.Users.SingleOrDefault(u => u.Email == vm.Email);
+
+                if (existingUser != null && existingUser.IsActivated == false)
+                {
+                    TempData["Error"] = "Not Authorized to Login !!!";
+                    return RedirectToAction("Login", "Login");
+
+                }
+
+                if (existingUser != null && existingUser.Password == vm.Password)
+                {
+                    // Set session variables for user
+                    HttpContext.Session.SetInt32("UserId", existingUser.Id);
                     HttpContext.Session.SetString("UserEmail", existingUser.Email);
                     HttpContext.Session.SetString("UserName", existingUser.Name);
-
 
                     TempData["Success"] = "Login Successfully";
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    TempData["failed"] = "Login Failed Invalide Creadentials ";
-                    return View();
-                }
             }
+
+            TempData["failed"] = "Login Failed: Invalid Credentials";
             return View();
         }
+
 
 
 
@@ -71,24 +91,31 @@ namespace Syrophage.Controllers
         [HttpPost]
         public IActionResult Register(Users model)
         {
-            //var existingEmailUser = unitOfWorks.Users.GetByEmail(usr.User.Email);
-            var existingEmail = _db.Users.FirstOrDefault(r => r.Email == model.Email);
-            if (existingEmail != null)
+           
+                //var existingEmailUser = unitOfWorks.Users.GetByEmail(usr.User.Email);
+                var existingEmail = _db.Users.FirstOrDefault(r => r.Email == model.Email);
+                if (existingEmail != null)
+                {
+                    TempData["repeatemail"] = "Email is Already Exists";
+                    // return RedirectToAction("Login", "Login");
+                }
+                // Check if the phone number already exists
+                var existingPhoneUser = _db.Users.FirstOrDefault(r => r.Phone == model.Phone);
+                if (existingPhoneUser != null)
+                {
+                    TempData["repeatephone"] = "Phone no. is Already Exists";
+                    return RedirectToAction("Register", "Login");
+                }
+
+            if (model.Password != model.ConfirmPassword)
             {
-                TempData["repeatemail"] = "Email is Already Exists";
-                // return RedirectToAction("Login", "Login");
+                TempData["Confirm"] = "The new password and confirmed password do not match.";
+                return View(model);
             }
-            // Check if the phone number already exists
-            var existingPhoneUser = _db.Users.FirstOrDefault(r => r.Phone == model.Phone);
-            if (existingPhoneUser != null)
-            {
-                TempData["repeatephone"] = "Phone no. is Already Exists";
-                return RedirectToAction("Login", "Login");
-            }
-            if (ModelState.IsValid)
-            {
 
 
+            if (model!=null)
+            {
                 var reg = new Users
                 {
                     Name = model.Name,
@@ -105,14 +132,25 @@ namespace Syrophage.Controllers
                 _db.Users.Add(reg);
                 _db.SaveChanges();
 
+                var role = new Role
+                {
+                    email = model.Email,
+                    role = "User"
+                };
+                _db.Roles.Add(role);
+                _db.SaveChanges();
+
 
                 //service.SendRegistrationEmail(RL.Registration.Email);
                 TempData["Success"] = "Your account has been registered successfully. Please wait for account verification.";
                 return RedirectToAction("Index", "Home");
             }
+            else
+            {
 
-            TempData["Error"] = "Registration Failed";
-            return RedirectToAction("Index", "Home");
+                TempData["Error"] = "Registration Failed";
+                return RedirectToAction("Register", "Login");
+            }
 
         }
 

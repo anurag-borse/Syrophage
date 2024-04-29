@@ -30,9 +30,10 @@ namespace Syrophage.Models
         public string Password { get; set; }
 
 
-
+        [Required(ErrorMessage = "Please Enter Password .")]
         public string? ConfirmPassword { get; set; }
 
+        [Required]
         public bool? IsActivated { get; set; }
 
 
