@@ -167,6 +167,9 @@ namespace Syrophage.Controllers
                 return RedirectToAction("Register", "Login");
             }
 
+            TempData["Error"] = "Someting Error Happen";
+            return RedirectToAction("Register", "Login");
+
         }
 
         public string GenerateRegId()
