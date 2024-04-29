@@ -47,7 +47,7 @@ namespace Syrophage.Controllers
             {
                 if (existingUser.Password == vm.Password)
                 {
-                    HttpContext.Session.SetInt32("UserId",existingUser.Id);
+                    HttpContext.Session.SetInt32("UserId", existingUser.Id);
                     HttpContext.Session.SetString("UserEmail", existingUser.Email);
                     HttpContext.Session.SetString("UserName", existingUser.Name);
 
@@ -57,8 +57,9 @@ namespace Syrophage.Controllers
                 }
                 else
                 {
-                    TempData["failed"] = "Login Failed Invalide Creadentials ";
-                    return View();
+                    TempData["Error"] = "Login Failed Invalide Creadentials ";
+                    return RedirectToAction("Login", "Login");
+
                 }
             }
             return View();
@@ -85,15 +86,15 @@ namespace Syrophage.Controllers
             var existingEmail = _db.Users.FirstOrDefault(r => r.Email == model.Email);
             if (existingEmail != null)
             {
-                TempData["repeatemail"] = "Email is Already Exists";
-                // return RedirectToAction("Login", "Login");
+                TempData["Message"] = "Email is Already Exists";
+                 return RedirectToAction("Register", "Login");
             }
             // Check if the phone number already exists
             var existingPhoneUser = _db.Users.FirstOrDefault(r => r.Phone == model.Phone);
             if (existingPhoneUser != null)
             {
-                TempData["repeatephone"] = "Phone no. is Already Exists";
-                return RedirectToAction("Login", "Login");
+                TempData["Message"] = "Phone no. is Already Exists";
+                return RedirectToAction("Register", "Login");
             }
             if (ModelState.IsValid)
             {

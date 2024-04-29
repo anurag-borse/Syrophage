@@ -10,6 +10,7 @@
 
         IUserRepository User { get; }
 
+        ITokenRepository Token { get; }
 
         public void Save();
     }

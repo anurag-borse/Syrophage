@@ -12,12 +12,15 @@ namespace Syrophage.Repository
 
         public IUserRepository User { get; set; }
 
+        public ITokenRepository Token { get; set; }
+
         public Unitofworks(ApplicationDbContext _db)
         {
             this._db = _db;
             Contact = new ContactRepository(_db);
             Newsletter = new NewsletterRepository(_db);
             User = new UserRepository(_db);
+            Token = new TokenRepository(_db);
         }
 
         public void Save()

@@ -12,8 +12,8 @@ using Syrophage.Data;
 namespace Syrophage.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240428085559_addpic")]
-    partial class addpic
+    [Migration("20240429085158_initial1")]
+    partial class initial1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,6 +69,46 @@ namespace Syrophage.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Newsletters");
+                });
+
+            modelBuilder.Entity("Syrophage.Models.Token", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Attachment1Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Attachment2Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestQuery")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tokens");
                 });
 
             modelBuilder.Entity("Syrophage.Models.Users", b =>
