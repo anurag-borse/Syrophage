@@ -75,14 +75,14 @@ namespace Syrophage.Controllers
             var existingEmail = _db.Users.FirstOrDefault(r => r.Email == model.Email);
             if (existingEmail != null)
             {
-                TempData["Error"] = "Email Already Exists";
-                return RedirectToAction("Register", "Login");
+                TempData["Message"] = "Email is Already Exists";
+                 return RedirectToAction("Register", "Login");
             }
             // Check if the phone number already exists
             var existingPhoneUser = _db.Users.FirstOrDefault(r => r.Phone == model.Phone);
             if (existingPhoneUser != null)
             {
-                TempData["Error"] = "Phone no. Already Exists";
+                TempData["Message"] = "Phone no. is Already Exists";
                 return RedirectToAction("Register", "Login");
             }
             if (model != null)
