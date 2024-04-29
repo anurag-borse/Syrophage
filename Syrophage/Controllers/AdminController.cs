@@ -25,6 +25,32 @@ namespace Syrophage.Controllers
             var user = unitofworks.User.GetAll().ToList();
             return View(user);
         }
-  
+
+
+
+        [HttpPost]
+        public JsonResult ToggleActivation(int id, bool isActivated)
+        {
+            var user = unitofworks.User.GetById(id);
+            if (user != null)
+            {
+                user.IsActivated = !isActivated;
+                unitofworks.User.Update(user);
+                unitofworks.Save();
+
+
+                if (isActivated == false)
+                {
+                    services.SendActivationEmail(user.Email, user.Password);
+                }
+
+
+                return Json(new { success = true });
+
+
+            }
+            return Json(new { success = false });
+
+        }
     }
 }

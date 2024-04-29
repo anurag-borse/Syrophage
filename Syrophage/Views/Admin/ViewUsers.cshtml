@@ -30,72 +30,6 @@
 
 </head>
 <body>
-   @*  <div id="main-wrapper"
-         data-layout="vertical"
-         data-navbarbg="skin5"
-         data-sidebartype="full"
-         data-sidebar-position="absolute"
-         data-header-position="absolute"
-         data-boxed-layout="full">
-
-
-        <partial name="AdminNavbar" />
-
-
-
-
-        <partial name="AdminSidebar" />
-
-
-
-
-
-
-
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title mb-0">Static Table</h5>
-                        </div>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">First</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Phone</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">RegId</th>
-                                    <th scope="col">Is Active</th>
-                                    <th scope="col">Profile Picture</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var user in Model)
-                                {
-                                    <tr>
-                                        <th scope="row">@user.Id</th>
-                                        <td>@user.Name</td>
-                                        <td>@user.Email</td>
-                                        <td>@user.Phone</td>
-                                        <td>@user.Address</td>
-                                        <td>@user.RegId</td>
-                                        <td>@user.IsActivated</td>
-
-                                        <td>
-                                            <img src="@user.ProfileImageUrl" height="50px" width="50px" />
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> *@
 
 
     <div id="main-wrapper"
@@ -130,7 +64,7 @@
                 </div>
             </div>
 
-            <div class="container-fluid">
+            <div class="container-fluid" id="userData">
 
                 <div class="row">
                     <div class="col-12">
@@ -141,8 +75,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First</th>
+                                        <th scope="col">Name</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Phone</th>
                                         <th scope="col">Address</th>
@@ -155,13 +88,15 @@
                                     @foreach (var user in Model)
                                     {
                                         <tr>
-                                            <th scope="row">@user.Id</th>
                                             <td>@user.Name</td>
                                             <td>@user.Email</td>
                                             <td>@user.Phone</td>
                                             <td>@user.Address</td>
                                             <td>@user.RegId</td>
-                                            <td>@user.IsActivated</td>
+
+                                            <td>
+                                                <button data-activated="@(user.IsActivated ?? false)" onclick="toggleActivation(@user.Id, this)" class="btn btn-@(user.IsActivated == true ? "success" : "danger")">@(user.IsActivated == true ? "De-Activate" : "Activate")</button>
+                                            </td>
 
                                             <td>
                                                 <img src="@user.ProfileImageUrl" height="70px" width="70px" />
@@ -175,11 +110,10 @@
                 </div>
             </div>
 
-            </div>
-
         </div>
 
     </div>
+
 
 
 
@@ -193,5 +127,43 @@
     <script src="~/admin/dist/js/custom.min.js"></script>
     <script src="~/admin/dist/js/pages/dashboards/dashboard1.js"></script>
     <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
+
+
+    <script>
+        function toggleActivation(id, button) {
+            var isActivated = $(button).data('activated');
+            $.ajax({
+                url: '/Admin/ToggleActivation',
+                type: 'POST',
+                data: { id: id, isActivated: isActivated },
+                success: function (response) {
+                    if (response.success) {
+                        var newIsActivated = !isActivated;
+                        $(button).data('activated', newIsActivated);
+                        $(button).text(newIsActivated ? "De-Activate" : "Activate");
+                        $(button).removeClass('badge-success badge-danger');
+                        $(button).addClass(newIsActivated ? 'badge-success' : 'badge-danger');
+
+                        // Refresh the user data
+                        $.ajax({
+                            url: '/Admin/ViewUsers',
+                            type: 'GET',
+                            success: function (html) {
+                                // Replace the current user data with the new user data
+                                $('#userData').replaceWith(
+                                    $(html).find('#userData')
+                                );
+                            }
+                        });
+                    } else {
+                        // Handle error
+                        console.error('Failed to toggle activation status');
+                    }
+                }
+            });
+        }
+
+    </script>
+
 </body>
 </html>
