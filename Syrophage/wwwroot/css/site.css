@@ -44,3 +44,15 @@ body {
 #SignUp {
     background-image: url('../assets/images/home/bg-login.jpg');
 }
+
+
+
+
+#Profile2 {
+    background-image: url('../assets/images/home/bg-home-2.jpg');
+}
+
+.FormSection{
+    display:block;
+    margin:40px;
+}

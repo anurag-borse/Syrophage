@@ -1,0 +1,186 @@
+﻿@model Syrophage.Models.Users
+
+
+
+
+
+
+<link href="~/css/site.css" rel="stylesheet" />
+
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<section class="bg-half" id="SignUp">
+    <div class="bg-overlay"></div>
+    <div class="home-center">
+        <div class="home-desc-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="page-next-level text-white">
+                            <h4 class="text-uppercase">@Model.Name's Profile</h4>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+<section style="display:block;justify-content:center; margin:100px">
+    <div>
+
+        <div class="mt-5">
+            <h4>Profile Details</h4>
+            <span class="bar"></span>
+
+            <div class="mt-4">
+                <div class="custom-form">
+                    <form method="post" asp-action="updateUser" asp-controller="User" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group app-label">
+                                    <label>Name</label>
+                                    <input asp-for="Name" id="name2" type="text" class="form-control bg-grey" placeholder="@Model.Name" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group app-label">
+                                    <label>RegId</label>
+                                    <input asp-for="RegId" id="email2" type="email" class="form-control bg-grey" placeholder="@Model.RegId" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group app-label">
+                                    <label>Phone</label>
+                                    <input asp-for="Phone" id="email2" type="number" class="form-control bg-grey" placeholder="@Model.Phone">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group app-label">
+                                    <label>Email</label>
+                                    <input asp-for="Email" id="email2" type="email" class="form-control bg-grey" placeholder="@Model.Email">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6" hidden>
+                                <div class="form-group app-label">
+                                    <label>Email</label>
+                                    <input asp-for="Id" id="email2" type="number" class="form-control bg-grey" placeholder="@Model.Id">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group app-label">
+                                    <label>Address</label>
+                                    <textarea asp-for="Address" id="comments2" rows="3" class="form-control bg-grey" placeholder="Enter message :"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="form-group app-label">
+                                    <label>Profile Photo</label>
+                                    <input for="formFile" type="file" name="file" id="upload"  class="account-file-input" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 text-right">
+                                <input type="submit" id="submit2" name="send" class="submitBnt btn btn-custom" value="Update">
+                                <input type="reset" id="submit2" name="send" class="submitBnt btn btn-custom" value="Cancel">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+@if (TempData["Success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Success"]');
+    </script>
+}
+
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Error"]');
+    </script>
+}

@@ -1,6 +1,7 @@
 ﻿@{
     var userEmail = Context.Session.GetString("UserEmail");
     var userId = Context.Session.GetInt32("UserId");
+    var username = Context.Session.GetString("UserName");
 }
 
 
@@ -73,6 +74,7 @@
                             <span></span>
                             <span></span>
                         </div>
+                        
                     </a>
                     <!-- End mobile menu toggle-->
                 </div>
@@ -102,13 +104,19 @@
                         if (userEmail != null)
                         {
                             <li class="has-submenu">
-                                <a>Profile</a>
+                                <a>@username</a>
                                 <ul class="submenu">
-                                    <li><a>Profile</a></li>
+                                    <li><a asp-action="Profile" asp-controller="User">Profile</a></li>
                                     <li><a asp-action="Logout" asp-controller="Login">Logout</a></li>
-
                                 </ul>
                             </li>
+                            <li>
+                            <img src="https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg" style="width: 40px; height: 40px; border-radius:40px; margin-top:15px" alt="Profile Image" />
+
+                            </li>
+                            
+
+                 
                         }
                         else
                         {
@@ -197,7 +205,7 @@
                                 <p class="text-footer-clr">Subscribe to our email newsletter to receive useful articles and special offers.</p>
                                 <div class="subscribed-form">
                                     <div class="subcribed-form">
-                                        <form asp-action="Newsletter" asp-controller="">
+                                        <form asp-action="Newsletter" asp-controller="Home">
                                             <input name="email" type="email" placeholder="Your Email" id="email" required="">
                                             <button type="submit" class=""><span class="fab fa-telegram-plane"></span></button>
                                         </form>

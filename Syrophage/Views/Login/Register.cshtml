@@ -19,7 +19,6 @@
 
     <link rel="shortcut icon" href="images/favicon.ico">
 
-    <title>Alita - A Responsive Multipurpose HTML Template</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700|Poppins" rel="stylesheet">
@@ -75,33 +74,33 @@
                                     <div class="row">
                                         <div class="col-lg-12 mt-2">
 
-                                            <label class="">First name</label>
-                                            <input type="text" class="form-control" placeholder="First Name" name="Name" required="">
+                                            <label class="">Name</label>
+                                            <input type="text" class="form-control" placeholder="Name" asp-for="Name" >
                                             <span asp-validation-for="Name" style="color: red;"></span>
 
                                         </div>
                                         <div class="col-lg-12 mt-2">
                                             <label class="">Email</label>
-                                            <input type="email" class="form-control" placeholder="Email" name="Email" required="">
+                                            <input type="email" class="form-control" placeholder="Email" asp-for="Email">
                                             <span asp-validation-for="Email" style="color: red;"></span>
 
                                         </div>
                                         <div class="col-lg-12 mt-2">
                                             <label class="">Phone No.</label>
-                                            <input type="text" class="form-control" placeholder="Phone" name="Phone" required="">
+                                            <input type="text" class="form-control" placeholder="Phone" asp-for="Phone">
                                             <span asp-validation-for="Phone" style="color: red;"></span>
 
                                         </div>
                                         <div class="col-lg-12 mt-2">
                                             <label class="">Password</label>
-                                            <input type="password" class="form-control" placeholder="Password" name="Password" required="">
+                                            <input type="password" class="form-control" placeholder="Password" asp-for="Password">
                                             <span asp-validation-for="Password" style="color: red;"></span>
 
 
                                         </div>
                                         <div class="col-lg-12 mt-2">
                                             <label class="">Confirm Password</label>
-                                            <input type="password" class="form-control" placeholder="Confirm Password" name="ConfirmPassword" required="">
+                                            <input type="password" class="form-control" placeholder="Confirm Password" asp-for="ConfirmPassword">
                                             <span asp-validation-for="ConfirmPassword" style="color: red;"></span>
 
                                         </div>
@@ -116,6 +115,8 @@
                                         </div>
                                         <div class="mx-auto">
                                             <p class="mb-0 mt-2"><small class="text-dark mr-2">Already have an account ?</small> <a asp-action="Login" asp-controller="Login" class="text-dark font-weight-bold">Sign in</a></p>
+
+                                            <p class="mb-0 mt-2" style="margin-left: 00px;"><small class="text-dark mr-2">Dont want to Register ?</small> <a asp-action="Index" asp-controller="Home" class="text-dark font-weight-bold">Skip To Home</a></p>
                                         </div>
                                     </div>
                                 </form>
@@ -128,6 +129,13 @@
     </section>
     <!-- HOME END-->
     <!-- js placed at the end of the document so the pages load faster -->
+
+@*     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> *@
+
+
+
     <script src="~/assets/js/jquery.min.js"></script>
     <script src="~/assets/js/popper.min.js"></script>
     <script src="~/assets/js/bootstrap.min.js"></script>

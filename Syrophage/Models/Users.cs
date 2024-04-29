@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace Syrophage.Models
 {
@@ -28,10 +29,24 @@ namespace Syrophage.Models
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", ErrorMessage = "Password Must be Strong")]
         public string Password { get; set; }
 
+
+
         public string? ConfirmPassword { get; set; }
 
         public bool? IsActivated { get; set; }
 
+
+
+
+
+
+        [ValidateNever]
         public string RegId { get; set; }
+
+        [ValidateNever]
+        public string Address { get; set; }
+
+        [ValidateNever]
+        public string ProfileImageUrl { get; set; }
     }
 }

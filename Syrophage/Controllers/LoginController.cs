@@ -40,6 +40,7 @@ namespace Syrophage.Controllers
                 {
                     HttpContext.Session.SetInt32("UserId",existingUser.Id);
                     HttpContext.Session.SetString("UserEmail", existingUser.Email);
+                    HttpContext.Session.SetString("UserName", existingUser.Name);
 
 
                     TempData["Success"] = "Login Successfully";
@@ -84,7 +85,7 @@ namespace Syrophage.Controllers
                 TempData["repeatephone"] = "Phone no. is Already Exists";
                 return RedirectToAction("Login", "Login");
             }
-            if (model != null)
+            if (ModelState.IsValid)
             {
 
 
@@ -93,13 +94,18 @@ namespace Syrophage.Controllers
                     Name = model.Name,
                     Email = model.Email,
                     Password = model.Password,
+                    ConfirmPassword = model.ConfirmPassword,
                     Phone = model.Phone,
                     IsActivated = false,
-                    RegId = GenerateRegId()
+                    RegId = GenerateRegId(),
+                    Address = "",
+                    ProfileImageUrl = ""
                 };
                 model.IsActivated = false; // Set IsActivated to false when a new user is registered
                 _db.Users.Add(reg);
                 _db.SaveChanges();
+                
+                
                 //service.SendRegistrationEmail(RL.Registration.Email);
 
                 return RedirectToAction("Index", "Home");
@@ -112,13 +118,19 @@ namespace Syrophage.Controllers
 
         public string GenerateRegId()
         {
+            // Get the current year
+            int year = DateTime.Now.Year;
+
+            // Generate a random 4-digit number
             Random random = new Random();
-            int randomNumber = random.Next(0, 10000000);
-            string formattedNumber = randomNumber.ToString("D7");
-            string regId = "SRE" + formattedNumber;
+            int randomNumber = random.Next(1000, 9999); // Generate a 4-digit random number
+
+            // Combine the year and random number to form the registration ID
+            string regId = "SP" + year.ToString() + randomNumber.ToString();
 
             return regId;
         }
+
 
 
 

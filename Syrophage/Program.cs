@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Syrophage.Data;
 using Syrophage.Repository.IRepository;
 using Syrophage.Repository;
+using Syrophage.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 
 builder.Services.AddScoped<IUnitofWorks, Unitofworks>();
+builder.Services.AddScoped<IServices, Services>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
