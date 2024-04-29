@@ -12,6 +12,8 @@
 
         ITokenRepository Token { get; }
 
+
+
         public void Save();
     }
 }

@@ -15,5 +15,18 @@ namespace Syrophage.Data
         public DbSet<Newsletter> Newsletters { get; set; }
         public DbSet<Token> Tokens { get; set; }
 
+        public DbSet<Admin> Admins { get; set; }    
+
+
+
+        public DbSet<Role> Roles { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Role>().HasData(new Role { Id = 1, email = "admin@gmail.com", role = "Admin" });
+
+            modelBuilder.Entity<Admin>().HasData(new Admin { Id = 1, Email = "admin@gmail.com", Password = "Admin@123" });
+        }
+
     }
 }
