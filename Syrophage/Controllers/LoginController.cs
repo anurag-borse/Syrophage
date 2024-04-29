@@ -52,7 +52,7 @@ namespace Syrophage.Controllers
                 if (existingAdmin != null && existingAdmin.Password == vm.Password)
                 {
                     // Redirect to admin dashboard
-                    return RedirectToAction("Services", "Home");
+                    return RedirectToAction("Dashboard", "Admin");
                 }
             }
             else if (role == "User")
@@ -85,6 +85,8 @@ namespace Syrophage.Controllers
 
                 }
             }
+            
+
 
             TempData["failed"] = "Login Failed: Invalid Credentials";
             return View();
@@ -123,6 +125,8 @@ namespace Syrophage.Controllers
                 TempData["Message"] = "Phone no. is Already Exists";
                 return RedirectToAction("Register", "Login");
             }
+          
+            if (model.Password != model.ConfirmPassword)
 
 
             if (model != null)
@@ -162,6 +166,9 @@ namespace Syrophage.Controllers
                 TempData["Error"] = "Registration Failed";
                 return RedirectToAction("Register", "Login");
             }
+
+            TempData["Error"] = "Someting Error Happen";
+            return RedirectToAction("Register", "Login");
 
         }
 

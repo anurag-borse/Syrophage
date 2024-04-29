@@ -14,5 +14,14 @@ namespace Syrophage.Repository
 
         }
 
+        public Token GetById(int Id)
+        {
+            return _db.Tokens.Find(Id);
+        }
+
+        public void Update(Token obj)
+        {
+            _db.Tokens.Update(obj);
+        }
     }
 }

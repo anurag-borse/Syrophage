@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Syrophage.Models;
 using Syrophage.Repository.IRepository;
 using Syrophage.Services;
 
@@ -36,6 +37,58 @@ namespace Syrophage.Controllers
         {
             var user = unitofworks.User.GetAll().ToList();
             return View(user);
+        }
+
+
+        [HttpGet]
+        public IActionResult ViewContact()
+        {
+            var Contacts = unitofworks.Contact.GetAll().ToList();
+            return View(Contacts);
+        }
+
+
+        [HttpGet]
+        public IActionResult ViewNewsLetter()
+        {
+            var Newsletter = unitofworks.Newsletter.GetAll().ToList();
+            return View(Newsletter);
+        }
+
+
+
+
+        [HttpGet]
+        public IActionResult ViewTokens()
+        {
+            var Token = unitofworks.Token.GetAll().ToList();
+            return View(Token);
+        }
+
+
+        [HttpGet]
+        public IActionResult EditToken(int id)
+        {
+            var token = unitofworks.Token.GetById(id);
+            return View(token);
+        }
+
+        [HttpPost]
+        public IActionResult EditToken(Token obj)
+        {
+
+            var TokeninDb = unitofworks.Token.GetById(obj.Id);
+
+
+            if (TokeninDb != null) {
+                TokeninDb.Status = obj.Status;
+                    }
+
+
+            unitofworks.Token.Update(TokeninDb);
+            unitofworks.Save();
+
+            return RedirectToAction("ViewTokens" ,"Admin");
         }
 
 
