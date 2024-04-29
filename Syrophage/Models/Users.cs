@@ -46,7 +46,7 @@ namespace Syrophage.Models
 
         [ValidateNever]
         public string Address { get; set; }
-
+            
         [ValidateNever]
         public string ProfileImageUrl { get; set; }
     }

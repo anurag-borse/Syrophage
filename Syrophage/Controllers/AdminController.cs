@@ -16,6 +16,18 @@ namespace Syrophage.Controllers
         }
         public IActionResult Dashboard()
         {
+
+            var newslettersCount = unitofworks.Newsletter.GetAll().Count();
+            var activeUsersCount = unitofworks.User.GetAll().Where(x => x.IsActivated == true).Count();
+            var nonActiveUsersCount = unitofworks.User.GetAll().Where(x => x.IsActivated == false).Count();
+
+            ViewBag.NewslettersCount = newslettersCount;
+            ViewBag.ActiveUsersCount = activeUsersCount;
+            ViewBag.NonActiveUsersCount = nonActiveUsersCount;
+
+            // var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>>(products, feedback, enquiry);
+
+
             return View();
         }
 
@@ -52,5 +64,16 @@ namespace Syrophage.Controllers
             return Json(new { success = false });
 
         }
+
+
+        //[HttpGet]
+        //public JsonResult ChartData()
+        //{
+        //    var usersCount = unitofworks.User.GetAll().Count();
+        //    var contactsCount = unitofworks.Contact.GetAll().Count();
+
+            
+        //}
+
     }
 }
