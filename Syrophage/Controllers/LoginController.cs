@@ -52,7 +52,7 @@ namespace Syrophage.Controllers
                 if (existingAdmin != null && existingAdmin.Password == vm.Password)
                 {
                     // Redirect to admin dashboard
-                    return RedirectToAction("Services", "Home");
+                    return RedirectToAction("Dashboard", "Admin");
                 }
             }
             else if (role == "User")
@@ -85,7 +85,7 @@ namespace Syrophage.Controllers
 
                 }
             }
-            }
+            
 
             TempData["failed"] = "Login Failed: Invalid Credentials";
             return View();
@@ -123,23 +123,7 @@ namespace Syrophage.Controllers
                 TempData["Message"] = "Phone no. is Already Exists";
                 return RedirectToAction("Register", "Login");
             }
-            if (ModelState.IsValid)
-           
-                //var existingEmailUser = unitOfWorks.Users.GetByEmail(usr.User.Email);
-                var existingEmail = _db.Users.FirstOrDefault(r => r.Email == model.Email);
-                if (existingEmail != null)
-                {
-                    TempData["repeatemail"] = "Email is Already Exists";
-                    // return RedirectToAction("Login", "Login");
-                }
-                // Check if the phone number already exists
-                var existingPhoneUser = _db.Users.FirstOrDefault(r => r.Phone == model.Phone);
-                if (existingPhoneUser != null)
-                {
-                    TempData["repeatephone"] = "Phone no. is Already Exists";
-                    return RedirectToAction("Register", "Login");
-                }
-
+          
             if (model.Password != model.ConfirmPassword)
             {
                 TempData["Confirm"] = "The new password and confirmed password do not match.";
