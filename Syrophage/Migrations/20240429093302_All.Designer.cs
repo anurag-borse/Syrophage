@@ -12,8 +12,8 @@ using Syrophage.Data;
 namespace Syrophage.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240429085158_initial1")]
-    partial class initial1
+    [Migration("20240429093302_All")]
+    partial class All
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,35 @@ namespace Syrophage.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Syrophage.Models.Admin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Admins");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "admin@gmail.com",
+                            Password = "Admin@123"
+                        });
+                });
 
             modelBuilder.Entity("Syrophage.Models.Contact", b =>
                 {
@@ -69,6 +98,35 @@ namespace Syrophage.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Newsletters");
+                });
+
+            modelBuilder.Entity("Syrophage.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            email = "admin@gmail.com",
+                            role = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Syrophage.Models.Token", b =>
@@ -124,6 +182,7 @@ namespace Syrophage.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConfirmPassword")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -131,6 +190,7 @@ namespace Syrophage.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsActivated")
+                        .IsRequired()
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")

@@ -97,6 +97,35 @@ namespace Syrophage.Migrations
                     b.ToTable("Newsletters");
                 });
 
+            modelBuilder.Entity("Syrophage.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            email = "admin@gmail.com",
+                            role = "Admin"
+                        });
+                });
+
             modelBuilder.Entity("Syrophage.Models.Token", b =>
                 {
                     b.Property<int>("Id")
@@ -137,35 +166,6 @@ namespace Syrophage.Migrations
                     b.ToTable("Tokens");
                 });
 
-            modelBuilder.Entity("Syrophage.Models.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            email = "admin@gmail.com",
-                            role = "Admin"
-                        });
-                });
-
             modelBuilder.Entity("Syrophage.Models.Users", b =>
                 {
                     b.Property<int>("Id")
@@ -179,6 +179,7 @@ namespace Syrophage.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConfirmPassword")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -186,6 +187,7 @@ namespace Syrophage.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsActivated")
+                        .IsRequired()
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
