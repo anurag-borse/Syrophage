@@ -40,5 +40,13 @@ namespace Syrophage.Models
 
         public bool? IsActivated { get; set; }
 
+
+
+        public ICollection<UserCoupon>? UserCoupons { get; set; }
+
+
+
+
+
     }
 }

@@ -22,6 +22,17 @@ namespace Syrophage.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<Order> Orders { get; set; }
 
+
+        public DbSet<UserCoupon> UserCoupons { get; set; }
+
+
+
+
+
+
+
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasData(new Role { Id = 1, email = "admin@gmail.com", role = "Admin" });

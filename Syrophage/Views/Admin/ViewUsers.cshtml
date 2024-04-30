@@ -24,6 +24,7 @@
 
     <link href="~/admin/assets/libs/datatables.net-bs4/css/datatables.bootstrap4.css" rel="stylesheet" />
 
+    <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
 
 
 
@@ -72,7 +73,7 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-0">USERS</h5>
                             </div>
-                            <table class="table">
+                            <table class="table" id="usersTable">
                                 <thead>
                                     <tr>
                                         <th scope="col">Id</th>
@@ -83,6 +84,7 @@
                                         <th scope="col">RegId</th>
                                         <th scope="col">Is Active</th>
                                         <th scope="col">Profile Picture</th>
+                                        <th scope="col">Assign Coupon</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -103,6 +105,12 @@
                                             <td>
                                                 <img src="@user.ProfileImageUrl" height="70px" width="70px" />
                                             </td>
+
+                                            <td>
+                                                <a asp-route-id="@user.Id" asp-action="AddCouponToUser" asp-controller="Admin" class="btn btn-primary">Add Coupon</a>
+                                            </td>
+
+
                                         </tr>
                                     }
                                 </tbody>
@@ -166,6 +174,17 @@
                 }
             });
         }
+
+
+
+
+
+
+        $(document).ready(function () {
+            $('#usersTable').DataTable();
+        });
+
+
 
     </script>
 

@@ -16,6 +16,8 @@
         IOrderRepository Orders { get; }
 
 
+        IUserCouponRepository UserCoupon { get; }
+
 
         public void Save();
     }

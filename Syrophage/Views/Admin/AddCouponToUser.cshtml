@@ -1,0 +1,147 @@
+﻿@model Syrophage.Models.Users
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+    <title>Admin Dashboard</title>
+    <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
+    <link href="~/admin/assets/libs/datatables.net-bs4/css/datatables.bootstrap4.css" rel="stylesheet" />
+
+
+
+
+
+
+</head>
+<body>
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+         data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+
+
+
+        <partial name="AdminNavbar" />
+
+
+
+
+        <partial name="AdminSidebar" />
+
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Add Coupon To @Model.Name with RegID : @Model.RegId</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+
+
+                        <h5>Assigned Coupons</h5>
+                        <div class="row">
+                            @foreach (var couponId in ViewBag.availablecouponsforthisuser)
+                            {
+                                var coupon = ((IEnumerable<Coupon>)ViewBag.Coupons).FirstOrDefault(c => c.Id == couponId);
+                                if (coupon != null)
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card">
+
+                                            <div class="card-body">
+                                                <h5 class="card-title">@coupon.Name</h5>
+                                                <p class="card-text">Discount: @coupon.Discount</p>
+                                                <p class="card-text">Minimum Amount: @coupon.MinimumAmount</p>
+                                                <p class="card-text">Expiry Date: @coupon.ExpiryDate.ToShortDateString()</p>
+                                                <button class="btn btn-danger remove-coupon" data-user-id="@Model.Id" data-coupon-id="@coupon.Id">Remove</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Available Coupons</h5>
+                        <div class="row">
+                            @foreach (var coupon in ViewBag.Coupons)
+                            {
+                                if (!ViewBag.availablecouponsforthisuser.Contains(coupon.Id))
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card">
+
+                                            <div class="card-body">
+                                                <h5 class="card-title">@coupon.Name</h5>
+                                                <p class="card-text">Discount: @coupon.Discount</p>
+                                                <p class="card-text">Minimum Amount: @coupon.MinimumAmount</p>
+                                                <p class="card-text">Expiry Date: @coupon.ExpiryDate.ToShortDateString()</p>
+                                                <button class="btn btn-primary add-coupon" data-user-id="@Model.Id" data-coupon-id="@coupon.Id">Add</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/admin/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/admin/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/admin/assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="~/admin/dist/js/waves.js"></script>
+    <script src="~/admin/dist/js/sidebarmenu.js"></script>
+    <script src="~/admin/dist/js/custom.min.js"></script>
+    <script src="~/admin/dist/js/pages/dashboards/dashboard1.js"></script>
+    <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
+</body>
+</html>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.remove-coupon').click(function () {
+            var userId = $(this).data('user-id');
+            var couponId = $(this).data('coupon-id');
+            $.post('@Url.Action("RemoveCouponFromUser", "Admin")', { userId: userId, couponId: couponId }, function (data) {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Failed to remove coupon.');
+                }
+            });
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('.add-coupon').click(function () {
+            var userId = $(this).data('user-id');
+            var couponId = $(this).data('coupon-id');
+            $.post('@Url.Action("AddCouponToUser", "Admin")', { userId: userId, couponId: couponId }, function (data) {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Failed to add coupon.');
+                }
+            });
+        });
+    });
+
+
+</script>
