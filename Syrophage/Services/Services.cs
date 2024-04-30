@@ -143,5 +143,37 @@ namespace Syrophage.Services
             var code = $"SY{random.Next(100, 999)}RO{random.Next(100, 999)}PA{random.Next(100, 999)}GE";
             return code;
         }
+
+        public string GenerateTokenId()
+        {
+            // Get the current year
+            int year = DateTime.Now.Year;
+
+            // Generate a random 4-digit number
+            Random random = new Random();
+            int randomNumber = random.Next(1000, 9999); // Generate a 4-digit random number
+
+            // Combine the year and random number to form the registration ID
+            string regId = "TK" + year.ToString() + randomNumber.ToString();
+
+            return regId;
+        }
+
+        public string GenerateRegId()
+        {
+            // Get the current year
+            int year = DateTime.Now.Year;
+
+            // Generate a random 4-digit number
+            Random random = new Random();
+            int randomNumber = random.Next(1000, 9999); // Generate a 4-digit random number
+
+            // Combine the year and random number to form the registration ID
+            string regId = "SP" + year.ToString() + randomNumber.ToString();
+
+            return regId;
+        }
+
+
     }
 }

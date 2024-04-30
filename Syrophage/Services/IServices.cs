@@ -13,6 +13,8 @@
 
         public string GenerateCouponCode();
 
+        public string GenerateTokenId();
+        public string GenerateRegId();
 
 
     }
