@@ -26,6 +26,7 @@
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
 
 
 </head>
@@ -149,7 +150,7 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-0">Available Coupons</h5>
                             </div>
-                            <table class="table">
+                            <table class="table" id="couponsTable">
                                 <thead>
                                     <tr>
                                         <th scope="col">Name</th>
@@ -275,6 +276,16 @@
                 }
             });
         }
+
+
+
+        $(document).ready(function () {
+            $('#couponsTable').DataTable();
+        });
+
+
+
+
 
     </script>
 

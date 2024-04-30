@@ -10,6 +10,10 @@
 
         public bool SendActivationEmail(string email, string password);
 
- 
+
+        public string GenerateCouponCode();
+
+
+
     }
 }

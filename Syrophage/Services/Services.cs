@@ -137,6 +137,11 @@ namespace Syrophage.Services
             }
         }
 
-        
+        public string GenerateCouponCode()
+        {
+            var random = new Random();
+            var code = $"SY{random.Next(100, 999)}RO{random.Next(100, 999)}PA{random.Next(100, 999)}GE";
+            return code;
+        }
     }
 }

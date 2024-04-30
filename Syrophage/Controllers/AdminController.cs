@@ -146,7 +146,7 @@ namespace Syrophage.Controllers
             {
 
                 coupon.IsActivated = false;
-                coupon.Code = GenerateCouponCode();
+                coupon.Code = services.GenerateCouponCode();
                 coupon.CreatedDate = DateTime.Now;
 
                 if(coupon.CouponPicture != null)
@@ -179,12 +179,7 @@ namespace Syrophage.Controllers
         }
 
 
-        public string GenerateCouponCode()
-        {
-            var random = new Random();
-            var code = $"SY{random.Next(100, 999)}RO{random.Next(100, 999)}PA{random.Next(100, 999)}GE";
-            return code;
-        }
+     
 
         [HttpPost]
         public JsonResult ToggleActivationCoupon(int id, bool isActivated)
@@ -258,17 +253,48 @@ namespace Syrophage.Controllers
         {
 
             var user = unitofworks.User.GetById(id);
+
+            ViewBag.availablecouponsforthisuser = unitofworks.UserCoupon.GetAll().Where(x => x.UserId == id).Select(x => x.CouponId).ToList();
+
+
+
             ViewBag.Coupons = unitofworks.Coupon.GetAll().ToList();
+
             return View(user);
+        
         }
 
 
 
+        [HttpPost]
+        public JsonResult RemoveCouponFromUser(int userId, int couponId)
+        {
+            var userCoupon = unitofworks.UserCoupon.GetAll().FirstOrDefault(uc => uc.UserId == userId && uc.CouponId == couponId);
+            if (userCoupon != null)
+            {
+                unitofworks.UserCoupon.Remove(userCoupon);
+                unitofworks.Save();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
 
 
 
+        [HttpPost]
+        public JsonResult AddCouponToUser(int userId, int couponId)
+        {
+            var userCoupon = new UserCoupon
+            {
+                UserId = userId,
+                CouponId = couponId
+            };
 
+            unitofworks.UserCoupon.Add(userCoupon);
+            unitofworks.Save();
 
+            return Json(new { success = true });
+        }
 
 
 

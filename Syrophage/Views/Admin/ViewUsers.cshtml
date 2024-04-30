@@ -24,6 +24,7 @@
 
     <link href="~/admin/assets/libs/datatables.net-bs4/css/datatables.bootstrap4.css" rel="stylesheet" />
 
+    <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
 
 
 
@@ -72,7 +73,7 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-0">USERS</h5>
                             </div>
-                            <table class="table">
+                            <table class="table" id="usersTable">
                                 <thead>
                                     <tr>
                                         <th scope="col">Id</th>
@@ -104,23 +105,10 @@
                                             <td>
                                                 <img src="@user.ProfileImageUrl" height="70px" width="70px" />
                                             </td>
-                                          @*   <td>
-                                                <form asp-action="AssignCouponToUser" asp-controller="Admin" method="post">
-                                                    <input type="hidden" name="userId" value="@user.Id" />
-                                                    <select name="couponId">
-                                                        @foreach (var coupon in ViewBag.Coupons)
-                                                        {
-                                                            <option value="@coupon.Id">@coupon.Name</option>
-                                                        }
-                                                    </select>
-                                                    <button type="submit">Assign Coupon</button>
-                                                </form>
-                                            </td> *@
 
                                             <td>
-                                                <a asp-route-id="@user.Id" asp-action="AddCouponToUser" asp-controller="Admin">Add Coupon </a>
+                                                <a asp-route-id="@user.Id" asp-action="AddCouponToUser" asp-controller="Admin" class="btn btn-primary">Add Coupon</a>
                                             </td>
-
 
 
                                         </tr>
@@ -184,6 +172,17 @@
                 }
             });
         }
+
+
+
+
+
+
+        $(document).ready(function () {
+            $('#usersTable').DataTable();
+        });
+
+
 
     </script>
 
