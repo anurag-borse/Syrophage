@@ -80,8 +80,20 @@ namespace Syrophage.Controllers
 
 
             TempData["failed"] = "Login Failed: Invalid Creadentials";
+                else
+                {
+                    TempData["Error"] = "Login Failed Invalide Creadentials ";
+                    return RedirectToAction("Login", "Login");
+
+                }
+            }
+            
+
+
+            TempData["failed"] = "Login Failed: Invalid Credentials";
             return View();
         }
+
 
 
 
@@ -106,7 +118,7 @@ namespace Syrophage.Controllers
             if (existingEmail != null)
             {
                 TempData["Message"] = "Email is Already Exists";
-                 return RedirectToAction("Register", "Login");
+                return RedirectToAction("Register", "Login");
             }
             // Check if the phone number already exists
             var existingPhoneUser = _db.Users.FirstOrDefault(r => r.Phone == model.Phone);
@@ -119,14 +131,11 @@ namespace Syrophage.Controllers
  
             
 
+          
             if (model.Password != model.ConfirmPassword)
-            {
-                TempData["Confirm"] = "The new password and confirmed password do not match.";
-                return View(model);
-            }
 
 
-            if (model!=null)
+            if (model != null)
             {
                 var reg = new Users
                 {
@@ -163,6 +172,9 @@ namespace Syrophage.Controllers
                 TempData["Error"] = "Registration Failed";
                 return RedirectToAction("Register", "Login");
             }
+
+            TempData["Error"] = "Someting Error Happen";
+            return RedirectToAction("Register", "Login");
 
         }
 
@@ -223,6 +235,7 @@ namespace Syrophage.Controllers
 
             return View();
         }
+
 
 
     }

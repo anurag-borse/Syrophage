@@ -1,4 +1,8 @@
-﻿@{
+﻿@model List<Syrophage.Models.Coupon>
+
+
+
+@{
     Layout = null;
 }
 
@@ -8,17 +12,282 @@
 
 <!-- Form to assign existing coupon to user -->
 
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
 
+    <title>Admin Dashboard</title>
 <hr />
+
+
+
+
+    <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
+
+    <link href="~/admin/assets/libs/datatables.net-bs4/css/datatables.bootstrap4.css" rel="stylesheet" />
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+</head>
+<body>
+
+
+    <div id="main-wrapper"
+         data-layout="vertical"
+         data-navbarbg="skin5"
+         data-sidebartype="full"
+         data-sidebar-position="absolute"
+         data-header-position="absolute"
+         data-boxed-layout="full">
+
+
+        <partial name="AdminNavbar" />
+
+
+
+
+        <partial name="AdminSidebar" />
+
+
+
+
+
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <div class="ms-auto text-end">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
 <!-- User Details -->
 <h2>User Details</h2>
-<div>
+            <div>
+                <div>
+
+                    <div class="container">
+
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@Model">Generate New Coupon  </button>
+
     <p><strong>Name:</strong> @Model.Name</p>
     <p><strong>Email:</strong> @Model.Email</p>
     <!-- Add other properties as needed -->
-</div>
+                    </div>
 
 <hr />
 
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" asp-action="AddCoupon" asp-controller="Admin" enctype="multipart/form-data">
+
+                                        <input type="text" class="form-control" name="Code" value="SYROPHAGE" hidden />
+
+                                        <div class="mb-3">
+                                            <label for="Name" class="col-form-label">Coupon Name:</label>
+                                            <input type="text" class="form-control" name="Name">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="Discount" class="col-form-label">Discount in %:</label>
+                                            <input type="number" class="form-control" name="Discount"></input>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="MinimumAmount" class="col-form-label">Minimum Amount for Coupon:</label>
+                                            <input type="number" class="form-control" name="MinimumAmount"></input>
+                                        </div>
+
+
+                                        <div class="mb-3">
+                                            <label for="CouponDescription" class="col-form-label">Coupon Description :</label>
+                                            <input type="text" class="form-control" name="CouponDescription"></input>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="ExpiryDate" class="col-form-label">ExpiryDate for Coupon:</label>
+                                            <input type="date" class="form-control" name="ExpiryDate"></input>
+                                        </div>
+
+
+                                        <div class="mb-3">
+                                            <label for="formFile" class="form-label">CouponPicture </label>
+
+                                            <input class="form-control" type="file" id="formFile" name="CouponPicture" />
+                                        </div>
+
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Send New Coupon</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="container-fluid" id="couponData">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-0">Available Coupons</h5>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Discount</th>
+                                        <th scope="col">MinimumAmount</th>
+                                        <th scope="col">Code</th>
+                                        <th scope="col">Created Date</th>
+                                        <th scope="col">Expiry Date</th>
+                                        <th scope="col">Is Active</th>
+                                        <th scope="col">Coupon Picture</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var coupon in Model)
+                                    {
+                                        <tr>
+                                            <td>@coupon.Name</td>
+                                            <td>@coupon.Discount</td>
+                                            <td>@coupon.MinimumAmount</td>
+                                            <td>@coupon.Code</td>
+                                            <td>@coupon.CreatedDate</td>
+                                            <td>@coupon.ExpiryDate</td>
+
+                                            <td>
+                                                <button data-activated="@(coupon.IsActivated ?? false)" onclick="toggleActivation(@coupon.Id, this)" class="btn btn-@(coupon.IsActivated == true ? "success" : "danger")">@(coupon.IsActivated == true ? "De-Activate" : "Activate")</button>
+                                            </td>
+
+                                            <td>
+                                                <img src="@coupon.CouponPictureUrl" height="70px" width="70px" />
+                                            </td>
+                                            <td>
+                                                <a onclick="deleteCoupon(@coupon.Id)" class="btn btn-danger"><i class="bi bi-trash-fill"></i>Delete</a>
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <script src="~/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/admin/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/admin/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/admin/assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="~/admin/dist/js/waves.js"></script>
+    <script src="~/admin/dist/js/sidebarmenu.js"></script>
+    <script src="~/admin/dist/js/custom.min.js"></script>
+    <script src="~/admin/dist/js/pages/dashboards/dashboard1.js"></script>
+    <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
+
+
+    <script>
+        function toggleActivation(id, button) {
+            var isActivated = $(button).data('activated');
+            $.ajax({
+                url: '/Admin/ToggleActivationCoupon',
+                type: 'POST',
+                data: { id: id, isActivated: isActivated },
+                success: function (response) {
+                    if (response.success) {
+                        var newIsActivated = !isActivated;
+                        $(button).data('activated', newIsActivated);
+                        $(button).text(newIsActivated ? "De-Activate" : "Activate");
+                        $(button).removeClass('badge-success badge-danger');
+                        $(button).addClass(newIsActivated ? 'badge-success' : 'badge-danger');
+
+                        // Refresh the user data
+                        $.ajax({
+                            url: '/Admin/Coupons',
+                            type: 'GET',
+                            success: function (html) {
+                                // Replace the current user data with the new user data
+                                $('#couponData').replaceWith(
+                                    $(html).find('#couponData')
+                                );
+                            }
+                        });
+                    } else {
+                        // Handle error
+                        console.error('Failed to toggle activation status');
+                    }
+                }
+            });
+        }
+
+
+
+        function deleteCoupon(id) {
+            $.ajax({
+                url: '/Admin/DeleteCoupon',
+                type: 'POST',
+                data: { id: id },
+                success: function (response) {
+                    if (response.success) {
+                        // Refresh the coupon data
+                        $.ajax({
+                            url: '/Admin/Coupons',
+                            type: 'GET',
+                            success: function (html) {
+                                // Replace the current coupon data with the new coupon data
+                                $('#couponData').replaceWith(
+                                    $(html).find('#couponData')
+                                );
+                            }
+                        });
+                    } else {
+                        // Handle error
+                        console.error('Failed to delete coupon');
+                    }
+                }
+            });
+        }
+
+    </script>
+
+</body>
+</html>
 <!-- Static Coupons -->

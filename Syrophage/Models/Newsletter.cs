@@ -10,3 +10,4 @@ namespace Syrophage.Models
         public string email { get; set; }
     }
 }
+    

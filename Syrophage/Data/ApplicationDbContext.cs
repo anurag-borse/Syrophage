@@ -17,7 +17,7 @@ namespace Syrophage.Data
 
         public DbSet<Admin> Admins { get; set; }    
 
-
+        public DbSet<Coupon> Coupons { get; set; }
 
         public DbSet<Role> Roles { get; set; }
 

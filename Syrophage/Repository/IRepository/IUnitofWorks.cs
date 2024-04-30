@@ -12,6 +12,7 @@
 
         ITokenRepository Token { get; }
 
+        ICouponRepository Coupon { get; }
 
 
         public void Save();

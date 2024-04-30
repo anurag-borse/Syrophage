@@ -3,7 +3,7 @@
 <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
 <link href="~/admin/dist/css/style.css" rel="stylesheet" />
 <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 <aside class="left-sidebar" data-sidebarbg="skin5">
     <!-- Sidebar scroll-->
@@ -13,24 +13,53 @@
             <ul id="sidebarnav" class="pt-4">
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                       href="index.html"
+                       asp-action="Dashboard" asp-controller="Admin"
                        aria-expanded="false">
                         <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
+
+
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                       href="index.html"
+                       asp-action="ViewContact" asp-controller="Admin"
                        aria-expanded="false">
-                        <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Contact Us</span>
+                        <i class="bi bi-person-lines-fill"></i><span class="hide-menu">Contact Us</span>
                     </a>
                 </li>
+            
 
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link"
                        asp-action="ViewUsers" asp-controller="Admin"
                        aria-expanded="false">
-                        <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Users</span>
+                        <i class="bi bi-people-fill"></i><span class="hide-menu">Users</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                       asp-action="ViewNewsLetter" asp-controller="Admin"
+                       aria-expanded="false">
+                        <i class="bi bi-people-fill"></i><span class="hide-menu">Newsletter</span>
+                    </a>
+                </li>
+
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                       asp-action="ViewTokens" asp-controller="Admin"
+                       aria-expanded="false">
+                        <i class="bi bi-cpu-fill"></i><span class="hide-menu">Tokens</span>
+                    </a>
+                </li>
+
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                       asp-action="Coupons" asp-controller="Admin"
+                       aria-expanded="false">
+                        <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Coupons</span>
                     </a>
                 </li>
                 

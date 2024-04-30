@@ -81,7 +81,7 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult TokenGenerate()
         {
-
+            SetLayoutModel();
             int userId = HttpContext.Session.GetInt32("UserId") ?? -1;
 
             var user = unitofworks.User.GetById(userId);

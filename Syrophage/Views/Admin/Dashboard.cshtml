@@ -175,12 +175,33 @@
                     </div>
                     <!-- Column -->
                 </div>
-                <!-- ============================================================== -->
-                <!-- Sales chart -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Recent comment and chats -->
-                <!-- ============================================================== -->
+
+
+
+
+
+
+
+
+
+
+                <div class="col-md-12 col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-1">Active and Non Active Users</h4>
+                            <canvas id="pieChart"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
             </div>
 
         </div>
@@ -198,6 +219,15 @@
     <script src="~/admin/dist/js/sidebarmenu.js"></script>
     <script src="~/admin/dist/js/custom.min.js"></script>
     <script src="~/admin/dist/js/pages/dashboards/dashboard1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        var activeUsersCount = @ViewBag.ActiveUsersCount;
+        var nonActiveUsersCount = @ViewBag.NonActiveUsersCount;
+    </script>
+    <script src="~/js/chart.js"></script>
+
+
 
     <partial name="_Toastr" />
 

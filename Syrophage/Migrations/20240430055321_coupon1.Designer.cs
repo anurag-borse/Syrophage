@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Syrophage.Data;
 
@@ -11,9 +12,11 @@ using Syrophage.Data;
 namespace Syrophage.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240430055321_coupon1")]
+    partial class coupon1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,8 +93,8 @@ namespace Syrophage.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasMaxLength(17)
-                        .HasColumnType("nvarchar(17)");
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
 
                     b.Property<string>("CouponDescription")
                         .HasColumnType("nvarchar(max)");
@@ -109,6 +112,7 @@ namespace Syrophage.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool?>("IsActivated")
+                        .IsRequired()
                         .HasColumnType("bit");
 
                     b.Property<double>("MinimumAmount")
