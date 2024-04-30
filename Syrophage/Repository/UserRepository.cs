@@ -20,6 +20,11 @@ namespace Syrophage.Repository
             return _db.Users.Find(Id);
         }
 
+        public Users GetByname(string Name)
+        {
+            return _db.Users.FirstOrDefault(u => u.Name == Name);
+        }
+
         public void Update(Users obj)
         {
             _db.Users.Update(obj);

@@ -52,7 +52,11 @@ body {
     background-image: url('../assets/images/home/bg-home-2.jpg');
 }
 
-.FormSection{
-    display:block;
-    margin:40px;
+#Order {
+    background-image: url('../assets/images/home/bg-work.jpg');
+}
+
+.FormSection {
+    display: block;
+    margin: 40px;
 }

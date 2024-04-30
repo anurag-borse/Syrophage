@@ -12,6 +12,8 @@
 
         ITokenRepository Token { get; }
 
+        IOrderRepository Orders { get; }
+
 
 
         public void Save();

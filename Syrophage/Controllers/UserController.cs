@@ -186,5 +186,26 @@ namespace Syrophage.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Orders()
+        {
+
+            SetLayoutModel();
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var orders = unitofworks.Orders.GetByUserID(userId);
+            return View(orders);
+        }
+
+
+        [HttpGet]
+        public IActionResult Trackorder(int id)
+        {
+            SetLayoutModel();
+            var order = unitofworks.Orders.GetById(id);
+            ViewBag.OrderStatus = order.Status;
+            return View(order);
+        }
+
+
     }
 }

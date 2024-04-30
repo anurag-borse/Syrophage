@@ -58,17 +58,17 @@
                     <a class="sidebar-link has-arrow waves-effect waves-dark"
                        href="javascript:void(0)"
                        aria-expanded="false">
-                        <i class="mdi mdi-receipt"></i><span class="hide-menu">Forms </span>
+                        <i class="mdi mdi-receipt"></i><span class="hide-menu">Orders </span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
-                            <a href="form-basic.html" class="sidebar-link">
-                                <i class="mdi mdi-note-outline"></i><span class="hide-menu"> Form Basic </span>
+                            <a asp-action="AddOrder" asp-controller="Admin" class="sidebar-link">
+                                <i class="mdi mdi-note-outline"></i><span class="hide-menu"> Add-Orders </span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="form-wizard.html" class="sidebar-link">
-                                <i class="mdi mdi-note-plus"></i><span class="hide-menu"> Form Wizard </span>
+                            <a asp-action ="ManageOrder" asp-controller="Admin" class="sidebar-link">
+                                <i class="mdi mdi-note-plus"></i><span class="hide-menu"> Manage Order</span>
                             </a>
                         </li>
                     </ul>

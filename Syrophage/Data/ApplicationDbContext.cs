@@ -20,6 +20,7 @@ namespace Syrophage.Data
 
 
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
