@@ -183,7 +183,7 @@ namespace Syrophage.Controllers
                     unitofworks.Save();
 
                     TempData["Success"] = "Orer Placed SuccessFully";
-                    return RedirectToAction("Dashboard", "Admin");
+                    return RedirectToAction("ManageOrder", "Admin");
 
                 }
 
