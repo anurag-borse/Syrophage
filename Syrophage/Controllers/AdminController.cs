@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Syrophage.Data;
 using Syrophage.Models;
+using Syrophage.Models.ViewModel;
 using Syrophage.Repository.IRepository;
 using Syrophage.Services;
 
@@ -14,10 +15,10 @@ namespace Syrophage.Controllers
         private readonly IUnitofWorks unitofworks;
         private readonly IServices services;
         
-        public AdminController(IUnitofWorks unitofworks, IServices services, ApplicationDbContext _db)
+        
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AdminController(IUnitofWorks unitofworks, IServices services, IWebHostEnvironment webHostEnvironment)
+        public AdminController(IUnitofWorks unitofworks, IServices services, IWebHostEnvironment webHostEnvironment, ApplicationDbContext _db)
         {
             this.unitofworks = unitofworks;
             this.services = services;
@@ -58,23 +59,33 @@ namespace Syrophage.Controllers
 
         }
 
-        [HttpGet]
+        //[HttpGet]
 
-        public IActionResult Coupons(int Id)
-        {
-            var user = _db.Users.FirstOrDefault(u => u.Id == Id);
-            if (user == null)
-            {
-                return NotFound(); 
-            }
+        //public IActionResult Coupons1(int Id)
+        //{
+        //    var user = _db.Users.FirstOrDefault(u => u.Id == Id);
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-           
-            return View(user);
-           
-        }
-        
+        //    var coupons = unitofworks.Coupon.GetAll().ToList();
 
-  
+        //    var viewModel = new CouponsViewModel
+        //    {
+        //        Coupons = coupons,
+        //        User = user
+        //    };
+
+        //    return View(viewModel);
+
+
+       
+
+        //}
+
+
+
 
 
         [HttpGet]

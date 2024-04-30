@@ -79,14 +79,14 @@ namespace Syrophage.Controllers
             }
 
 
-            TempData["failed"] = "Login Failed: Invalid Creadentials";
+      
                 else
                 {
                     TempData["Error"] = "Login Failed Invalide Creadentials ";
                     return RedirectToAction("Login", "Login");
 
                 }
-            }
+            
             
 
 

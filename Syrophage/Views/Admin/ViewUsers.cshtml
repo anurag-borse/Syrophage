@@ -82,6 +82,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
+                                        <th scope="col">Sr.No</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Phone</th>
@@ -89,6 +90,7 @@
                                         <th scope="col">RegId</th>
                                         <th scope="col">Is Active</th>
                                         <th scope="col">Profile Picture</th>
+                                        <th scope="col">Activation Status</th>
                                         <th scope="col">Add Gifts</th>
                                         <th scope="col">View Gifts</th>
                                     </tr>
@@ -112,8 +114,8 @@
                                             <td>
                                                 <img src="@user.ProfileImageUrl" height="70px" width="70px" />
                                             </td>
-                                            <td> <a asp-action="Coupons" asp-controller="Admin" asp-route-id="@user.Id">Add</a> </td>
-                                            <td> <a asp-action="Coupons" asp-controller="Admin" asp-route-id="@user.Id">View</a> </td>
+                              @*               <td> <a asp-action="Coupons1" asp-controller="Admin" asp-route-id="@user.Id">Add</a> </td>
+                                            <td> <a asp-action="Coupons" asp-controller="Admin" asp-route-id="@user.Id">View</a> </td> *@
 
                                         </tr>
                                     }
