@@ -15,14 +15,21 @@
 
     <title>Admin Dashboard</title>
 
-
-
-
     <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
     <link href="~/admin/dist/css/style.css" rel="stylesheet" />
     <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
 
     <link href="~/admin/assets/libs/datatables.net-bs4/css/datatables.bootstrap4.css" rel="stylesheet" />
+
+
+    <link href="~/assets/css/flash.css" rel="stylesheet" />
+
+
+
+
+
+
+
 
 
 
@@ -149,6 +156,7 @@
                                         <th scope="col">RegId</th>
                                         <th scope="col">Is Active</th>
                                         <th scope="col">Profile Picture</th>
+                                        <th scope="col">Gifts</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -162,10 +170,11 @@
                                             <td>@user.Address</td>
                                             <td>@user.RegId</td>
                                             <td>@user.IsActivated</td>
-
                                             <td>
                                                 <img src="@user.ProfileImageUrl" height="70px" width="70px" />
                                             </td>
+                                            <td> <a asp-action="Coupons" asp-controller="Admin" asp-route-id="@user.Id">Flash</a> </td>
+
                                         </tr>
                                     }
                                 </tbody>

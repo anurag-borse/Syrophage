@@ -6,6 +6,7 @@ using Syrophage.Models.ViewModel;
 using Syrophage.Repository;
 using Syrophage.Repository.IRepository;
 using Syrophage.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace Syrophage.Controllers
 {
@@ -37,12 +38,6 @@ namespace Syrophage.Controllers
 
             var role = _db.Roles.FirstOrDefault(r => r.email == vm.Email)?.role;
 
-            if (role == null)
-            {
-                TempData["failed"] = "Login Failed: Invalid Email";
-                return View();
-            }
-
 
             if (role == "Admin")
             {
@@ -51,6 +46,9 @@ namespace Syrophage.Controllers
 
                 if (existingAdmin != null && existingAdmin.Password == vm.Password)
                 {
+                    HttpContext.Session.SetInt32("AdminId", existingAdmin.Id);
+                    HttpContext.Session.SetString("AdminEmail",existingAdmin.Email);
+                    TempData["AdminSuccess"] = "Login Successfully";
                     // Redirect to admin dashboard
                     return RedirectToAction("Dashboard", "Admin");
                 }
@@ -78,16 +76,10 @@ namespace Syrophage.Controllers
                     TempData["Success"] = "Login Successfully";
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    TempData["Error"] = "Login Failed Invalide Creadentials ";
-                    return RedirectToAction("Login", "Login");
-
-                }
             }
-            
 
-            TempData["failed"] = "Login Failed: Invalid Credentials";
+
+            TempData["failed"] = "Login Failed: Invalid Creadentials";
             return View();
         }
 
@@ -222,6 +214,14 @@ namespace Syrophage.Controllers
 
                 _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
             }
+        }
+
+        [HttpGet]
+
+        public IActionResult Forgot()
+        {
+
+            return View();
         }
 
 

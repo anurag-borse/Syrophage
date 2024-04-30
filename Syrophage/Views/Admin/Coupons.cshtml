@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+}
+
+@model Syrophage.Models.Users
+
+<h3>Add Coupons To User</h3>
+
+<!-- Form to assign existing coupon to user -->
+<form asp-action="AssignCoupon" asp-controller="YourController" method="post">
+    <input type="hidden" asp-for="Id" /> <!-- Hidden field for user ID -->
+    <div class="form-group">
+        <label for="couponId">Select Coupon:</label>
+        <select class="form-control" id="couponId" name="couponId">
+            <option value="">Select a coupon</option>
+            <option value="1">Coupon 1</option>
+            <option value="2">Coupon 2</option>
+            <!-- Add more static coupons as needed -->
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Assign Coupon</button>
+</form>
+
+<hr />
+
+<!-- User Details -->
+<h2>User Details</h2>
+<div>
+    <p><strong>Name:</strong> @Model.Name</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <!-- Add other properties as needed -->
+</div>
+
+<hr />
+
+<!-- Static Coupons -->
+<h2>Static Coupons</h2>
+<div>
+    <p>Coupon 1: XYZ123</p>
+    <p>Coupon 2: ABC456</p>
+    <!-- Add more static coupons as needed -->
+</div>

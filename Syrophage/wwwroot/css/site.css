@@ -56,3 +56,6 @@ body {
     display:block;
     margin:40px;
 }
+.bg-home {
+    background-image: url('../assets/images/home/bg-login.jpg');
+}

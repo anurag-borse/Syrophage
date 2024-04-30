@@ -95,7 +95,7 @@
                                             <button class="btn btn-custom w-100">Sign in</button>
                                         </div>
                                         <div class="mx-auto">
-                                            <p class="mb-3 mt-2"><a href="forgot-password.html" class="text-dark font-weight-bold">Forgot your password ?</a></p>
+                                            <p class="mb-3 mt-2"><a asp-action="Forgot" asp-controller="Login" class="text-dark font-weight-bold">Forgot your password ?</a></p>
                                         </div>
                                         <div class="mx-auto">
                                             <p class="mb-0 mt-2"><small class="text-dark mr-2">Don't have an account ?</small> <a asp-action="Register" asp-controller="Login" class="text-dark font-weight-bold">Sign Up</a></p>
@@ -135,7 +135,7 @@
 
     @* ----------------- *@
 
-
+    <partial name="_Toastr" />
 
 </body>
 
@@ -143,36 +143,3 @@
 <!-- login14-->
 </html>
 
-
-
-
-@if (TempData["Error"] != null)
-{
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
-    <script type="text/javascript">
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-
-
-        // Display the Toastr notification
-        toastr.error('@TempData["Error"]');
-    </script>
-}
