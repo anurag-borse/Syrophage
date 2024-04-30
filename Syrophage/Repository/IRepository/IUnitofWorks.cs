@@ -14,6 +14,8 @@
 
         ICouponRepository Coupon { get; }
 
+        IUserCouponRepository UserCoupon { get; }
+
 
         public void Save();
     }

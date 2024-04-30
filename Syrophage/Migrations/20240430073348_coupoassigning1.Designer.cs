@@ -12,8 +12,8 @@ using Syrophage.Data;
 namespace Syrophage.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240429093302_All")]
-    partial class All
+    [Migration("20240430073348_coupoassigning1")]
+    partial class coupoassigning1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,6 +81,49 @@ namespace Syrophage.Migrations
                     b.HasKey("id");
 
                     b.ToTable("contacttb");
+                });
+
+            modelBuilder.Entity("Syrophage.Models.Coupon", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(17)
+                        .HasColumnType("nvarchar(17)");
+
+                    b.Property<string>("CouponDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CouponPictureUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Discount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsActivated")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("MinimumAmount")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Coupons");
                 });
 
             modelBuilder.Entity("Syrophage.Models.Newsletter", b =>
@@ -169,6 +212,29 @@ namespace Syrophage.Migrations
                     b.ToTable("Tokens");
                 });
 
+            modelBuilder.Entity("Syrophage.Models.UserCoupon", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CouponId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CouponId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserCoupons");
+                });
+
             modelBuilder.Entity("Syrophage.Models.Users", b =>
                 {
                     b.Property<int>("Id")
@@ -217,6 +283,35 @@ namespace Syrophage.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Syrophage.Models.UserCoupon", b =>
+                {
+                    b.HasOne("Syrophage.Models.Coupon", "Coupon")
+                        .WithMany("UserCoupons")
+                        .HasForeignKey("CouponId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Syrophage.Models.Users", "User")
+                        .WithMany("UserCoupons")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coupon");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Syrophage.Models.Coupon", b =>
+                {
+                    b.Navigation("UserCoupons");
+                });
+
+            modelBuilder.Entity("Syrophage.Models.Users", b =>
+                {
+                    b.Navigation("UserCoupons");
                 });
 #pragma warning restore 612, 618
         }

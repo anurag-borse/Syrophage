@@ -75,6 +75,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
+                                        <th scope="col">Id</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Phone</th>
@@ -82,6 +83,7 @@
                                         <th scope="col">RegId</th>
                                         <th scope="col">Is Active</th>
                                         <th scope="col">Profile Picture</th>
+                                        <th scope="col">Assign Coupon</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -102,6 +104,25 @@
                                             <td>
                                                 <img src="@user.ProfileImageUrl" height="70px" width="70px" />
                                             </td>
+                                          @*   <td>
+                                                <form asp-action="AssignCouponToUser" asp-controller="Admin" method="post">
+                                                    <input type="hidden" name="userId" value="@user.Id" />
+                                                    <select name="couponId">
+                                                        @foreach (var coupon in ViewBag.Coupons)
+                                                        {
+                                                            <option value="@coupon.Id">@coupon.Name</option>
+                                                        }
+                                                    </select>
+                                                    <button type="submit">Assign Coupon</button>
+                                                </form>
+                                            </td> *@
+
+                                            <td>
+                                                <a asp-route-id="@user.Id" asp-action="AddCouponToUser" asp-controller="Admin">Add Coupon </a>
+                                            </td>
+
+
+
                                         </tr>
                                     }
                                 </tbody>
