@@ -14,3 +14,11 @@ var pieChart = new Chart(ctxPie, {
         }]
     }
 });
+
+// Random data generation function
+
+
+
+
+
+

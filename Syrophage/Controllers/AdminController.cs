@@ -27,12 +27,18 @@ namespace Syrophage.Controllers
             var newslettersCount = unitofworks.Newsletter.GetAll().Count();
             var activeUsersCount = unitofworks.User.GetAll().Where(x => x.IsActivated == true).Count();
             var nonActiveUsersCount = unitofworks.User.GetAll().Where(x => x.IsActivated == false).Count();
+            var couponNames = unitofworks.Coupon.GetAll().Select(c => c.Name).ToList();
+            var coupondiscounts = unitofworks.Coupon.GetAll().Select(c => c.Discount).ToList();
+            ViewBag.CouponNames = couponNames;
+            ViewBag.coupondiscounts = coupondiscounts;
+
+
 
             ViewBag.NewslettersCount = newslettersCount;
             ViewBag.ActiveUsersCount = activeUsersCount;
             ViewBag.NonActiveUsersCount = nonActiveUsersCount;
+           
 
-            // var model = new Tuple<List<Product>, List<FeedBack>, List<Enquiry>>(products, feedback, enquiry);
 
 
             return View();

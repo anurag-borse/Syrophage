@@ -173,7 +173,7 @@
                                             <td>@coupon.MinimumAmount</td>
                                             <td>@coupon.Code</td>
                                             <td>@coupon.CreatedDate</td>
-                                            <td>@coupon.ExpiryDate</td>
+                                            <td>@coupon.ExpiryDate.ToString("dd-MM-yyyy")</td>
 
                                             <td>
                                                 <button data-activated="@(coupon.IsActivated ?? false)" onclick="toggleActivation(@coupon.Id, this)" class="btn btn-@(coupon.IsActivated == true ? "success" : "danger")">@(coupon.IsActivated == true ? "De-Activate" : "Activate")</button>
