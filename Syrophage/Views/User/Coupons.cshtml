@@ -41,42 +41,40 @@
             @foreach (var coupon in Model)
             {
                 <div class="col-md-4">
-                    <!-- POST START -->
+                    
                     <article class="post blog-post">
                         <div class="post-preview">
-                            <a href="#"><img src="@coupon.CouponPictureUrl" alt="" class="img-fluid mx-auto d-block"></a>
+                            <a href="#"><img src="@coupon.CouponPictureUrl" alt="" class="img-fluid mx-auto d-block" style="width:70px; height:70px"></a>
                         </div>
 
                         <div class="post-header">
                             <h4 class="post-title"><a href="#">@coupon.Name</a></h4>
                             <ul class="post-meta">
                                 <li>
-                                    <i class="mdi mdi-calendar"></i> <small>@(coupon.CreatedDate?.ToString("MMM dd, yyyy"))</small>
+                                    <i class="mdi mdi-calendar"></i> <small>@(coupon.ExpiryDate.ToString("MMM dd, yyyy"))</small>
                                 </li>
-                                <li><i class="mdi mdi-tag-text-outline"></i>
-                                    <a href="#"> <small>Discount: @coupon.Discount%</small></a></li>
+                                <li>
+                                    <i class="mdi mdi-tag-text-outline"></i>
+                                    <a href="#"> <small>Discount: @coupon.Discount%</small></a>
+                                </li>
                             </ul>
 
                             <div class="post-content">
-                                <p class="text-muted">@coupon.CouponDescription</p>
+                                <p class="text-muted">@coupon.CouponDescription  @coupon.MinimumAmount</p>
                             </div>
 
                             <span class="bar"></span>
 
                             <div class="post-footer">
-                                <div class="likes">
-                                    <ul class="post-meta">
-                                        <li><a href="#"><i class="far fa-heart mr-1"></i> <small>29</small></a></li>
-                                        <li><a href="#"> <i class="far fa-comment mr-1"></i>
-                                             <small>40</small></a>
-                                        </li>
-                                    </ul>
+                                <div class="coupon-code">
+                                    <input type="password" value="@coupon.Code" id="couponCode-@coupon.Id" readonly class="form-control">
+                                    <button class="btn btn-primary" onclick="toggleCouponCode(@coupon.Id)"  style="margin-top: 8px"  >Show Code</button>
+                                    <button class="btn btn-success" onclick="copyCouponCode(@coupon.Id)" data-toggle="tooltip" title="Copied!" style="margin-top: 8px; margin-left:20px">Copy Code</button>
                                 </div>
-                                <div class="post-more"><a href="#">Read More <i class="mdi mdi-arrow-right"></i></a></div>
                             </div>
                         </div>
                     </article>
-                    <!-- POST END -->
+                    
                 </div>
             }
         </div>
@@ -85,3 +83,35 @@
 
 
 
+
+
+
+<script>
+    function toggleCouponCode(couponId) {
+        var input = document.getElementById('couponCode-' + couponId);
+        if (input.type === "password") {
+            input.type = "text";
+        } else {
+            input.type = "password";
+        }
+    }
+
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip({ trigger: 'manual' });
+    });
+
+    function copyCouponCode(couponId) {
+        var input = document.getElementById('couponCode-' + couponId);
+        input.type = "text";
+        input.select();
+        document.execCommand("copy");
+        input.type = "password";
+        var button = $('[onclick="copyCouponCode(' + couponId + ')"]');
+        button.tooltip('show');
+        setTimeout(function () {
+            button.tooltip('hide');
+        }, 1000);
+    }
+
+</script>
