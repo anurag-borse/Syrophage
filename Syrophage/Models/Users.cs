@@ -38,9 +38,6 @@ namespace Syrophage.Models
 
 
 
-
-
-
         [ValidateNever]
         public string RegId { get; set; }
 
@@ -49,5 +46,14 @@ namespace Syrophage.Models
             
         [ValidateNever]
         public string ProfileImageUrl { get; set; }
+
+
+
+        public ICollection<UserCoupon>? UserCoupons { get; set; }
+
+
+
+
+
     }
 }

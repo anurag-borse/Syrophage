@@ -16,6 +16,8 @@ namespace Syrophage.Repository
 
         public ICouponRepository Coupon { get; set; }
 
+        public IUserCouponRepository UserCoupon { get; set;}
+
         public Unitofworks(ApplicationDbContext _db)
         {
             this._db = _db;
@@ -24,6 +26,8 @@ namespace Syrophage.Repository
             User = new UserRepository(_db);
             Token = new TokenRepository(_db);
             Coupon = new CouponRepository(_db);
+
+            UserCoupon = new UserCouponRepository(_db);
         }
 
         public void Save()

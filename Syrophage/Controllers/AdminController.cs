@@ -46,6 +46,8 @@ namespace Syrophage.Controllers
         public IActionResult ViewUsers()
         {
             var user = unitofworks.User.GetAll().ToList();
+            ViewBag.Coupons = unitofworks.Coupon.GetAll().ToList();
+
             return View(user);
         }
 
@@ -84,6 +86,12 @@ namespace Syrophage.Controllers
 
         //}
 
+
+
+
+
+
+       
 
 
 
@@ -200,7 +208,7 @@ namespace Syrophage.Controllers
                     coupon.CouponPictureUrl = Path.Combine("/CouponImages", fileName).Replace("\\", "/"); ;
 
                 }
-
+                 
 
 
 
@@ -266,6 +274,50 @@ namespace Syrophage.Controllers
             }
             return Json(new { success = false });
         }
+
+
+
+
+
+        [HttpPost]
+        public IActionResult AssignCouponToUser(int userId, int couponId)
+        {
+            var userCoupon = new UserCoupon
+            {
+                UserId = userId,
+                CouponId = couponId
+            };
+
+            unitofworks.UserCoupon.Add(userCoupon);
+            unitofworks.Save();
+
+            return RedirectToAction("ViewUsers");
+        }
+
+
+
+
+        [HttpGet]
+        public IActionResult AddCouponToUser(int id)
+        {
+
+            var user = unitofworks.User.GetById(id);
+            ViewBag.Coupons = unitofworks.Coupon.GetAll().ToList();
+            return View(user);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }
