@@ -1,0 +1,26 @@
+﻿@media (max-width: 767.98px) {
+    .progress-label {
+        display: none;
+    }
+}
+
+/* Hide progress labels on tablets */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .progress-label {
+        display: none;
+    }
+}
+
+/* Hide progress labels on small desktops and laptops */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .progress-label {
+        display: none;
+    }
+}
+
+/* Hide progress labels on larger desktops and widescreen monitors */
+@media (min-width: 1200px) {
+    .progress-label {
+        display: none;
+    }
+}

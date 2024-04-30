@@ -7,6 +7,9 @@ namespace Syrophage.Repository.IRepository
 
         Users GetById(int Id);
 
+        Users GetByname(string Name);
+
+
         void Update(Users obj);
     }
 }

@@ -22,6 +22,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\Db_Images\" />
     <Folder Include="wwwroot\CouponImages\" />
+    <Folder Include="wwwroot\OrderImages\" />
     <Folder Include="wwwroot\UserProfilePic\" />
   </ItemGroup>
 

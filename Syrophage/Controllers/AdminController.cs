@@ -14,10 +14,13 @@ namespace Syrophage.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public AdminController(IUnitofWorks unitofworks, IServices services, IWebHostEnvironment webHostEnvironment)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public AdminController(IUnitofWorks unitofworks, IServices services, IWebHostEnvironment _webHostEnvironment)
         {
             this.unitofworks = unitofworks;
             this.services = services;
             _webHostEnvironment = webHostEnvironment;
+            this._webHostEnvironment = _webHostEnvironment;
         }
         public IActionResult Dashboard()
         {
@@ -43,7 +46,6 @@ namespace Syrophage.Controllers
             return View(user);
         }
 
-
         [HttpGet]
         public IActionResult ViewContact()
         {
@@ -51,16 +53,12 @@ namespace Syrophage.Controllers
             return View(Contacts);
         }
 
-
         [HttpGet]
         public IActionResult ViewNewsLetter()
         {
             var Newsletter = unitofworks.Newsletter.GetAll().ToList();
             return View(Newsletter);
         }
-
-
-
 
         [HttpGet]
         public IActionResult ViewTokens()
@@ -84,18 +82,17 @@ namespace Syrophage.Controllers
             var TokeninDb = unitofworks.Token.GetById(obj.Id);
 
 
-            if (TokeninDb != null) {
+            if (TokeninDb != null)
+            {
                 TokeninDb.Status = obj.Status;
-                    }
+            }
 
 
             unitofworks.Token.Update(TokeninDb);
             unitofworks.Save();
 
-            return RedirectToAction("ViewTokens" ,"Admin");
+            return RedirectToAction("ViewTokens", "Admin");
         }
-
-
 
         [HttpPost]
         public JsonResult ToggleActivation(int id, bool isActivated)
@@ -129,6 +126,34 @@ namespace Syrophage.Controllers
             var coupons = unitofworks.Coupon.GetAll().ToList();
             return View(coupons);
         }
+        }
+
+        [HttpGet]
+        public IActionResult AddOrder()
+        {
+            var User = unitofworks.User.GetAll().ToList();
+            return View(User);
+         }
+
+        [HttpPost]
+        public IActionResult AddOrder(Order obj , IFormFile file)
+        {
+            if (ModelState.IsValid)
+            {
+                var User = unitofworks.User.GetByname(obj.username);
+
+
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                
+                if ( file != null)
+                {
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"OrderImages");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
 
        
         [HttpPost]
@@ -211,6 +236,64 @@ namespace Syrophage.Controllers
                 // Get the physical path of the file
                 var filePath = Path.Combine(_webHostEnvironment.WebRootPath, coupon.CouponPictureUrl.TrimStart('/'));
 
+                    var order = new Order
+                    {
+                        ProductName = obj.ProductName,
+                        Status = obj.Status,
+                        UserId = User.Id,
+                        username = obj.username,
+                        ProductImageurl = @"\OrderImages\" + filename,
+                        date = DateTime.Now,
+                        quantity = obj.quantity
+                    };
+
+
+
+                    unitofworks.Orders.Add(order);
+                    unitofworks.Save();
+
+                    TempData["Success"] = "Orer Placed SuccessFully";
+                    return RedirectToAction("Dashboard", "Admin");
+
+                }
+
+            }
+            TempData["Error"] = "Orer Not Placed";
+            return RedirectToAction("AddOrder", "Admin");
+        }
+
+        [HttpGet]
+        public IActionResult ManageOrder()
+        {
+            var Orders = unitofworks.Orders.GetAll().ToList();
+            return View(Orders);
+        }
+
+        [HttpGet]
+        public IActionResult EidtOrder(int id)
+        {
+            var Orders = unitofworks.Orders.GetById(id);
+            return View(Orders);
+        }
+
+        [HttpPost]
+        public IActionResult EidtOrder(Order obj)
+        {
+
+
+            var Orerindb = unitofworks.Orders.GetById(obj.id);
+
+            Orerindb.Status = obj.Status;
+            Orerindb.ProductName = obj.ProductName;
+
+            
+            unitofworks.Orders.Update(Orerindb);
+            unitofworks.Save();
+
+            TempData["Success"] = "Order Updated Succesfully";
+            return RedirectToAction("ManageOrder" ,"Admin");
+        }
+
                 if (System.IO.File.Exists(filePath))
                 {
                     System.IO.File.Delete(filePath);
@@ -222,6 +305,7 @@ namespace Syrophage.Controllers
             }
             return Json(new { success = false });
         }
+
 
     }
 }

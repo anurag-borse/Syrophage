@@ -1,0 +1,154 @@
+﻿@model Syrophage.Models.Order
+
+
+<link href="~/css/stylesheet.css" rel="stylesheet" />
+<style>
+    /* Container styles */
+    .container {
+        padding: 20px;
+    }
+
+    /* Card styles */
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Card header styles */
+    .card-header {
+        background-color: #a3c85e;
+        border-radius: 10px 10px 0 0;
+        padding: 15px 20px;
+    }
+
+        /* Card header text styles */
+        .card-header h3 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+    /* Card body styles */
+    .card-body {
+        padding: 20px;
+    }
+
+    /* Order information styles */
+    .order-info p {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+    /* Progress bar container styles */
+    .progress-container {
+        position: relative;
+    }
+
+    /* Progress label styles */
+    .progress-label {
+        position: absolute;
+        top: -30px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+
+
+   
+</style>
+
+
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+
+
+<section class="section" style="margin-top:80px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card mt-5">
+                    <div class="card-header text-white">
+                        <h3 class="mb-0">Track Order</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-4 order-info">
+                            <h5>Order Information</h5>
+                            <p><strong>Order ID:</strong> @Model.id</p>
+                            <p><strong>Product Quantity:</strong> @Model.quantity</p>
+                            <!-- Add any other order information you want to display -->
+                        </div>
+
+                        <br />
+                        <!-- Progress bar container -->
+                        <div class="progress-container">
+                            <!-- Progress labels -->
+                            <!-- Progress labels for larger screens -->
+                            <div class="progress-label d-none d-md-block">Order Received</div>
+                            <div class="progress-label d-none d-md-block" style="left: 25%;">Dispatched</div>
+                            <div class="progress-label d-none d-md-block" style="left: 50%;">Shipped</div>
+                            <div class="progress-label d-none d-md-block" style="right: 0;">Delivered</div>
+
+                            <!-- Progress labels for smaller screens (hidden on larger screens) -->
+                            <div class="progress-label d-md-none">Order Received</div>
+                            <div class="progress-label d-md-none" style="left: 25%;">Dispatched</div>
+                            <div class="progress-label d-md-none" style="left: 50%;">Shipped</div>
+                            <div class="progress-label d-md-none" style="right: 0;">Delivered</div>
+
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Ensure jQuery is included before your script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Script for progress bar functionality -->
+<script>
+    $(document).ready(function () {
+        var progress = 0;
+        var orderStatus = '@ViewBag.OrderStatus';
+        var progressBar = $('.progress-bar');
+
+        function updateProgress(value, colorClass) {
+            progressBar.css('width', value + '%').attr('aria-valuenow', value);
+            progressBar.removeClass('bg-warning bg-danger bg-primary bg-success');
+            progressBar.addClass(colorClass);
+        }
+
+        // Update progress and color based on order status
+        switch (orderStatus) {
+            case 'Order Received':
+                progress = 10;
+                updateProgress(progress, 'bg-warning');
+                break;
+            case 'Dispatched':
+                progress = 25;
+                updateProgress(progress, 'bg-danger');
+                break;
+            case 'Shipped':
+                progress = 50;
+                updateProgress(progress, 'bg-primary');
+                break;
+            case 'Delerived':
+                progress = 100;
+                updateProgress(progress, 'bg-success');
+                break;
+            default:
+                progress = 0;
+                updateProgress(progress, 'bg-warning');
+                break;
+        }
+    });
+</script>

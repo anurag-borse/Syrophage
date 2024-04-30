@@ -14,6 +14,8 @@ namespace Syrophage.Repository
 
         public ITokenRepository Token { get; set; }
 
+        public IOrderRepository Orders { get; set; }
+
         public ICouponRepository Coupon { get; set; }
 
         public Unitofworks(ApplicationDbContext _db)
@@ -23,6 +25,7 @@ namespace Syrophage.Repository
             Newsletter = new NewsletterRepository(_db);
             User = new UserRepository(_db);
             Token = new TokenRepository(_db);
+            Orders = new OrderRepository(_db);
             Coupon = new CouponRepository(_db);
         }
 

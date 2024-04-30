@@ -22,8 +22,9 @@ namespace Syrophage.Models
         public IFormFile? Attachment1 { get; set; }
 
         public string? Attachment1Url { get; set; }
+       
+        
         [NotMapped]
-
         public IFormFile? Attachment2 { get; set; }
 
         public string? Attachment2Url { get; set; }
