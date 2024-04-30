@@ -12,7 +12,7 @@
 
 
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
     <link href="~/admin/dist/css/style.css" rel="stylesheet" />
     <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
@@ -69,7 +69,7 @@
                                 <h1 class="font-light text-white">
                                     <i class="mdi mdi-view-dashboard"></i>
                                 </h1>
-                                <h6 class="text-white">Dashboard</h6>
+                                <a class="text-white" asp-action="Dashboard" asp-controller="Admin">Dashboard</a>
                             </div>
                         </div>
                     </div>
@@ -78,20 +78,20 @@
                         <div class="card card-hover">
                             <div class="box bg-success text-center">
                                 <h1 class="font-light text-white">
-                                    <i class="mdi mdi-chart-areaspline"></i>
+                                    <i class="fa fa-phone-square"></i>
                                 </h1>
-                                <h6 class="text-white">Charts</h6>
+                                <a class="text-white" asp-action="ViewContact" asp-controller="Admin">Contact Us</a>
                             </div>
                         </div>
                     </div>
                     <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
+                    <div class="col-md-6 col-lg-2 col-xlg-3" >
                         <div class="card card-hover">
                             <div class="box bg-warning text-center">
                                 <h1 class="font-light text-white">
-                                    <i class="mdi mdi-collage"></i>
+                                    <i class="fa fa-user-circle"></i>
                                 </h1>
-                                <h6 class="text-white">Widgets</h6>
+                                <a class="text-white" asp-action="ViewUsers"  asp-controller="Admin">Users</a>
                             </div>
                         </div>
                     </div>
@@ -100,9 +100,9 @@
                         <div class="card card-hover">
                             <div class="box bg-danger text-center">
                                 <h1 class="font-light text-white">
-                                    <i class="mdi mdi-border-outside"></i>
+                                    <i class="fa fa-envelope"></i>
                                 </h1>
-                                <h6 class="text-white">Tables</h6>
+                                <a class="text-white" asp-action="ViewNewsLetter" asp-controller="Admin">News letter</a>
                             </div>
                         </div>
                     </div>
@@ -111,9 +111,9 @@
                         <div class="card card-hover">
                             <div class="box bg-info text-center">
                                 <h1 class="font-light text-white">
-                                    <i class="mdi mdi-arrow-all"></i>
+                                    <i class="mdi mdi-cards"></i>
                                 </h1>
-                                <h6 class="text-white">Full Width</h6>
+                                <a class="text-white" asp-action="ViewTokens" asp-controller="Admin">Tokens</a>
                             </div>
                         </div>
                     </div>
@@ -123,9 +123,9 @@
                         <div class="card card-hover">
                             <div class="box bg-danger text-center">
                                 <h1 class="font-light text-white">
-                                    <i class="mdi mdi-receipt"></i>
+                                    <i class="fa fa-truck"></i>
                                 </h1>
-                                <h6 class="text-white">Forms</h6>
+                                <a class="text-white" asp-action="ManageOrder" asp-controller="Admin">Orders</a>
                             </div>
                         </div>
                     </div>
@@ -134,9 +134,9 @@
                         <div class="card card-hover">
                             <div class="box bg-info text-center">
                                 <h1 class="font-light text-white">
-                                    <i class="mdi mdi-relative-scale"></i>
+                                    <i class="fa fa-cart-plus"></i>
                                 </h1>
-                                <h6 class="text-white">Buttons</h6>
+                                <a class="text-white" asp-action="AddOrder" asp-controller="Admin">Add-Orders</a>
                             </div>
                         </div>
                     </div>
@@ -145,9 +145,9 @@
                         <div class="card card-hover">
                             <div class="box bg-cyan text-center">
                                 <h1 class="font-light text-white">
-                                    <i class="mdi mdi-pencil"></i>
+                                    <i class="fa fa-eye"></i>
                                 </h1>
-                                <h6 class="text-white">Elements</h6>
+                                <a class="text-white" asp-action="ManageOrder" asp-controller="Admin">Manage-Order</a>
                             </div>
                         </div>
                     </div>
@@ -183,22 +183,25 @@
 
 
 
+                <div class="row">
+                    <div class="col-md-12 col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title mb-1">Active and Non-Active Users (Pie Chart)</h4>
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
 
-
-                <div class="col-md-12 col-lg-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title mb-1">Active and Non Active Users</h4>
-                            <canvas id="pieChart"></canvas>
-
+                    <div class="col-md-12 col-lg-7">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title mb-1">Active and Non-Active Users (Bar Chart)</h4>
+                                <canvas id="barChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
-
-
-
 
 
 
@@ -224,6 +227,36 @@
     <script>
         var activeUsersCount = @ViewBag.ActiveUsersCount;
         var nonActiveUsersCount = @ViewBag.NonActiveUsersCount;
+
+        var couponNames = @Html.Raw(Json.Serialize(ViewBag.CouponNames));
+        var couponDiscounts = @Html.Raw(Json.Serialize(ViewBag.coupondiscounts));
+
+        // Chart initialization
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var lineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: couponNames, // Use coupon names for X axis
+                datasets: [{
+                    label: 'Coupon Discounts',
+                    data: couponDiscounts, // Use coupon discounts for Y axis
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)', // Area color under the line
+                    borderColor: 'rgba(54, 162, 235, 1)', // Line color
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    
+
     </script>
     <script src="~/js/chart.js"></script>
 
