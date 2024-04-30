@@ -13,13 +13,12 @@ namespace Syrophage.Controllers
         private readonly IServices services;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AdminController(IUnitofWorks unitofworks, IServices services, IWebHostEnvironment webHostEnvironment)
-        private readonly IWebHostEnvironment _webHostEnvironment;
+
+
         public AdminController(IUnitofWorks unitofworks, IServices services, IWebHostEnvironment _webHostEnvironment)
         {
             this.unitofworks = unitofworks;
             this.services = services;
-            _webHostEnvironment = webHostEnvironment;
             this._webHostEnvironment = _webHostEnvironment;
         }
         public IActionResult Dashboard()
@@ -135,7 +134,7 @@ namespace Syrophage.Controllers
             var coupons = unitofworks.Coupon.GetAll().ToList();
             return View(coupons);
         }
-        }
+        
 
         [HttpGet]
         public IActionResult AddOrder()
@@ -164,7 +163,36 @@ namespace Syrophage.Controllers
                         file.CopyTo(fileStream);
                     }
 
-       
+
+
+                    var order = new Order
+                    {
+                        ProductName = obj.ProductName,
+                        Status = obj.Status,
+                        UserId = User.Id,
+                        username = obj.username,
+                        ProductImageurl = @"\OrderImages\" + filename,
+                        date = DateTime.Now,
+                        quantity = obj.quantity
+                    };
+
+
+
+
+                    unitofworks.Orders.Add(order);
+                    unitofworks.Save();
+
+                    TempData["Success"] = "Orer Placed SuccessFully";
+                    return RedirectToAction("Dashboard", "Admin");
+
+                }
+
+            }
+            TempData["Error"] = "Orer Not Placed";
+            return RedirectToAction("AddOrder", "Admin");
+        }
+
+
         [HttpPost]
         public IActionResult AddCoupon(Coupon coupon)
         {
@@ -240,31 +268,21 @@ namespace Syrophage.Controllers
                 // Get the physical path of the file
                 var filePath = Path.Combine(_webHostEnvironment.WebRootPath, coupon.CouponPictureUrl.TrimStart('/'));
 
-                    var order = new Order
-                    {
-                        ProductName = obj.ProductName,
-                        Status = obj.Status,
-                        UserId = User.Id,
-                        username = obj.username,
-                        ProductImageurl = @"\OrderImages\" + filename,
-                        date = DateTime.Now,
-                        quantity = obj.quantity
-                    };
-
-
-
-                    unitofworks.Orders.Add(order);
-                    unitofworks.Save();
-
-                    TempData["Success"] = "Orer Placed SuccessFully";
-                    return RedirectToAction("Dashboard", "Admin");
-
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
                 }
 
+                unitofworks.Coupon.Remove(coupon);
+                unitofworks.Save();
+                return Json(new { success = true });
             }
-            TempData["Error"] = "Orer Not Placed";
-            return RedirectToAction("AddOrder", "Admin");
+            return Json(new { success = false });
         }
+
+
+
+
 
         [HttpGet]
         public IActionResult ManageOrder()
@@ -298,22 +316,6 @@ namespace Syrophage.Controllers
             return RedirectToAction("ManageOrder" ,"Admin");
         }
 
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.Delete(filePath);
-                }
-
-                unitofworks.Coupon.Remove(coupon);
-                unitofworks.Save();
-                return Json(new { success = true });
-            }
-            return Json(new { success = false });
-        }
-
-
-
-
-
         [HttpPost]
         public IActionResult AssignCouponToUser(int userId, int couponId)
         {
@@ -328,8 +330,6 @@ namespace Syrophage.Controllers
 
             return RedirectToAction("ViewUsers");
         }
-
-
 
 
         [HttpGet]
@@ -347,7 +347,6 @@ namespace Syrophage.Controllers
             return View(user);
         
         }
-
 
 
         [HttpPost]
@@ -379,11 +378,6 @@ namespace Syrophage.Controllers
 
             return Json(new { success = true });
         }
-
-
-
-
-
 
 
     }
