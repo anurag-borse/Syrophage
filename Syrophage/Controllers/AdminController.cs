@@ -474,7 +474,7 @@ namespace Syrophage.Controllers
                     unitofworks.Save();
 
                     TempData["success"] = "product Added";
-                    return RedirectToAction("ManageProduct","Admin");
+                    return RedirectToAction("ManageProduct", "Admin");
 
                 }
             }
@@ -502,16 +502,33 @@ namespace Syrophage.Controllers
         public IActionResult DeleteCategory(int id)
         {
             var category = unitofworks.Categories.GetById(id);
-
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
             var products = unitofworks.Product.GetAll().Where(j => j.Category == category.CategoryName).ToList();
 
 
-            foreach(var prod in products)
+
+
+
+            string OldImagepath = category.CategoryPictureUrl;
+
+            string oldImagePath = Path.Combine(wwwRootPath, OldImagepath.TrimStart('\\'));
+
+
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+
+
+
+
+            foreach (var prod in products)
             {
                 unitofworks.Product.Remove(prod);
             }
 
-            if(category != null)
+            if (category != null)
             {
                 unitofworks.Categories.Remove(category);
                 unitofworks.Save();
@@ -522,18 +539,31 @@ namespace Syrophage.Controllers
 
 
             TempData["Error"] = "Category  not Deleted";
-            return RedirectToAction("Categories","Admin");
+            return RedirectToAction("Categories", "Admin");
         }
         [HttpPost]
         public IActionResult EditProduct(Product obj, IFormFile file)
         {
             if (ModelState.IsValid)
             {
+                var product1 = unitofworks.Product.GetById(obj.id);
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
 
                 // Check if a new image is uploaded
                 if (file != null)
                 {
+
+                    string OldImagepath = product1.productImageUrl;
+
+                    // Remove the old image file if it exists
+                    string oldImagePath = Path.Combine(wwwRootPath, OldImagepath.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+
+
+
                     // Generate a unique filename for the new image
                     string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRootPath, @"ProductImage");
@@ -545,25 +575,20 @@ namespace Syrophage.Controllers
                     }
 
                     // Update product details including the new image URL
-                    var product = new Product
-                    {
-                        id = obj.id, // Assuming Id is the primary key of the product
-                        productname = obj.productname,
-                        Description = obj.Description,
-                        Category = obj.Category,
-                        Company = obj.Company,
-                        productImageUrl = @"\ProductImage\" + filename
-                    };
 
-                    // Remove the old image file if it exists
-                    if (!string.IsNullOrEmpty(obj.productImageUrl))
+                    var product = unitofworks.Product.GetById(obj.id);
+
+
+                    if (product != null)
                     {
-                        string oldImagePath = Path.Combine(wwwRootPath, obj.productImageUrl.TrimStart('\\'));
-                        if (System.IO.File.Exists(oldImagePath))
-                        {
-                            System.IO.File.Delete(oldImagePath);
-                        }
+                        product.productname = obj.productname;
+                        product.Category = obj.Category;
+                        product.Description = obj.Description;
+                        product.productImageUrl = @"\ProductImage\" + filename;
+                        product.Company = obj.Company;
+
                     }
+
 
                     // Update the product in the database
                     unitofworks.Product.Update(product);
