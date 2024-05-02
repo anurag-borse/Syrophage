@@ -18,6 +18,8 @@
 
         IUserCouponRepository UserCoupon { get; }
 
+        IProductsRepository Product { get; }
+
 
         public void Save();
     }

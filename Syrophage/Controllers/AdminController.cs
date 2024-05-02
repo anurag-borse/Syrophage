@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Syrophage.Models;
 using Syrophage.Repository.IRepository;
@@ -6,6 +7,7 @@ using Syrophage.Services;
 
 namespace Syrophage.Controllers
 {
+
     public class AdminController : Controller
     {
 
@@ -52,12 +54,6 @@ namespace Syrophage.Controllers
 
             return View(user);
         }
-
-
-
-       
-
-
 
 
         [HttpGet]
@@ -198,7 +194,6 @@ namespace Syrophage.Controllers
             return RedirectToAction("AddOrder", "Admin");
         }
 
-
         [HttpPost]
         public IActionResult AddCoupon(Coupon coupon)
         {
@@ -238,9 +233,6 @@ namespace Syrophage.Controllers
             return RedirectToAction("Coupons");
         }
 
-
-     
-
         [HttpPost]
         public JsonResult ToggleActivationCoupon(int id, bool isActivated)
         {
@@ -259,11 +251,6 @@ namespace Syrophage.Controllers
             return Json(new { success = false });
 
         }
-
-
-
-
-
 
         [HttpPost]
         public JsonResult DeleteCoupon(int id)
@@ -285,10 +272,6 @@ namespace Syrophage.Controllers
             }
             return Json(new { success = false });
         }
-
-
-
-
 
         [HttpGet]
         public IActionResult ManageOrder()
@@ -337,7 +320,6 @@ namespace Syrophage.Controllers
             return RedirectToAction("ViewUsers");
         }
 
-
         [HttpGet]
         public IActionResult AddCouponToUser(int id)
         {
@@ -354,7 +336,6 @@ namespace Syrophage.Controllers
         
         }
 
-
         [HttpPost]
         public JsonResult RemoveCouponFromUser(int userId, int couponId)
         {
@@ -367,8 +348,6 @@ namespace Syrophage.Controllers
             }
             return Json(new { success = false });
         }
-
-
 
         [HttpPost]
         public JsonResult AddCouponToUser(int userId, int couponId)
@@ -383,6 +362,14 @@ namespace Syrophage.Controllers
             unitofworks.Save();
 
             return Json(new { success = true });
+        }
+
+        [HttpGet]
+        public IActionResult AddProduct()
+        {
+
+            return View();
+
         }
 
 

@@ -18,12 +18,12 @@ builder.Services.AddSession(options =>
 });
 
 
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
        .AddCookie(options =>
        {
-           options.LoginPath = "/Admin/Login";
+           options.LoginPath = "/Login/Login";
        });
-
 
 
 

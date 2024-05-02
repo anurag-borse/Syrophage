@@ -1,4 +1,5 @@
 ﻿using Syrophage.Data;
+using Syrophage.Models;
 using Syrophage.Repository.IRepository;
 
 namespace Syrophage.Repository
@@ -20,6 +21,8 @@ namespace Syrophage.Repository
 
         public IUserCouponRepository UserCoupon { get; set;}
 
+        public IProductsRepository Product { get; set; }
+
         public Unitofworks(ApplicationDbContext _db)
         {
             this._db = _db;
@@ -29,6 +32,7 @@ namespace Syrophage.Repository
             Token = new TokenRepository(_db);
             Orders = new OrderRepository(_db);
             Coupon = new CouponRepository(_db);
+            Product = new ProductsRepository(_db);
 
             UserCoupon = new UserCouponRepository(_db);
         }
