@@ -505,19 +505,12 @@ namespace Syrophage.Controllers
             string wwwRootPath = _webHostEnvironment.WebRootPath;
             var products = unitofworks.Product.GetAll().Where(j => j.Category == category.CategoryName).ToList();
 
-
-
-
-
             var filePath = Path.Combine(_webHostEnvironment.WebRootPath, category.CategoryPictureUrl.TrimStart('/'));
 
             if (System.IO.File.Exists(filePath))
             {
                 System.IO.File.Delete(filePath);
             }
-
-
-
 
 
             foreach (var prod in products)
@@ -558,6 +551,10 @@ namespace Syrophage.Controllers
                     {
                         System.IO.File.Delete(oldImagePath);
                     }
+
+
+
+
 
 
 
@@ -619,6 +616,35 @@ namespace Syrophage.Controllers
             TempData["Error"] = "Failed to update product.";
             return RedirectToAction("EditProduct", "Admin", new { id = obj.id }); // Redirect to the edit page with the product ID
         }
+
+
+        [HttpPost]
+        public JsonResult DeleteProduct(int id)
+        {
+            var product = unitofworks.Product.GetById(id);
+            if (product != null)
+            {
+                // Get the physical path of the file
+                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, product.productImageUrl.TrimStart('/'));
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                unitofworks.Product.Remove(product);
+                unitofworks.Save();
+
+                return Json(new { success = true});
+            }
+            return Json(new { success = false });
+        }
+
+
+
+
+
+
 
     }
 }
