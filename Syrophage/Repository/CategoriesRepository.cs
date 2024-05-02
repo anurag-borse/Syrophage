@@ -11,5 +11,15 @@ namespace Syrophage.Repository
         {
             _db = db;
         }
+
+        public Categories GetById(int Id)
+        {
+            return _db.Categories.Find(Id);
+        }
+
+        public void Update(Categories obj)
+        {
+            _db.Categories.Update(obj);
+        }
     }
 }

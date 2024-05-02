@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace Syrophage.Models
 {
@@ -14,6 +15,8 @@ namespace Syrophage.Models
 
         public string Company { get; set; }
 
+
+        [ValidateNever]
         public string productImageUrl { get; set; }
     }
 }

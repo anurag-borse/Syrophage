@@ -38,7 +38,10 @@ namespace Syrophage.Controllers
         {
             var categorie_product=unitofworks.Product.GetByCategoryName(name);  
             return View(categorie_product);  
+            var carte = unitofworks.Categories.GetAll().ToList();
+            return View(carte);
         }
+
 
         public IActionResult Privacy()
         {
