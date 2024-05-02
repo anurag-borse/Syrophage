@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Syrophage.Data;
@@ -9,6 +12,7 @@ using Syrophage.Services;
 
 namespace Syrophage.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         public readonly ApplicationDbContext _db;
@@ -62,7 +66,10 @@ namespace Syrophage.Controllers
 
         public IActionResult Logout()
         {
+
+             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
+           
             TempData["clear"] = "Yor Are Logout :";
             return RedirectToAction("Index", "Home");
 

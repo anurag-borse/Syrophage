@@ -7,6 +7,8 @@ using Syrophage.Repository;
 using Syrophage.Repository.IRepository;
 using Syrophage.Services;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Syrophage.Controllers
 {
@@ -49,6 +51,23 @@ namespace Syrophage.Controllers
                 {
                     HttpContext.Session.SetInt32("AdminId", existingAdmin.Id);
                     HttpContext.Session.SetString("AdminEmail",existingAdmin.Email);
+
+
+                    //-------------------------------------------------
+
+                    var claims = new List<Claim>
+                    {
+                            new Claim(ClaimTypes.Name, existingAdmin.Email)
+                    };
+
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    var authProperties = new AuthenticationProperties();
+
+                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+
+
+
                     TempData["AdminSuccess"] = "Login Successfully";
                     // Redirect to admin dashboard
                     return RedirectToAction("Dashboard", "Admin");
