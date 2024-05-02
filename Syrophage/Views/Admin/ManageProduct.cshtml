@@ -15,6 +15,7 @@
 
     <title>Admin Dashboard</title>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 
@@ -101,7 +102,7 @@
 
                                                 <a type="button" class="btn btn-primary" asp-action="EidtProduct" asp-controller="Admin" asp-route-id="@user.id"><i class="bi bi-pencil-fill"></i></a>
 
-                                                <a type="button" class="btn btn-danger" asp-action="DeleteProduct" asp-controller="Admin" asp-route-id="@user.id"><i class="bi bi-trash-fill"></i></a>
+                                                <a type="button" class="btn btn-danger delete-btn" data-id="@user.id"><i class="bi bi-trash-fill"></i></a>
                                             </td>
 
 
@@ -137,7 +138,65 @@
 
 
 <script>
+
     $(document).ready(function () {
         $('#manageOrderData').DataTable();
     });
+
+
+
+
+
+
+
+
+    document.querySelectorAll('.delete-btn').forEach(item => {
+        item.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default action (i.e., navigating to the link)
+
+            // Use SweetAlert to show a confirmation dialog
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this item!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        // If the user confirms deletion, get the ID and call the deleteProduct function
+                        var productId = item.getAttribute('data-id');
+                        deleteProduct(productId);
+                    } else {
+                        // If the user cancels, do nothing
+                    }
+                });
+        });
+    });
+
+    function deleteProduct(id) {
+        $.ajax({
+            url: '/Admin/DeleteProduct',
+            type: 'POST',
+            data: { id: id },
+            success: function (response) {
+                if (response.success) {
+                    $.ajax({
+                        url: '/Admin/ManageProduct',
+                        type: 'GET',
+                        success: function (html) {
+                            // Replace the current product data with the new product data
+                            $('#manageOrderData').replaceWith(
+                                $(html).find('#manageOrderData')
+                            );
+                        }
+                    });
+                } else {
+                    // Handle error
+                    console.error('Failed to delete product');
+                }
+            }
+        });
+    }
+
 </script>
