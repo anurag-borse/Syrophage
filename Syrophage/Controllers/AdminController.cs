@@ -215,6 +215,10 @@ namespace Syrophage.Controllers
 
                 unitofworks.Coupon.Add(coupon);
                 unitofworks.Save();
+
+                TempData["CouponName"] = coupon.Name;
+                TempData["CouponImageUrl"] = coupon.CouponPictureUrl;
+
                 TempData["Success"] = "Coupon Added Successfully";
                 return RedirectToAction("Coupons");
             }

@@ -1,0 +1,14 @@
+﻿@{
+    Layout = null;
+}
+
+<h2> Available Coupons</h2>
+
+@if (TempData.ContainsKey("CouponName") && TempData.ContainsKey("CouponImageUrl"))
+{
+    <div>
+        <h2>Coupon Details</h2>
+        <p><strong>Name:</strong> @TempData["CouponName"]</p>
+        <img src="@TempData["CouponImageUrl"]" alt="Coupon Image" />
+    </div>
+}

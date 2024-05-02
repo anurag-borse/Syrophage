@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using Syrophage.Models;
 using Syrophage.Models.ViewModel;
 using Syrophage.Repository.IRepository;
@@ -147,6 +148,13 @@ namespace Syrophage.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult coupon()
+        {
+            return View();  
+        }
+
+
         public string GenerateTokenId()
         {
             // Get the current year
@@ -184,6 +192,9 @@ namespace Syrophage.Controllers
 
                 _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
             }
+
+
+
         }
 
     }

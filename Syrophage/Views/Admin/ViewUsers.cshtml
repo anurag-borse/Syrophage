@@ -112,7 +112,7 @@
                                             <td>
                                                 <img src="@user.ProfileImageUrl" height="70px" width="70px" />
                                             </td>
-                                          @*   <td>
+                                            <td>
                                                 <form asp-action="AssignCouponToUser" asp-controller="Admin" method="post">
                                                     <input type="hidden" name="userId" value="@user.Id" />
                                                     <select name="couponId">
@@ -123,12 +123,12 @@
                                                     </select>
                                                     <button type="submit">Assign Coupon</button>
                                                 </form>
-                                            </td> *@
-
-                                            <td>
-                                                <a asp-route-id="@user.Id" asp-action="AddCouponToUser" asp-controller="Admin">Add Coupon </a>
                                             </td>
 
+                                            @* <td>
+                                                <a asp-route-id="@user.Id" asp-action="AddCouponToUser" asp-controller="Admin">Add Coupon </a>
+                                            </td>
+ *@
 
 
                                         </tr>
