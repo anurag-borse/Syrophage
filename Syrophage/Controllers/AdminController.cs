@@ -564,6 +564,10 @@ namespace Syrophage.Controllers
 
 
 
+
+
+
+
                     // Generate a unique filename for the new image
                     string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRootPath, @"ProductImage");
