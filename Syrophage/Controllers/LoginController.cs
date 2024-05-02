@@ -41,6 +41,7 @@ namespace Syrophage.Controllers
 
             if (role == "Admin")
             {
+
                 // Retrieve the admin based on the email
                 var existingAdmin = _db.Admins.SingleOrDefault(u => u.Email == vm.Email);
 
