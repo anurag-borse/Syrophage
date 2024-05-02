@@ -1,0 +1,209 @@
+﻿@model List<Syrophage.Models.Categories>
+
+@{
+    Layout = null;
+}
+
+
+
+
+<!-- Form to assign existing coupon to user -->
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+
+    <title>Admin Dashboard</title>
+
+
+
+
+    <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
+
+    <link href="~/admin/assets/libs/datatables.net-bs4/css/datatables.bootstrap4.css" rel="stylesheet" />
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    @*  for data table *@
+    <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
+
+
+</head>
+<body>
+
+
+    <div id="main-wrapper"
+         data-layout="vertical"
+         data-navbarbg="skin5"
+         data-sidebartype="full"
+         data-sidebar-position="absolute"
+         data-header-position="absolute"
+         data-boxed-layout="full">
+
+
+        <partial name="AdminNavbar" />
+
+
+
+
+        <partial name="AdminSidebar" />
+
+
+
+
+
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <div class="ms-auto text-end">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- User Details -->
+            <div>
+                <div>
+
+                    <div class="container">
+
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@Model">Generate New Category  </button>
+
+
+                    </div>
+
+                    <hr />
+
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">New Category</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" asp-action="AddCategory" asp-controller="Admin" enctype="multipart/form-data">
+
+
+                                        <div class="mb-3">
+                                            <label for="Name" class="col-form-label">Category Name:</label>
+                                            <input type="text" class="form-control" name="CategoryName">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="CouponDescription" class="col-form-label">Category Description :</label>
+                                            <input type="text" class="form-control" name="CategoryDescription">
+                                        </div>
+
+
+
+                                        <div class="mb-3">
+                                            <label for="formFile" class="form-label">Category Picture </label>
+
+                                            <input class="form-control" type="file" id="formFile" name="CategoryPicture" />
+                                        </div>
+
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Create New Category</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="container-fluid" >
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-0">Available Categories</h5>
+                            </div>
+                            <table class="table" id="categoriesData">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Image</th>
+                                       
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var categories in Model)
+                                    {
+                                        <tr>
+                                            <td>@categories.Id</td>
+
+                                            <td>@categories.CategoryName</td>
+                                            <td>@categories.CategoryDescription</td>
+
+
+                                            <td>
+                                                <img src="@categories.CategoryPictureUrl" height="70px" width="70px" />
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <script src="~/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/admin/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/admin/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/admin/assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="~/admin/dist/js/waves.js"></script>
+    <script src="~/admin/dist/js/sidebarmenu.js"></script>
+    <script src="~/admin/dist/js/custom.min.js"></script>
+    <script src="~/admin/dist/js/pages/dashboards/dashboard1.js"></script>
+    <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
+
+
+
+</body>
+</html>
+<!-- Static Coupons -->
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#categoriesData').DataTable();
+    });
+</script>

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Syrophage.Data;
+using Syrophage.Migrations;
 using Syrophage.Models;
 using Syrophage.Models.ViewModel;
 using Syrophage.Repository.IRepository;
@@ -67,38 +68,6 @@ namespace Syrophage.Controllers
             return RedirectToAction("Index", "Home");
 
         }
-
-        //[HttpGet]
-
-        //public IActionResult Coupons1(int Id)
-        //{
-        //    var user = _db.Users.FirstOrDefault(u => u.Id == Id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var coupons = unitofworks.Coupon.GetAll().ToList();
-
-        //    var viewModel = new CouponsViewModel
-        //    {
-        //        Coupons = coupons,
-        //        User = user
-        //    };
-
-        //    return View(viewModel);
-
-
-       
-
-        //}
-
-
-
-
-
-
-       
 
 
 
@@ -285,9 +254,6 @@ namespace Syrophage.Controllers
             return RedirectToAction("Coupons");
         }
 
-
-     
-
         [HttpPost]
         public JsonResult ToggleActivationCoupon(int id, bool isActivated)
         {
@@ -306,10 +272,6 @@ namespace Syrophage.Controllers
             return Json(new { success = false });
 
         }
-
-
-
-
 
 
         [HttpPost]
@@ -332,9 +294,6 @@ namespace Syrophage.Controllers
             }
             return Json(new { success = false });
         }
-
-
-
 
 
         [HttpGet]
@@ -416,7 +375,6 @@ namespace Syrophage.Controllers
         }
 
 
-
         [HttpPost]
         public JsonResult AddCouponToUser(int userId, int couponId)
         {
@@ -432,6 +390,52 @@ namespace Syrophage.Controllers
             return Json(new { success = true });
         }
 
+
+
+
+
+        [HttpGet]
+        public IActionResult Categories()
+        {
+            var categories = unitofworks.Categories.GetAll().ToList();
+
+
+            return View(categories);
+        }
+
+
+        [HttpPost]
+        public IActionResult AddCategory(Categories categories)
+        {
+            if (ModelState.IsValid)
+            {
+                if(categories.CategoryPicture != null)
+                {
+
+                    var file = categories.CategoryPicture;
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    var fileName = Guid.NewGuid().ToString() + file.FileName;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "CategoryPictures", fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    categories.CategoryPictureUrl = Path.Combine("/CategoryPictures", fileName).Replace("\\", "/"); ;
+
+
+                }
+
+                unitofworks.Categories.Add(categories);
+                unitofworks.Save();
+
+                TempData["Success"] = "Category Added Successfully";
+                return RedirectToAction("Categories");
+            }
+
+
+            return View();
+        }
 
     }
 }
