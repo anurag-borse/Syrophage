@@ -18,6 +18,7 @@ namespace Syrophage.Models
         [Required]
         public double MinimumAmount { get; set; }
 
+        [Required]
         public string? CouponDescription { get; set; }
 
         [Required]
@@ -33,6 +34,7 @@ namespace Syrophage.Models
 
         [NotMapped]
 
+        [Required]
         public IFormFile? CouponPicture { get; set; }
 
         public string? CouponPictureUrl { get; set; }

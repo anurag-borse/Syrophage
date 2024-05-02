@@ -1,1 +1,101 @@
-﻿
+﻿@model List<Syrophage.Models.Categories>
+
+<link href="~/css/site.css" rel="stylesheet" />
+
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+
+<section class="bg-half" id="ContactUs">
+    <div class="bg-overlay"></div>
+    <div class="home-center">
+        <div class="home-desc-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="page-next-level text-white">
+                            <h1 class="text-uppercase">Products</h1>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WORK START -->
+<section class="section bg-light" id="work">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-12">
+                <div class="section-title text-center">
+                    <h3>Products</h3>
+                    <div class="spacer-15"></div>
+                    <p class="text-muted mb-0">Donec sodales sagittis magna. Excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.</p>
+                    <div class="spacer-30"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+@*     @foreach (var user in Model)
+    {
+        <tr>
+            <th scope="row">@user.Id</th>
+            <td>@user.CategoryName</td>
+            <td>@user.CategoryDescription</td>
+            <td>@user.CategoryPicture</td>
+            </tr>
+    } *@
+
+
+
+
+
+
+    <div class="container-fluid mt-30">
+        <div class="port portfolio-masonry">
+            <div class="portfolioContainer row">
+                @foreach (var category in Model)
+                {
+                    <div class="col-lg-3 col-md-6 @category.CategoryName.ToLower() @category.CategoryName.ToLower() p-0">
+                        <div class="portfolio-box mt-0 mb-0">
+
+                            <a asp-action="ViewCategorie_Product" asp-controller="Home" asp-route-name="@category.CategoryName">
+                                <img src="@category.CategoryPictureUrl" class="" alt="member-image" style="width: 500px; height: 350px;">
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-box-detail">
+                                        <p>@category.CategoryName</p>
+                                        <h4>@category.CategoryDescription</h4>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center mt-30">
+                    <a href="work-col-three.html" class="btn btn-custom">See More <i class="fas fa-angle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
