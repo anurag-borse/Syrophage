@@ -10,6 +10,12 @@
 
         public bool SendActivationEmail(string email, string password);
 
- 
+
+        public string GenerateCouponCode();
+
+        public string GenerateTokenId();
+        public string GenerateRegId();
+
+
     }
 }

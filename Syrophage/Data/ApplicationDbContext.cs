@@ -20,6 +20,7 @@ namespace Syrophage.Data
         public DbSet<Coupon> Coupons { get; set; }
 
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
 
         public DbSet<UserCoupon> UserCoupons { get; set; }

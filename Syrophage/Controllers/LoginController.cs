@@ -146,7 +146,7 @@ namespace Syrophage.Controllers
                     ConfirmPassword = model.ConfirmPassword,
                     Phone = model.Phone,
                     IsActivated = false,
-                    RegId = GenerateRegId(),
+                    RegId = services.GenerateRegId(),
                     Address = "",
                     ProfileImageUrl = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                 };
@@ -177,21 +177,6 @@ namespace Syrophage.Controllers
             TempData["Error"] = "Someting Error Happen";
             return RedirectToAction("Register", "Login");
 
-        }
-
-        public string GenerateRegId()
-        {
-            // Get the current year
-            int year = DateTime.Now.Year;
-
-            // Generate a random 4-digit number
-            Random random = new Random();
-            int randomNumber = random.Next(1000, 9999); // Generate a 4-digit random number
-
-            // Combine the year and random number to form the registration ID
-            string regId = "SP" + year.ToString() + randomNumber.ToString();
-
-            return regId;
         }
 
 

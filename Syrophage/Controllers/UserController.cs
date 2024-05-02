@@ -86,9 +86,9 @@ namespace Syrophage.Controllers
             int userId = HttpContext.Session.GetInt32("UserId") ?? -1;
 
             var user = unitofworks.User.GetById(userId);
-            var tokens = unitofworks.Token.GetAll(u => u.RegId == user.RegId).ToList();
+            var tokens = unitofworks.Token.GetAll(u => u.RegId == user.RegId).OrderByDescending(c => c.Id).ToList();
 
-            var model = new Tuple<Users,List<Token>>(user, tokens);
+            var model = new Tuple<Users, List<Token>>(user, tokens);
 
 
             return View(model);
@@ -101,7 +101,7 @@ namespace Syrophage.Controllers
             if (ModelState.IsValid)
             {
                 token.RegId = token.RegId;
-                token.RequestId = GenerateTokenId();
+                token.RequestId = services.GenerateTokenId();
                 token.Date = DateTime.Now;
                 token.Status = "Pending";
                 token.Name = token.Name;
@@ -148,27 +148,7 @@ namespace Syrophage.Controllers
 
         }
 
-        [HttpGet]
-        public IActionResult coupon()
-        {
-            return View();  
-        }
 
-
-        public string GenerateTokenId()
-        {
-            // Get the current year
-            int year = DateTime.Now.Year;
-
-            // Generate a random 4-digit number
-            Random random = new Random();
-            int randomNumber = random.Next(1000, 9999); // Generate a 4-digit random number
-
-            // Combine the year and random number to form the registration ID
-            string regId = "TK" + year.ToString() + randomNumber.ToString();
-
-            return regId;
-        }
 
 
         public void SetLayoutModel()
@@ -192,8 +172,51 @@ namespace Syrophage.Controllers
 
                 _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
             }
+        }
+
+        [HttpGet]
+        public IActionResult Orders()
+        {
+
+            SetLayoutModel();
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var orders = unitofworks.Orders.GetByUserID(userId);
+            return View(orders);
+        }
 
 
+        [HttpGet]
+        public IActionResult Trackorder(int id)
+        {
+            SetLayoutModel();
+            var order = unitofworks.Orders.GetById(id);
+            ViewBag.OrderStatus = order.Status;
+            return View(order);
+        }
+
+
+
+
+
+        [HttpGet]
+        public IActionResult Coupons()
+        {
+            SetLayoutModel();
+
+            var userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+
+
+            ViewBag.UserId = userId;
+
+
+
+
+            var userCoupons = unitofworks.UserCoupon.GetAll(u => u.UserId == userId, includeProperties: "Coupon").ToList();
+
+            var coupons = userCoupons.Select(uc => uc.Coupon).ToList();
+
+            // Pass the list of Coupon objects to the view
+            return View(coupons);
 
         }
 

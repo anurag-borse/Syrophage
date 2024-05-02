@@ -1,0 +1,145 @@
+﻿@model List<Syrophage.Models.Order>
+
+
+
+@{
+    Layout = null;
+}
+
+
+
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+
+    <title>Admin Dashboard</title>
+
+
+
+
+    <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
+
+    <link href="~/admin/assets/libs/datatables.net-bs4/css/datatables.bootstrap4.css" rel="stylesheet" />
+
+
+    <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
+
+
+
+</head>
+<body>
+
+
+
+    <div id="main-wrapper"
+         data-layout="vertical"
+         data-navbarbg="skin5"
+         data-sidebartype="full"
+         data-sidebar-position="absolute"
+         data-header-position="absolute"
+         data-boxed-layout="full">
+
+
+        <partial name="AdminNavbar" />
+
+
+
+
+        <partial name="AdminSidebar" />
+
+
+
+
+
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Manage Orders</h4>
+                        <div class="ms-auto text-end">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-0">Contacts</h5>
+                            </div>
+                            <table class="table" id="manageOrderData">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">ProductName</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">ProductImage</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr>
+
+                                            <td>@user.username</td>
+                                            <td>@user.ProductName</td>
+                                            <td>@user.date.ToString("dd-MM-yyyy")</td>
+                                            <td>@user.Status</td>
+                                            <td>@user.quantity</td>
+                                            <td>
+                                                <img src="@user.ProductImageurl" height="70px" width="70px" />
+                                            </td>
+                                            <td>
+
+                                                <a type="button" class="btn btn-primary" asp-action="EidtOrder" asp-controller="Admin" asp-route-id="@user.id"><i class="bi bi-pencil-fill"></i></a>
+
+
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+
+
+
+
+    <script src="~/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/admin/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/admin/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/admin/assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="~/admin/dist/js/waves.js"></script>
+    <script src="~/admin/dist/js/sidebarmenu.js"></script>
+    <script src="~/admin/dist/js/custom.min.js"></script>
+    <script src="~/admin/dist/js/pages/dashboards/dashboard1.js"></script>
+    <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
+</body>
+</html>
+
+
+<script>
+    $(document).ready(function () {
+        $('#manageOrderData').DataTable();
+    });
+</script>
