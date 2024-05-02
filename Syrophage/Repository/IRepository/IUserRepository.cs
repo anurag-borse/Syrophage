@@ -11,5 +11,7 @@ namespace Syrophage.Repository.IRepository
 
 
         void Update(Users obj);
+
+        
     }
 }

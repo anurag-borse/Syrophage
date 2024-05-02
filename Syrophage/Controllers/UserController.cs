@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using Syrophage.Models;
 using Syrophage.Models.ViewModel;
 using Syrophage.Repository.IRepository;

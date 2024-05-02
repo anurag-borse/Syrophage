@@ -1,19 +1,22 @@
 ﻿@model List<Syrophage.Models.Coupon>
 
 
-
 @{
     Layout = null;
 }
 
 
 
+<h3>Add Coupons To User</h3>
+
+<!-- Form to assign existing coupon to user -->
 
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 <head>
 
     <title>Admin Dashboard</title>
+<hr />
 
 
 
@@ -68,6 +71,8 @@
 
 
 
+<!-- User Details -->
+<h2>User Details</h2>
             <div>
                 <div>
 
@@ -75,8 +80,12 @@
 
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@Model">Generate New Coupon  </button>
 
+  @*   <p><strong>Name:</strong> @Model.Name</p>
+    <p><strong>Email:</strong> @Model.Email</p> *@
+    <!-- Add other properties as needed -->
                     </div>
 
+<hr />
 
 
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -285,3 +294,4 @@
 
 </body>
 </html>
+<!-- Static Coupons -->

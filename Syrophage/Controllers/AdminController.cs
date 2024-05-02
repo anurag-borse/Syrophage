@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Syrophage.Data;
 using Syrophage.Models;
+using Syrophage.Models.ViewModel;
 using Syrophage.Repository.IRepository;
 using Syrophage.Services;
 
@@ -8,9 +11,11 @@ namespace Syrophage.Controllers
 {
     public class AdminController : Controller
     {
-
+        public readonly ApplicationDbContext _db;
         private readonly IUnitofWorks unitofworks;
         private readonly IServices services;
+        
+        
         private readonly IWebHostEnvironment _webHostEnvironment;
 
 
@@ -52,6 +57,44 @@ namespace Syrophage.Controllers
 
             return View(user);
         }
+
+        [HttpGet]
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            TempData["clear"] = "Yor Are Logout :";
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        //[HttpGet]
+
+        //public IActionResult Coupons1(int Id)
+        //{
+        //    var user = _db.Users.FirstOrDefault(u => u.Id == Id);
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var coupons = unitofworks.Coupon.GetAll().ToList();
+
+        //    var viewModel = new CouponsViewModel
+        //    {
+        //        Coupons = coupons,
+        //        User = user
+        //    };
+
+        //    return View(viewModel);
+
+
+       
+
+        //}
+
+
+
 
 
 
@@ -231,6 +274,10 @@ namespace Syrophage.Controllers
 
                 unitofworks.Coupon.Add(coupon);
                 unitofworks.Save();
+
+                TempData["CouponName"] = coupon.Name;
+                TempData["CouponImageUrl"] = coupon.CouponPictureUrl;
+
                 TempData["Success"] = "Coupon Added Successfully";
                 return RedirectToAction("Coupons");
             }
