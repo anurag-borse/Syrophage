@@ -242,9 +242,8 @@
                             </div>
                             <div class="footer-item mt-3">
                                 <ul class="list-unstyled">
-                                    <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> About us</a></li>
-                                    <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Services</a></li>
-                                    <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> FAQ</a></li>
+                                    <li><a asp-action="About" asp-controller="Home"><i class="fas fa-chevron-right mr-2"></i> About us</a></li>
+                                    <li><a asp-action="Services" asp-controller="Home"><i class="fas fa-chevron-right mr-2"></i> Services</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -254,10 +253,17 @@
                             </div>
                             <div class="footer-item mt-3">
                                 <ul class="list-unstyled">
-                                    <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Accounts</a></li>
-                                    <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Sales & Support</a></li>
-                                    <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Orders Track</a></li>
-                                    <li><a href="#"><i class="fas fa-chevron-right mr-2"></i> Download Center</a></li>
+                                    <li><a asp-action="Products" asp-controller="Home"><i class="fas fa-chevron-right mr-2"></i> Products</a></li>
+
+                                    @{
+                                        if(userEmail != null)
+                                        {
+                                            <li><a asp-action="Orders" asp-controller="User"><i class="fas fa-chevron-right mr-2"></i> Orders </a></li>
+                                            <li><a asp-action="Coupons" asp-controller="User"><i class="fas fa-chevron-right mr-2"></i> Coupons </a></li>
+
+                                        }
+                                    }
+
                                 </ul>
                             </div>
                         </div>
@@ -277,7 +283,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                     <!-- End Footer Info -->
                 </div>

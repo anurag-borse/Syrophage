@@ -21,8 +21,8 @@ namespace Syrophage.Controllers
         public readonly ApplicationDbContext _db;
         private readonly IUnitofWorks unitofworks;
         private readonly IServices services;
-        
-        
+
+
         private readonly IWebHostEnvironment _webHostEnvironment;
 
 
@@ -49,7 +49,7 @@ namespace Syrophage.Controllers
             ViewBag.NewslettersCount = newslettersCount;
             ViewBag.ActiveUsersCount = activeUsersCount;
             ViewBag.NonActiveUsersCount = nonActiveUsersCount;
-           
+
 
 
 
@@ -70,10 +70,10 @@ namespace Syrophage.Controllers
         public IActionResult Logout()
         {
 
-             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
-           
-            TempData["clear"] = "Yor Are Logout :";
+
+            TempData["Success"] = "Yor Are Logout :";
             return RedirectToAction("Index", "Home");
 
         }
@@ -126,6 +126,7 @@ namespace Syrophage.Controllers
             unitofworks.Token.Update(TokeninDb);
             unitofworks.Save();
 
+            TempData["Success"] = "Token Updated Succesfully";
             return RedirectToAction("ViewTokens", "Admin");
         }
 
@@ -146,10 +147,12 @@ namespace Syrophage.Controllers
                 }
 
 
+                TempData["Success"] = "User Activated Successfully";
+
                 return Json(new { success = true });
 
-
             }
+            TempData["Error"] = "User Activation Failed";
             return Json(new { success = false });
 
         }
@@ -161,17 +164,17 @@ namespace Syrophage.Controllers
             var coupons = unitofworks.Coupon.GetAll().ToList();
             return View(coupons);
         }
-        
+
 
         [HttpGet]
         public IActionResult AddOrder()
         {
             var User = unitofworks.User.GetAll().ToList();
             return View(User);
-         }
+        }
 
         [HttpPost]
-        public IActionResult AddOrder(Order obj , IFormFile file)
+        public IActionResult AddOrder(Order obj, IFormFile file)
         {
             if (ModelState.IsValid)
             {
@@ -179,8 +182,8 @@ namespace Syrophage.Controllers
 
 
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
-                
-                if ( file != null)
+
+                if (file != null)
                 {
                     string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRootPath, @"OrderImages");
@@ -209,13 +212,13 @@ namespace Syrophage.Controllers
                     unitofworks.Orders.Add(order);
                     unitofworks.Save();
 
-                    TempData["Success"] = "Orer Placed SuccessFully";
+                    TempData["Success"] = "Order Placed SuccessFully";
                     return RedirectToAction("ManageOrder", "Admin");
 
                 }
 
             }
-            TempData["Error"] = "Orer Not Placed";
+            TempData["Error"] = "Order Not Placed";
             return RedirectToAction("AddOrder", "Admin");
         }
 
@@ -229,7 +232,7 @@ namespace Syrophage.Controllers
                 coupon.Code = services.GenerateCouponCode();
                 coupon.CreatedDate = DateTime.Now;
 
-                if(coupon.CouponPicture != null)
+                if (coupon.CouponPicture != null)
                 {
 
                     var file = coupon.CouponPicture;
@@ -244,7 +247,7 @@ namespace Syrophage.Controllers
                     coupon.CouponPictureUrl = Path.Combine("/CouponImages", fileName).Replace("\\", "/"); ;
 
                 }
-                 
+
 
 
 
@@ -269,11 +272,11 @@ namespace Syrophage.Controllers
                 unitofworks.Save();
 
 
-                return Json(new { success = true });
+                return Json(new { success = true, message = "Activation Done Successfully !!!" });
 
 
             }
-            return Json(new { success = false });
+            return Json(new { success = false, message = "Activation Failed !!!" });
 
         }
 
@@ -294,9 +297,10 @@ namespace Syrophage.Controllers
 
                 unitofworks.Coupon.Remove(coupon);
                 unitofworks.Save();
-                return Json(new { success = true });
+
+                return Json(new { success = true, message = "Coupon Deleted Successfully" });
             }
-            return Json(new { success = false });
+            return Json(new { success = false, message = "Coupon Not Deleted" });
         }
 
 
@@ -324,28 +328,14 @@ namespace Syrophage.Controllers
             Orerindb.Status = obj.Status;
             Orerindb.ProductName = obj.ProductName;
 
-            
+
             unitofworks.Orders.Update(Orerindb);
             unitofworks.Save();
 
             TempData["Success"] = "Order Updated Succesfully";
-            return RedirectToAction("ManageOrder" ,"Admin");
+            return RedirectToAction("ManageOrder", "Admin");
         }
 
-        [HttpPost]
-        public IActionResult AssignCouponToUser(int userId, int couponId)
-        {
-            var userCoupon = new UserCoupon
-            {
-                UserId = userId,
-                CouponId = couponId
-            };
-
-            unitofworks.UserCoupon.Add(userCoupon);
-            unitofworks.Save();
-
-            return RedirectToAction("ViewUsers");
-        }
 
         [HttpGet]
         public IActionResult AddCouponToUser(int id)
@@ -360,7 +350,7 @@ namespace Syrophage.Controllers
             ViewBag.Coupons = unitofworks.Coupon.GetAll().ToList();
 
             return View(user);
-        
+
         }
 
         [HttpPost]
@@ -380,16 +370,21 @@ namespace Syrophage.Controllers
         [HttpPost]
         public JsonResult AddCouponToUser(int userId, int couponId)
         {
-            var userCoupon = new UserCoupon
+            if (userId >= 0  && couponId >= 0)
             {
-                UserId = userId,
-                CouponId = couponId
-            };
 
-            unitofworks.UserCoupon.Add(userCoupon);
-            unitofworks.Save();
+                var userCoupon = new UserCoupon
+                {
+                    UserId = userId,
+                    CouponId = couponId
+                };
 
-            return Json(new { success = true });
+                unitofworks.UserCoupon.Add(userCoupon);
+                unitofworks.Save();
+
+                return Json(new { success = true  });
+            }
+            return Json(new { success = false });
         }
 
 
@@ -411,7 +406,7 @@ namespace Syrophage.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(categories.CategoryPicture != null)
+                if (categories.CategoryPicture != null)
                 {
 
                     var file = categories.CategoryPicture;
@@ -435,7 +430,7 @@ namespace Syrophage.Controllers
                 return RedirectToAction("Categories");
             }
 
-
+            TempData["Error"] = "Category Not Added";
             return View();
         }
 
