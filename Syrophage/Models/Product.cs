@@ -8,11 +8,13 @@ namespace Syrophage.Models
         [Key]
         public int id { get; set; }
 
+        [Required]
         public string productname { get; set; }
+        [Required]
         public string Description { get; set; }
-
+        [Required]
         public string Category { get; set; }
-
+        [Required]
         public string Company { get; set; }
 
 
