@@ -27,10 +27,17 @@ namespace Syrophage.Controllers
             return View();
         }
 
-        public IActionResult Products()
+        public IActionResult Products(Categories categories)
         {
             SetLayoutModel();
-            return View();
+            var Allcategories = unitofworks.Categories.GetAll();    
+            return View(Allcategories);
+        }
+
+        public IActionResult ViewCategorie_Product(string name)
+        {
+            var categorie_product=unitofworks.Product.GetByCategoryName(name);  
+            return View(categorie_product);  
         }
 
         public IActionResult Privacy()
@@ -52,6 +59,14 @@ namespace Syrophage.Controllers
             return View();
         }
 
+
+
+        //[HttpPost]
+        //public IActionResult Products(Categories categories)
+        //{
+        //    var Allcategories=unitofworks.Categories;
+        //    return View();
+        //}
 
         [HttpPost]
         public IActionResult Contact(Contact obj)

@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Syrophage.Models.Categories>
 
 <link href="~/css/site.css" rel="stylesheet" />
 
@@ -44,7 +44,52 @@
         </div>
     </div>
 
+
+
+@*     @foreach (var user in Model)
+    {
+        <tr>
+            <th scope="row">@user.Id</th>
+            <td>@user.CategoryName</td>
+            <td>@user.CategoryDescription</td>
+            <td>@user.CategoryPicture</td>
+            </tr>
+    } *@
+
+
+
+
+
+
     <div class="container-fluid mt-30">
+        <div class="port portfolio-masonry">
+            <div class="portfolioContainer row">
+                @foreach (var category in Model)
+                {
+                    <div class="col-lg-3 col-md-6 @category.CategoryName.ToLower() @category.CategoryName.ToLower() p-0">
+                        <div class="portfolio-box mt-0 mb-0">
+
+                            <a asp-action="ViewCategorie_Product" asp-controller="Home" asp-route-name="@category.CategoryName">
+                                <img src="@category.CategoryPictureUrl" class="" alt="member-image" style="width: 500px; height: 350px;">
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-box-detail">
+                                        <p>@category.CategoryName</p>
+                                        <h4>@category.CategoryDescription</h4>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    @* <div class="container-fluid mt-30">
         <div class="port portfolio-masonry">
             <div class="portfolioContainer row">
                 <div class="col-lg-3 col-md-6 natural personal p-0">
@@ -167,7 +212,7 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> *@
             <!-- end portfoliocontainer-->
         </div>
         <div class="row">
