@@ -25,6 +25,13 @@ namespace Syrophage.Data
 
         public DbSet<UserCoupon> UserCoupons { get; set; }
 
+        public DbSet<Categories> Categories { get; set; }
+
+
+
+
+
+
         public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -21,6 +21,8 @@ namespace Syrophage.Repository
 
         public IUserCouponRepository UserCoupon { get; set;}
 
+        public ICategoriesRepository Categories{ get; set; }
+
         public IProductsRepository Product { get; set; }
 
         public Unitofworks(ApplicationDbContext _db)
@@ -35,6 +37,7 @@ namespace Syrophage.Repository
             Product = new ProductsRepository(_db);
 
             UserCoupon = new UserCouponRepository(_db);
+            Categories = new CategoriesRepository(_db);
         }
 
         public void Save()

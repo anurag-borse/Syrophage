@@ -18,6 +18,8 @@
 
         IUserCouponRepository UserCoupon { get; }
 
+        ICategoriesRepository Categories { get; }
+
         IProductsRepository Product { get; }
 
 
