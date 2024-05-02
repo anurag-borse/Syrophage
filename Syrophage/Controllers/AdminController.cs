@@ -15,7 +15,7 @@ using Syrophage.Services;
 namespace Syrophage.Controllers
 {
 
-    [Authorize]
+    //[Authorize]
     public class AdminController : Controller
     {
         public readonly ApplicationDbContext _db;
@@ -509,14 +509,11 @@ namespace Syrophage.Controllers
 
 
 
-            string OldImagepath = category.CategoryPictureUrl;
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, category.CategoryPictureUrl.TrimStart('/'));
 
-            string oldImagePath = Path.Combine(wwwRootPath, OldImagepath.TrimStart('\\'));
-
-
-            if (System.IO.File.Exists(oldImagePath))
+            if (System.IO.File.Exists(filePath))
             {
-                System.IO.File.Delete(oldImagePath);
+                System.IO.File.Delete(filePath);
             }
 
 
