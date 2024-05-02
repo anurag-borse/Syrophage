@@ -4,7 +4,7 @@
 *@
 @{
 }
-<!DOCTYPE html>
+@* <!DOCTYPE html>
 <html lang="en">
 
 
@@ -308,25 +308,11 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> *@
     <!-- HOME END-->
     <!-- WORK START -->
     <section class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <div class="text-center">
-                        <ul class="col container-filter portfolioFilter list-unstyled m-0" id="filter">
-                            <li><a class="categories active" data-filter="*">All</a></li>
-                            <li><a class="categories" data-filter=".marketing">Marketing</a></li>
-                            <li><a class="categories" data-filter=".finance">Finance</a></li>
-                            <li><a class="categories" data-filter=".account">Accounting</a></li>
-                            <li><a class="categories" data-filter=".part">Partners</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <div class="container">
             <div class="port portfolio-masonry mt-3">
@@ -341,7 +327,7 @@
                                     <div class="col-lg-4 col-md-6 @product.Category.ToLower()">
                                         <div class="portfolio-box">
                                             <a class="mfp-image" href="@product.productImageUrl" title="@product.productname">
-                                                <img src="@product.productImageUrl" class="img-fluid" alt="member-image">
+                                                <img src="@product.productImageUrl" class="" alt="member-image" style="width: 500px; height: 350px;">
                                             </a>
                                             <div class="gallary-title text-center">
                                                 <h6><a href="work-single.html">@product.productname</a></h6>
@@ -367,7 +353,7 @@
   
     <!-- FOOTER END -->
     <!-- Back to top -->
-    <a href="#" class="back-to-top" id="back-to-top">
+   @*  <a href="#" class="back-to-top" id="back-to-top">
         <i class="mdi mdi-chevron-up"> </i>
     </a>
     <!-- Back to top -->
@@ -389,4 +375,4 @@
 
 
 <!-- work-col-three12-->
-</html>
+</html> *@
