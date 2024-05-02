@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,7 @@ using Syrophage.Services;
 
 namespace Syrophage.Controllers
 {
+
     [Authorize]
     public class AdminController : Controller
     {
@@ -217,7 +219,6 @@ namespace Syrophage.Controllers
             return RedirectToAction("AddOrder", "Admin");
         }
 
-
         [HttpPost]
         public IActionResult AddCoupon(Coupon coupon)
         {
@@ -250,10 +251,6 @@ namespace Syrophage.Controllers
 
                 unitofworks.Coupon.Add(coupon);
                 unitofworks.Save();
-
-                TempData["CouponName"] = coupon.Name;
-                TempData["CouponImageUrl"] = coupon.CouponPictureUrl;
-
                 TempData["Success"] = "Coupon Added Successfully";
                 return RedirectToAction("Coupons");
             }
@@ -350,7 +347,6 @@ namespace Syrophage.Controllers
             return RedirectToAction("ViewUsers");
         }
 
-
         [HttpGet]
         public IActionResult AddCouponToUser(int id)
         {
@@ -366,7 +362,6 @@ namespace Syrophage.Controllers
             return View(user);
         
         }
-
 
         [HttpPost]
         public JsonResult RemoveCouponFromUser(int userId, int couponId)

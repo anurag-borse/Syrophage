@@ -27,6 +27,12 @@ namespace Syrophage.Controllers
             return View();
         }
 
+        public IActionResult Products()
+        {
+            SetLayoutModel();
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

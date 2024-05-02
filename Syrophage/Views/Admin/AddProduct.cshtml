@@ -1,0 +1,165 @@
+﻿
+
+@{
+    Layout = null;
+}
+
+
+
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+
+    <title>Admin Dashboard</title>
+
+
+
+
+    <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
+
+    <link href="~/admin/assets/libs/datatables.net-bs4/css/datatables.bootstrap4.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+
+
+</head>
+<body>
+
+
+
+    <div id="main-wrapper"
+         data-layout="vertical"
+         data-navbarbg="skin5"
+         data-sidebartype="full"
+         data-sidebar-position="absolute"
+         data-header-position="absolute"
+         data-boxed-layout="full">
+
+
+        <partial name="AdminNavbar" />
+
+
+
+
+        <partial name="AdminSidebar" />
+
+
+
+
+
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Admin Dashboard</h4>
+                        <div class="ms-auto text-end">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-0">Add Product</h5>
+                            </div>
+                            <form class="form-horizontal" method="post" asp-action="AddOrder" asp-controller="Admin" enctype="multipart/form-data">
+                                <div class="card-body">
+
+
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-end control-label col-form-label">Prouct Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="fname" name="ProductName" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-end control-label col-form-label">Quantity</label>
+                                        <div class="col-sm-9">
+                                            <input type="number" class="form-control" id="fname" name="quantity" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label for="lname"
+                                               class="col-sm-3 text-end control-label col-form-label">Product Image</label>
+
+
+                                        <div class="col-sm-9">
+                                            <input for="formFile" type="file" name="file" id="upload" class="form-control" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 text-end control-label col-form-label">Status</label>
+                                        <div class="col-sm-9">
+                                            <select name="Status" class="form-control" id="status">
+                                                <option value="Order Received">Order Received</option>
+                                                <option value="Dispatched">Dispatched</option>
+                                                <option value="Shipped">Shipped</option>
+                                                <option value="Delivered">Delivered</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+                             @*        <div class="form-group row">
+                                        <label class="col-sm-3 text-end control-label col-form-label">Username</label>
+                                        <div class="col-sm-9">
+                                            <select name="username" class="form-control" id="status">
+                                                @foreach (var username in Model)
+                                                {
+                                                    <option value="@username.Name">@username.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div> *@
+
+
+                                </div>
+                                <div class="border-top">
+                                    <div class="card-body">
+                                        <button type="submit" class="btn btn-primary">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+
+
+
+
+    <script src="~/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/admin/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/admin/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/admin/assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="~/admin/dist/js/waves.js"></script>
+    <script src="~/admin/dist/js/sidebarmenu.js"></script>
+    <script src="~/admin/dist/js/custom.min.js"></script>
+    <script src="~/admin/dist/js/pages/dashboards/dashboard1.js"></script>
+    <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

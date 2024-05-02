@@ -20,6 +20,8 @@
 
         ICategoriesRepository Categories { get; }
 
+        IProductsRepository Product { get; }
+
 
         public void Save();
     }
