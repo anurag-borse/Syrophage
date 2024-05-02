@@ -434,5 +434,169 @@ namespace Syrophage.Controllers
             return View();
         }
 
+
+        [HttpGet]
+        public IActionResult Addproduct()
+        {
+            var categories = unitofworks.Categories.GetAll().ToList();
+            return View(categories);
+        }
+
+
+        [HttpPost]
+        public IActionResult Addproduct(Product obj, IFormFile file)
+        {
+
+            if (ModelState.IsValid)
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"ProductImage");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+
+
+                    var product = new Product
+                    {
+                        productname = obj.productname,
+                        Description = obj.Description,
+                        Category = obj.Category,
+                        Company = obj.Company,
+                        productImageUrl = @"\ProductImage\" + filename
+                    };
+                    unitofworks.Product.Add(product);
+                    unitofworks.Save();
+
+                    TempData["success"] = "product Added";
+                    return RedirectToAction("ManageProduct","Admin");
+
+                }
+            }
+
+            TempData["Error"] = "product Not Added";
+            return RedirectToAction("Addproduct", "Admin");
+        }
+
+        [HttpGet]
+        public IActionResult ManageProduct()
+        {
+            var products = unitofworks.Product.GetAll().ToList();
+            return View(products);
+        }
+
+        [HttpGet]
+        public IActionResult EidtProduct(int id)
+        {
+            var products = unitofworks.Product.GetById(id);
+            return View(products);
+        }
+
+
+        [HttpGet]
+        public IActionResult DeleteCategory(int id)
+        {
+            var category = unitofworks.Categories.GetById(id);
+
+            var products = unitofworks.Product.GetAll().Where(j => j.Category == category.CategoryName).ToList();
+
+
+            foreach(var prod in products)
+            {
+                unitofworks.Product.Remove(prod);
+            }
+
+            if(category != null)
+            {
+                unitofworks.Categories.Remove(category);
+                unitofworks.Save();
+
+                TempData["Success"] = "Category Deleted Successfully";
+                return RedirectToAction("Categories", "Admin");
+            }
+
+
+            TempData["Error"] = "Category  not Deleted";
+            return RedirectToAction("Categories","Admin");
+        }
+        [HttpPost]
+        public IActionResult EditProduct(Product obj, IFormFile file)
+        {
+            if (ModelState.IsValid)
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+                // Check if a new image is uploaded
+                if (file != null)
+                {
+                    // Generate a unique filename for the new image
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"ProductImage");
+
+                    // Save the new image
+                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    // Update product details including the new image URL
+                    var product = new Product
+                    {
+                        id = obj.id, // Assuming Id is the primary key of the product
+                        productname = obj.productname,
+                        Description = obj.Description,
+                        Category = obj.Category,
+                        Company = obj.Company,
+                        productImageUrl = @"\ProductImage\" + filename
+                    };
+
+                    // Remove the old image file if it exists
+                    if (!string.IsNullOrEmpty(obj.productImageUrl))
+                    {
+                        string oldImagePath = Path.Combine(wwwRootPath, obj.productImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    // Update the product in the database
+                    unitofworks.Product.Update(product);
+                    unitofworks.Save();
+
+                    TempData["success"] = "Product updated successfully.";
+                    return RedirectToAction("ManageProduct", "Admin");
+                }
+                else
+                {
+
+                    var product = new Product
+                    {
+                        id = obj.id,
+                        productname = obj.productname,
+                        Description = obj.Description,
+                        Category = obj.Category,
+                        Company = obj.Company,
+                        productImageUrl = obj.productImageUrl
+                    };
+
+                    // Update the product in the database
+                    unitofworks.Product.Update(product);
+                    unitofworks.Save();
+
+                    TempData["success"] = "Product updated successfully.";
+                    return RedirectToAction("ManageProduct", "Admin");
+                }
+            }
+
+            TempData["Error"] = "Failed to update product.";
+            return RedirectToAction("EditProduct", "Admin", new { id = obj.id }); // Redirect to the edit page with the product ID
+        }
+
     }
 }

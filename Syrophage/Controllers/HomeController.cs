@@ -30,8 +30,10 @@ namespace Syrophage.Controllers
         public IActionResult Products()
         {
             SetLayoutModel();
-            return View();
+            var carte = unitofworks.Categories.GetAll().ToList();
+            return View(carte);
         }
+
 
         public IActionResult Privacy()
         {

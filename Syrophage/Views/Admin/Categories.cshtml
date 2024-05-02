@@ -24,6 +24,7 @@
 
     <link href="~/admin/assets/libs/datatables.net-bs4/css/datatables.bootstrap4.css" rel="stylesheet" />
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -149,6 +150,7 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Image</th>
+                                        <th scope="col">Action</th>
                                        
                                     </tr>
                                 </thead>
@@ -166,6 +168,10 @@
                                                 <img src="@categories.CategoryPictureUrl" height="70px" width="70px" />
                                             </td>
 
+                                            <td>
+                                                <a asp-route-id="@categories.Id" data-id="@categories.Id" asp-action="DeleteCategory" asp-controller="Admin" class="btn btn-danger delete-btn"> <i class="bi bi-trash-fill"></i>Delete</a>
+                                            </td>
+
 
                                         </tr>
                                     }
@@ -179,6 +185,32 @@
         </div>
 
     </div>
+    <script>
+        document.querySelectorAll('.delete-btn').forEach(item => {
+            item.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the default action (i.e., navigating to the link)
+
+                // Use SweetAlert to show a confirmation dialog
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this item!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            // If the user confirms deletion, get the ID and redirect to the controller action
+                            var categoryId = item.getAttribute('data-id');
+                            window.location.href = '/Admin/DeleteCategory?id=' + categoryId;
+                        } else {
+                            // If the user cancels, do nothing
+                        }
+                    });
+            });
+        });
+    </script>
+
 
 
 
