@@ -25,7 +25,7 @@ namespace Syrophage.Data
 
         public DbSet<UserCoupon> UserCoupons { get; set; }
 
-
+        public DbSet<Categories> Categories { get; set; }
 
 
 

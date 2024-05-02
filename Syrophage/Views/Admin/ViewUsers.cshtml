@@ -15,9 +15,6 @@
 
     <title>Admin Dashboard</title>
 
-
-
-
     <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
     <link href="~/admin/dist/css/style.css" rel="stylesheet" />
     <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
@@ -26,8 +23,7 @@
 
     <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
 
-
-
+    <link href="~/assets/css/flash.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -44,21 +40,14 @@
 
         <partial name="AdminNavbar" />
 
-
-
-
         <partial name="AdminSidebar" />
-
-
-
-
 
 
         <div class="page-wrapper">
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Admin Dashboard</h4>
+                        <h4 class="page-title"></h4>
                         <div class="ms-auto text-end">
                         </div>
                     </div>
@@ -97,6 +86,7 @@
                                             <td>@user.Phone</td>
                                             <td>@user.Address</td>
                                             <td>@user.RegId</td>
+                                            <td>@user.IsActivated</td>
 
                                             <td>
                                                 <button data-activated="@(user.IsActivated ?? false)" onclick="toggleActivation(@user.Id, this)" class="btn btn-@(user.IsActivated == true ? "success" : "danger")">@(user.IsActivated == true ? "De-Activate" : "Activate")</button>
@@ -109,7 +99,7 @@
                                             <td>
                                                 <a asp-route-id="@user.Id" asp-action="AddCouponToUser" asp-controller="Admin" class="btn btn-primary">Add Coupon</a>
                                             </td>
-
+ 
 
                                         </tr>
                                     }

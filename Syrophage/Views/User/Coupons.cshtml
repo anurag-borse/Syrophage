@@ -2,7 +2,6 @@
 
 <link href="~/css/site.css" rel="stylesheet" />
 
-
 <div id="preloader">
     <div id="status">
         <div class="spinner">
@@ -11,7 +10,6 @@
         </div>
     </div>
 </div>
-
 
 <section class="bg-half" id="SignUp">
     <div class="bg-overlay"></div>
@@ -22,9 +20,8 @@
                     <div class="col-lg-12">
                         <div class="page-next-level text-white">
                             <h4 class="text-uppercase">
-                                <h4 class="text-uppercase">Available Coupons for @Context.Session.GetString("UserName")</h4>
+                                Available Coupons for @Context.Session.GetString("UserName")
                             </h4>
-
                         </div>
                     </div>
                 </div>
@@ -33,15 +30,12 @@
     </div>
 </section>
 
-
-
 <section class="section">
     <div class="container">
         <div class="row">
             @foreach (var coupon in Model)
             {
                 <div class="col-md-4">
-                    
                     <article class="post blog-post">
                         <div class="post-preview">
                             <a href="#"><img src="@coupon.CouponPictureUrl" alt="" class="img-fluid mx-auto d-block" style="width:70px; height:70px"></a>
@@ -68,25 +62,21 @@
                             <div class="post-footer">
                                 <div class="coupon-code">
                                     <input type="password" value="@coupon.Code" id="couponCode-@coupon.Id" readonly class="form-control">
-                                    <button class="btn btn-primary" onclick="toggleCouponCode(@coupon.Id)"  style="margin-top: 8px"  >Show Code</button>
-                                    <button class="btn btn-success" onclick="copyCouponCode(@coupon.Id)" data-toggle="tooltip" title="Copied!" style="margin-top: 8px; margin-left:20px">Copy Code</button>
+                                    <button class="btn btn-primary" onclick="toggleCouponCode(@coupon.Id)" style="margin-top: 8px">Show Code</button>
+                                    <button class="btn btn-success" onclick="copyCouponCode(@coupon.Id)" data-toggle="tooltip" data-trigger="manual" title="Copied!" style="margin-top: 8px; margin-left:20px">Copy Code</button>
                                 </div>
                             </div>
                         </div>
                     </article>
-                    
                 </div>
             }
         </div>
     </div>
 </section>
 
-
-
-
-
-
 <script>
+
+
     function toggleCouponCode(couponId) {
         var input = document.getElementById('couponCode-' + couponId);
         if (input.type === "password") {
@@ -96,9 +86,8 @@
         }
     }
 
-
     $(function () {
-        $('[data-toggle="tooltip"]').tooltip({ trigger: 'manual' });
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
     function copyCouponCode(couponId) {
@@ -113,5 +102,4 @@
             button.tooltip('hide');
         }, 1000);
     }
-
 </script>
