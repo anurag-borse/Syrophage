@@ -14,8 +14,8 @@ using Syrophage.Services;
 
 namespace Syrophage.Controllers
 {
-
     [Authorize]
+
     public class AdminController : Controller
     {
         public readonly ApplicationDbContext _db;
@@ -34,7 +34,7 @@ namespace Syrophage.Controllers
             this._webHostEnvironment = _webHostEnvironment;
         }
 
-
+        [Authorize]
         public IActionResult Dashboard()
         {
 
