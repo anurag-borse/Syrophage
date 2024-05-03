@@ -43,6 +43,7 @@ namespace Syrophage.Controllers
             var role = _db.Roles.FirstOrDefault(r => r.email == vm.Email)?.role;
 
 
+
             if (role == "Admin")
             {
 
@@ -58,10 +59,10 @@ namespace Syrophage.Controllers
                     //-------------------------------------------------
 
                     var adminClaims = new List<Claim>
-        {
+                        {
             new Claim(ClaimTypes.Name, existingAdmin.Email),
             // Add any additional claims specific to admin if needed
-        };
+                        };
 
                     var adminClaimsIdentity = new ClaimsIdentity(adminClaims, "AdminAuthentication");
 

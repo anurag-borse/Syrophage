@@ -15,7 +15,7 @@ using Syrophage.Services;
 namespace Syrophage.Controllers
 {
 
-    //[Authorize]
+    //  [Authorize]
     public class AdminController : Controller
     {
         private readonly IUnitofWorks unitofworks;
@@ -131,7 +131,7 @@ namespace Syrophage.Controllers
         }
 
 
-     
+
         /*=============================================users==============================================================*/
 
         /*=============================================NewsLetter==============================================================*/
@@ -721,7 +721,7 @@ namespace Syrophage.Controllers
                 if (file != null)
                 {
 
-          
+
 
 
                     string OldImagepath = service1.productImageUrl;
@@ -756,7 +756,7 @@ namespace Syrophage.Controllers
                         Service.Category = obj.Category;
                         Service.Description = obj.Description;
                         Service.productImageUrl = @"\ServicesImages\" + filename;
-    
+
                     }
 
 
@@ -786,8 +786,8 @@ namespace Syrophage.Controllers
                     TempData["success"] = "Service updated successfully.";
                     return RedirectToAction("ManageService", "Admin");
                 }
-     
-        }
+
+            }
             TempData["Error"] = "Service not Added";
             return RedirectToAction("ManageService", "Admin");
         }
@@ -963,13 +963,77 @@ namespace Syrophage.Controllers
                 unitofworks.Product.Remove(product);
                 unitofworks.Save();
 
-                return Json(new { success = true});
+                return Json(new { success = true });
             }
             return Json(new { success = false });
         }
 
 
 
+
+
+
+        [HttpGet]
+        public IActionResult MyProfile()
+        {
+            var logedadmin = HttpContext.Session.GetInt32("AdminId");
+
+            var user = unitofworks.Admin.GetById(logedadmin ?? 0);
+            return View(user);
+
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProfile(Admin admin)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var admininDb = unitofworks.Admin.GetById(admin.Id);
+
+                if (admininDb != null)
+                {
+                    admininDb.Name = admin.Name;
+                    admininDb.Email = admin.Email;
+                    admininDb.Contact = admin.Contact;
+                    admininDb.Address = admin.Address;
+                    admininDb.Password = admin.Password;
+                }
+                if (admin.ProfileImage != null)
+                {
+                    if (admininDb.ProfileImageUrl != null)
+                    {
+                        var filePathProfileImageUrl = Path.Combine(_webHostEnvironment.WebRootPath, admininDb.ProfileImageUrl.TrimStart('/'));
+                        if (System.IO.File.Exists(filePathProfileImageUrl))
+                        {
+                            System.IO.File.Delete(filePathProfileImageUrl);
+                        }
+                    }
+
+                    var file = admin.ProfileImage;
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    var fileName = Guid.NewGuid().ToString() + file.FileName;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "AdminProfileImages", fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    admininDb.ProfileImageUrl = Path.Combine("/AdminProfileImages", fileName).Replace("\\", "/");
+
+                }
+
+                unitofworks.Admin.Update(admininDb);
+                unitofworks.Save();
+
+
+                TempData["Success"] = "Profile Updated Successfully";
+                return RedirectToAction("MyProfile", "Admin");
+            }
+            TempData["Error"] = "Profile Not Updated";
+            return RedirectToAction("MyProfile", "Admin");
+
+        }
 
 
 

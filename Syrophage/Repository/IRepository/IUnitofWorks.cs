@@ -27,6 +27,7 @@
 
         IServicesRepository Services { get; }
 
+        IAdminRepository Admin { get; }
 
 
         public void Save();

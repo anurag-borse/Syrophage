@@ -15,17 +15,8 @@
             <!-- Logo -->
             <!-- ============================================================== -->
             <a class="navbar-brand" href="index.html">
-                <!-- Logo icon -->
-                @*                         <b class="logo-icon ps-2">
-                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                <!-- Dark Logo icon -->
-                <img src="~/screenshot 2024-04-29 135701.png"
-                alt="homepage"
-                class="light-logo"
-                height="80px"
-                width="100px"
-                width="25" />
-                </b> *@
+            
+
                 <!--End Logo icon -->
                 <!-- Logo text -->
                 <span class="logo-text ms-2">
@@ -37,19 +28,11 @@
                          class="light-logo" />
                 </span>
                 <!-- Logo icon -->
-                <!-- <b class="logo-icon"> -->
-                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                <!-- Dark Logo icon -->
-                <!-- <img src="../assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
-                <!-- </b> -->
-                <!--End Logo icon -->
+
+
+             
             </a>
-            <!-- ============================================================== -->
-            <!-- End Logo -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Toggle which is visible on mobile only -->
-            <!-- ============================================================== -->
+          
             <a class="nav-toggler waves-effect waves-light d-block d-md-none"
                href="javascript:void(0)">
                 <i class="ti-menu ti-close"></i>
@@ -193,6 +176,9 @@
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
+              
+                
+                
                 <li class="nav-item dropdown">
                     <a class="
                     nav-link
@@ -213,7 +199,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end user-dd animated"
                         aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-account me-1 ms-1"></i> My Profile</a>
+                        <a class="dropdown-item" asp-action="MyProfile" asp-controller="Admin" ><i class="mdi mdi-account me-1 ms-1"></i> My Profile</a>
                         <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-wallet me-1 ms-1"></i> My Balance</a>
                         <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email me-1 ms-1"></i> Inbox</a>
                         <div class="dropdown-divider"></div>
