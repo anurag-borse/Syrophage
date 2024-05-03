@@ -20,11 +20,10 @@ builder.Services.AddSession(options =>
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-       .AddCookie(options =>
-       {
-           options.LoginPath = "/Login/Login";
-       });
-
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login/Login"; // Set the default login path
+    });
 
 
 
