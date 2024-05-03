@@ -57,15 +57,6 @@ namespace Syrophage.Controllers
         }
 
         [HttpGet]
-        public IActionResult ViewUsers()
-        {
-            var user = unitofworks.User.GetAll().ToList();
-            ViewBag.Coupons = unitofworks.Coupon.GetAll().ToList();
-
-            return View(user);
-        }
-
-        [HttpGet]
 
         public IActionResult Logout()
         {
@@ -81,20 +72,78 @@ namespace Syrophage.Controllers
 
 
 
+
+        /*=============================================Contact us==============================================================*/
+
         [HttpGet]
         public IActionResult ViewContact()
         {
             var Contacts = unitofworks.Contact.GetAll().ToList();
             return View(Contacts);
         }
+        /*=============================================Contact us==============================================================*/
 
+        /*=============================================users==============================================================*/
+
+        [HttpGet]
+        public IActionResult ViewUsers()
+        {
+            var user = unitofworks.User.GetAll().ToList();
+            ViewBag.Coupons = unitofworks.Coupon.GetAll().ToList();
+
+            return View(user);
+        }
+        [HttpPost]
+        public IActionResult AddCoupon(Coupon coupon)
+        {
+            if (ModelState.IsValid)
+            {
+
+                coupon.IsActivated = false;
+                coupon.Code = services.GenerateCouponCode();
+                coupon.CreatedDate = DateTime.Now;
+
+                if (coupon.CouponPicture != null)
+                {
+
+                    var file = coupon.CouponPicture;
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    var fileName = Guid.NewGuid().ToString() + file.FileName;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "CouponImages", fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    coupon.CouponPictureUrl = Path.Combine("/CouponImages", fileName).Replace("\\", "/"); ;
+
+                }
+
+
+                unitofworks.Coupon.Add(coupon);
+                unitofworks.Save();
+                TempData["Success"] = "Coupon Added Successfully";
+                return RedirectToAction("Coupons");
+            }
+            TempData["Error"] = "Coupon Not Added";
+            return RedirectToAction("Coupons");
+        }
+
+
+     
+        /*=============================================users==============================================================*/
+
+        /*=============================================NewsLetter==============================================================*/
         [HttpGet]
         public IActionResult ViewNewsLetter()
         {
             var Newsletter = unitofworks.Newsletter.GetAll().ToList();
             return View(Newsletter);
         }
+        /*=============================================NewsLetter==============================================================*/
 
+
+        /*=============================================Tokens==============================================================*/
         [HttpGet]
         public IActionResult ViewTokens()
         {
@@ -156,8 +205,9 @@ namespace Syrophage.Controllers
             return Json(new { success = false });
 
         }
+        /*=============================================Tokens==============================================================*/
 
-
+        /*=============================================Coupons==============================================================*/
         [HttpGet]
         public IActionResult Coupons()
         {
@@ -165,7 +215,100 @@ namespace Syrophage.Controllers
             return View(coupons);
         }
 
+        [HttpPost]
+        public JsonResult ToggleActivationCoupon(int id, bool isActivated)
+        {
+            var coupon = unitofworks.Coupon.GetById(id);
+            if (coupon != null)
+            {
+                coupon.IsActivated = !isActivated;
+                unitofworks.Coupon.Update(coupon);
+                unitofworks.Save();
 
+
+                return Json(new { success = true, message = "Activation Done Successfully !!!" });
+
+
+            }
+            return Json(new { success = false, message = "Activation Failed !!!" });
+
+        }
+
+        [HttpPost]
+        public JsonResult DeleteCoupon(int id)
+        {
+            var coupon = unitofworks.Coupon.GetById(id);
+            if (coupon != null)
+            {
+                // Get the physical path of the file
+                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, coupon.CouponPictureUrl.TrimStart('/'));
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                unitofworks.Coupon.Remove(coupon);
+                unitofworks.Save();
+
+                return Json(new { success = true, message = "Coupon Deleted Successfully" });
+            }
+            return Json(new { success = false, message = "Coupon Not Deleted" });
+        }
+
+        [HttpPost]
+        public JsonResult RemoveCouponFromUser(int userId, int couponId)
+        {
+            var userCoupon = unitofworks.UserCoupon.GetAll().FirstOrDefault(uc => uc.UserId == userId && uc.CouponId == couponId);
+            if (userCoupon != null)
+            {
+                unitofworks.UserCoupon.Remove(userCoupon);
+                unitofworks.Save();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+
+
+        [HttpPost]
+        public JsonResult AddCouponToUser(int userId, int couponId)
+        {
+            if (userId >= 0 && couponId >= 0)
+            {
+
+                var userCoupon = new UserCoupon
+                {
+                    UserId = userId,
+                    CouponId = couponId
+                };
+
+                unitofworks.UserCoupon.Add(userCoupon);
+                unitofworks.Save();
+
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+
+        [HttpGet]
+        public IActionResult AddCouponToUser(int id)
+        {
+
+            var user = unitofworks.User.GetById(id);
+
+            ViewBag.availablecouponsforthisuser = unitofworks.UserCoupon.GetAll().Where(x => x.UserId == id).Select(x => x.CouponId).ToList();
+
+
+
+            ViewBag.Coupons = unitofworks.Coupon.GetAll().ToList();
+
+            return View(user);
+
+        }
+        /*=============================================Coupons==============================================================*/
+
+
+        /*=============================================Order==============================================================*/
         [HttpGet]
         public IActionResult AddOrder()
         {
@@ -206,9 +349,6 @@ namespace Syrophage.Controllers
                         quantity = obj.quantity
                     };
 
-
-
-
                     unitofworks.Orders.Add(order);
                     unitofworks.Save();
 
@@ -220,87 +360,6 @@ namespace Syrophage.Controllers
             }
             TempData["Error"] = "Order Not Placed";
             return RedirectToAction("AddOrder", "Admin");
-        }
-
-        [HttpPost]
-        public IActionResult AddCoupon(Coupon coupon)
-        {
-            if (ModelState.IsValid)
-            {
-
-                coupon.IsActivated = false;
-                coupon.Code = services.GenerateCouponCode();
-                coupon.CreatedDate = DateTime.Now;
-
-                if (coupon.CouponPicture != null)
-                {
-
-                    var file = coupon.CouponPicture;
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    var fileName = Guid.NewGuid().ToString() + file.FileName;
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "CouponImages", fileName);
-
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                    }
-                    coupon.CouponPictureUrl = Path.Combine("/CouponImages", fileName).Replace("\\", "/"); ;
-
-                }
-
-
-
-
-
-                unitofworks.Coupon.Add(coupon);
-                unitofworks.Save();
-                TempData["Success"] = "Coupon Added Successfully";
-                return RedirectToAction("Coupons");
-            }
-            TempData["Error"] = "Coupon Not Added";
-            return RedirectToAction("Coupons");
-        }
-
-        [HttpPost]
-        public JsonResult ToggleActivationCoupon(int id, bool isActivated)
-        {
-            var coupon = unitofworks.Coupon.GetById(id);
-            if (coupon != null)
-            {
-                coupon.IsActivated = !isActivated;
-                unitofworks.Coupon.Update(coupon);
-                unitofworks.Save();
-
-
-                return Json(new { success = true, message = "Activation Done Successfully !!!" });
-
-
-            }
-            return Json(new { success = false, message = "Activation Failed !!!" });
-
-        }
-
-
-        [HttpPost]
-        public JsonResult DeleteCoupon(int id)
-        {
-            var coupon = unitofworks.Coupon.GetById(id);
-            if (coupon != null)
-            {
-                // Get the physical path of the file
-                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, coupon.CouponPictureUrl.TrimStart('/'));
-
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.Delete(filePath);
-                }
-
-                unitofworks.Coupon.Remove(coupon);
-                unitofworks.Save();
-
-                return Json(new { success = true, message = "Coupon Deleted Successfully" });
-            }
-            return Json(new { success = false, message = "Coupon Not Deleted" });
         }
 
 
@@ -335,62 +394,10 @@ namespace Syrophage.Controllers
             TempData["Success"] = "Order Updated Succesfully";
             return RedirectToAction("ManageOrder", "Admin");
         }
+        /*=============================================Order==============================================================*/
 
 
-        [HttpGet]
-        public IActionResult AddCouponToUser(int id)
-        {
-
-            var user = unitofworks.User.GetById(id);
-
-            ViewBag.availablecouponsforthisuser = unitofworks.UserCoupon.GetAll().Where(x => x.UserId == id).Select(x => x.CouponId).ToList();
-
-
-
-            ViewBag.Coupons = unitofworks.Coupon.GetAll().ToList();
-
-            return View(user);
-
-        }
-
-        [HttpPost]
-        public JsonResult RemoveCouponFromUser(int userId, int couponId)
-        {
-            var userCoupon = unitofworks.UserCoupon.GetAll().FirstOrDefault(uc => uc.UserId == userId && uc.CouponId == couponId);
-            if (userCoupon != null)
-            {
-                unitofworks.UserCoupon.Remove(userCoupon);
-                unitofworks.Save();
-                return Json(new { success = true });
-            }
-            return Json(new { success = false });
-        }
-
-
-        [HttpPost]
-        public JsonResult AddCouponToUser(int userId, int couponId)
-        {
-            if (userId >= 0  && couponId >= 0)
-            {
-
-                var userCoupon = new UserCoupon
-                {
-                    UserId = userId,
-                    CouponId = couponId
-                };
-
-                unitofworks.UserCoupon.Add(userCoupon);
-                unitofworks.Save();
-
-                return Json(new { success = true  });
-            }
-            return Json(new { success = false });
-        }
-
-
-
-
-
+        /*=============================================Product Categories==============================================================*/
         [HttpGet]
         public IActionResult Categories()
         {
@@ -399,7 +406,6 @@ namespace Syrophage.Controllers
 
             return View(categories);
         }
-
 
         [HttpPost]
         public IActionResult AddCategory(Categories categories)
@@ -435,6 +441,360 @@ namespace Syrophage.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult DeleteCategory(int id)
+        {
+            var category = unitofworks.Categories.GetById(id);
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            var products = unitofworks.Product.GetAll().Where(j => j.Category == category.CategoryName).ToList();
+
+
+
+
+
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, category.CategoryPictureUrl.TrimStart('/'));
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+            foreach (var prod in products)
+            {
+                unitofworks.Product.Remove(prod);
+            }
+
+            if (category != null)
+            {
+                unitofworks.Categories.Remove(category);
+                unitofworks.Save();
+
+                TempData["Success"] = "Category Deleted Successfully";
+                return RedirectToAction("Categories", "Admin");
+            }
+
+
+            TempData["Error"] = "Category  not Deleted";
+            return RedirectToAction("Categories", "Admin");
+        }
+
+        [HttpGet]
+        public IActionResult EditCategory(int id)
+        {
+            var category = unitofworks.Categories.GetById(id);
+
+            return View(category);
+        }
+
+
+        [HttpPost]
+        public IActionResult EditCategory(Categories obj, IFormFile file)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var categories1 = unitofworks.Categories.GetById(obj.Id);
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+
+                if (file != null)
+                {
+                    string OldImagepath = categories1.CategoryPictureUrl;
+
+                    string oldImagePath = Path.Combine(wwwRootPath, OldImagepath.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+
+
+
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"CategoryPictures");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+
+                    var category = unitofworks.Categories.GetById(obj.Id);
+
+                    if (category != null)
+                    {
+                        category.CategoryName = obj.CategoryName;
+                        category.CategoryDescription = obj.CategoryDescription;
+                        category.CategoryPictureUrl = @"\CategoryPictures\" + filename;
+                    }
+
+                    unitofworks.Categories.Update(category);
+                    unitofworks.Save();
+
+
+                    TempData["Success"] = "Category updated successfully";
+                    return RedirectToAction("Categories", "Admin");
+                }
+            }
+
+
+            TempData["Error"] = "Category  not updated";
+            return RedirectToAction("Categories", "Admin");
+        }
+
+        /*=============================================Product Categories==============================================================*/
+
+
+        /*=============================================Service Categories==============================================================*/
+
+        [HttpGet]
+        public IActionResult ServiceCategories()
+        {
+            var categories = unitofworks.ServiceCategories.GetAll().ToList();
+            return View(categories);
+        }
+        [HttpPost]
+        public IActionResult AddServiceCategory(ServiceCategory obj, IFormFile file)
+        {
+            if (ModelState.IsValid)
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"ServiceCategoryImages");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    var cate = new ServiceCategory
+                    {
+                        CategoryName = obj.CategoryName,
+                        CategoryDescription = obj.CategoryDescription,
+                        CategoryPictureUrl = @"\ServiceCategoryImages\" + filename
+                    };
+
+
+                    unitofworks.ServiceCategories.Add(cate);
+                    unitofworks.Save();
+
+                    TempData["Success"] = "category Added Succesfully";
+                    return RedirectToAction("ServiceCategories", "Admin");
+                }
+            }
+
+
+            TempData["Error"] = "category Not Added";
+            return RedirectToAction("ServiceCategories", "Admin");
+        }
+        [HttpGet]
+        public IActionResult EditServiceCategories(int id)
+        {
+            var categories = unitofworks.ServiceCategories.GetById(id);
+            return View(categories);
+        }
+        [HttpPost]
+        public IActionResult EditServiceCategory(ServiceCategory obj, IFormFile file)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var categories1 = unitofworks.ServiceCategories.GetById(obj.Id);
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+
+                    string OldImagepath = categories1.CategoryPictureUrl;
+
+                    string oldImagePath = Path.Combine(wwwRootPath, OldImagepath.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+
+
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"ServiceCategoryImages");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    var category = unitofworks.ServiceCategories.GetById(obj.Id);
+
+                    if (category != null)
+                    {
+                        category.CategoryName = obj.CategoryName;
+                        category.CategoryDescription = obj.CategoryDescription;
+                        category.CategoryPictureUrl = @"\ServiceCategoryImages\" + filename;
+                    }
+
+                    unitofworks.ServiceCategories.Update(category);
+                    unitofworks.Save();
+
+
+                    TempData["Success"] = "Category updated successfully";
+                    return RedirectToAction("Servicecategories", "Admin");
+
+                }
+            }
+            TempData["Error"] = "Category Not updated ";
+            return RedirectToAction("Servicecategories", "Admin");
+        }
+        /*=============================================Service Categories==============================================================*/
+
+        /*=============================================Services==============================================================*/
+
+        [HttpGet]
+        public IActionResult AddService()
+        {
+            var categories = unitofworks.ServiceCategories.GetAll().ToList();
+            return View(categories);
+        }
+
+        [HttpGet]
+        public IActionResult ManageService()
+        {
+            var services = unitofworks.Services.GetAll().ToList();
+            return View(services);
+        }
+
+        [HttpPost]
+        public IActionResult AddService(Service obj, IFormFile file)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var Service = unitofworks.Services.GetById(obj.id);
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+                if (file != null)
+                {
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"ServicesImages");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    var Ser = new Service
+                    {
+                        servicename = obj.servicename,
+                        Description = obj.Description,
+                        Category = obj.Category,
+                        productImageUrl = @"\ServicesImages\" + filename
+                    };
+
+
+                    unitofworks.Services.Add(Ser);
+                    unitofworks.Save();
+
+
+                    TempData["Success"] = "Service Added Succefully";
+                    return RedirectToAction("ManageService", "Admin");
+
+                }
+
+            }
+            TempData["Error"] = "Service not Added";
+            return RedirectToAction("ManageService", "Admin");
+        }
+
+        [HttpGet]
+        public IActionResult EidtService(int id)
+        {
+            var services = unitofworks.Services.GetById(id);
+            return View(services);
+        }
+
+        [HttpPost]
+        public IActionResult EditService(Service obj, IFormFile file)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var service1 = unitofworks.Services.GetById(obj.id);
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+
+          
+
+
+                    string OldImagepath = service1.productImageUrl;
+
+                    // Remove the old image file if it exists
+                    string oldImagePath = Path.Combine(wwwRootPath, OldImagepath.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+
+
+
+                    // Generate a unique filename for the new image
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"ServicesImages");
+
+                    // Save the new image
+                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    // Update product details including the new image URL
+
+                    var Service = unitofworks.Services.GetById(obj.id);
+
+
+                    if (Service != null)
+                    {
+                        Service.servicename = obj.servicename;
+                        Service.Category = obj.Category;
+                        Service.Description = obj.Description;
+                        Service.productImageUrl = @"\ServicesImages\" + filename;
+    
+                    }
+
+
+                    // Update the product in the database
+                    unitofworks.Services.Update(Service);
+                    unitofworks.Save();
+
+                    TempData["success"] = "Services updated successfully.";
+                    return RedirectToAction("ManageService", "Admin");
+                }
+                else
+                {
+
+                    var service = new Service
+                    {
+                        id = obj.id,
+                        servicename = obj.servicename,
+                        Description = obj.Description,
+                        Category = obj.Category,
+                        productImageUrl = obj.productImageUrl
+                    };
+
+                    // Update the product in the database
+                    unitofworks.Services.Update(service);
+                    unitofworks.Save();
+
+                    TempData["success"] = "Service updated successfully.";
+                    return RedirectToAction("ManageService", "Admin");
+                }
+     
+        }
+            TempData["Error"] = "Service not Added";
+            return RedirectToAction("ManageService", "Admin");
+        }
+        /*=============================================Services==============================================================*/
+
+
+
+        /*=============================================product==============================================================*/
         [HttpGet]
         public IActionResult Addproduct()
         {
@@ -498,39 +858,6 @@ namespace Syrophage.Controllers
         }
 
 
-        [HttpGet]
-        public IActionResult DeleteCategory(int id)
-        {
-            var category = unitofworks.Categories.GetById(id);
-            string wwwRootPath = _webHostEnvironment.WebRootPath;
-            var products = unitofworks.Product.GetAll().Where(j => j.Category == category.CategoryName).ToList();
-
-            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, category.CategoryPictureUrl.TrimStart('/'));
-
-            if (System.IO.File.Exists(filePath))
-            {
-                System.IO.File.Delete(filePath);
-            }
-
-
-            foreach (var prod in products)
-            {
-                unitofworks.Product.Remove(prod);
-            }
-
-            if (category != null)
-            {
-                unitofworks.Categories.Remove(category);
-                unitofworks.Save();
-
-                TempData["Success"] = "Category Deleted Successfully";
-                return RedirectToAction("Categories", "Admin");
-            }
-
-
-            TempData["Error"] = "Category  not Deleted";
-            return RedirectToAction("Categories", "Admin");
-        }
         [HttpPost]
         public IActionResult EditProduct(Product obj, IFormFile file)
         {
@@ -648,3 +975,5 @@ namespace Syrophage.Controllers
 
     }
 }
+
+/*=============================================product==============================================================*/

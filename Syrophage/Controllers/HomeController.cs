@@ -128,7 +128,8 @@ namespace Syrophage.Controllers
         public IActionResult Services()
         {
             SetLayoutModel();
-            return View();
+            var services = unitofworks.ServiceCategories.GetAll().ToList();
+            return View(services);
         }
 
 
@@ -163,5 +164,13 @@ namespace Syrophage.Controllers
                 _httpContextAccessor.HttpContext.Items["LayoutModel"] = layoutModel;
             }
         }
+
+        [HttpGet]
+        public IActionResult ViewServices(string name)
+        {
+            var services = unitofworks.Services.GetByCategoryName(name).ToList();
+            return View(services);
+        }
+        
     }
 }

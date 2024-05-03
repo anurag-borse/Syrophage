@@ -1,8 +1,22 @@
-﻿
+﻿@model List<Syrophage.Models.ServiceCategory>
 
 <link href="~/css/site.css" rel="stylesheet" />
 
+<style>
+    .bg-half{
+        background-image: url('../assets/images/home/bg-services.jpg');
+    }
 
+    .img-size{
+        height:350px;
+        width:340px;
+    }
+
+    .description-container {
+        max-height: 100px; /* Adjust this value based on your design */
+        overflow-y: auto;
+    }
+</style>
 
 <div id="preloader">
     <div id="status">
@@ -13,28 +27,47 @@
     </div>
 </div>
 
-<!-- ERROR PAGE -->
-<section class="section bg-home" id="CommingSoon">
+<section class="bg-half" >
     <div class="bg-overlay"></div>
     <div class="home-center">
         <div class="home-desc-center">
             <div class="container">
-                <div class="row">
-                    <div class="col-12 text-center error-page">
-                        <a href="index-2.html">
-                            <img src="~/screenshot_2024-04-26_152838-removebg-preview.png" alt="missing_logo" height="70">
-                        </a>
-                        <h1 class="text-white coming-soon">Coming soon</h1>
-                    </div>
-                </div>
-
                 <div class="row justify-content-center">
-                    <div class="col-md-8 text-center">
-                        <div id="countdown"></div>
+                    <div class="col-lg-12">
+                        <div class="page-next-level text-white">
+                            <h4 class="text-uppercase">Services</h4>
+                            
+                        </div>
                     </div>
                 </div>
-            </div> <!-- end container -->
+            </div>
         </div>
     </div>
 </section>
-<!-- ERROR PAGE -->
+<!-- HOME END-->
+<!--  -->
+<section class="section">
+    <div class="container">
+        <div class="row">
+            @foreach (var serviceCategory in Model)
+            {
+                <div class="col-md-4">
+                    <div class="owl-services img-service bg-light">
+                        <div class="img">
+                            <img src="@serviceCategory.CategoryPictureUrl" alt="service_img" class="img-size">
+                        </div>
+                        <div class="owl-service-head text-center">
+                            <a href="#"><h4>@serviceCategory.CategoryName</h4></a>
+                            <div class="description-container">
+                                <p class="text-muted mb-0">@serviceCategory.CategoryDescription</p>
+                            </div>
+                            <div class="mt-3">
+                                <a asp-action="ViewServices" asp-controller="Home" asp-route-name="@serviceCategory.CategoryName" class="btn btn-outline-custom">Explore</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

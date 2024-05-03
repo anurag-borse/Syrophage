@@ -317,65 +317,30 @@
     <section class="section">
 
 
-        <div class="container">
-            <div class="port portfolio-masonry mt-3">
-                <div class="portfolioContainer row">
-                   
-
-                    <div class="container">
-                        <div class="port portfolio-masonry mt-3">
-                            <div class="portfolioContainer row">
-                                @foreach (var product in Model)
-                                {
-                                    <div class="col-lg-4 col-md-6 @product.Category.ToLower()">
-                                        <div class="portfolio-box">
-                                            <a class="mfp-image" href="@product.productImageUrl" title="@product.productname">
-                                                <img src="@product.productImageUrl" class="" alt="member-image" style="width: 500px; height: 350px;">
-                                            </a>
-                                            <div class="gallary-title text-center">
-                                                <h6><a href="work-single.html">@product.productname</a></h6>
-                                                <span class="text-muted">@product.Category</span>
-                                            </div>
+    <div class="container">
+        <div class="port portfolio-masonry mt-3">
+            <div class="portfolioContainer row">
+                <div class="container">
+                    <div class="port portfolio-masonry mt-3">
+                        <div class="portfolioContainer row">
+                            @foreach (var product in Model)
+                            {
+                                <div class="col-lg-4 col-md-6 @product.Category.ToLower()">
+                                    <div class="portfolio-box">
+                                        <a class="mfp-image" href="@product.productImageUrl" title="@product.productname">
+                                            <img src="@product.productImageUrl" class="" alt="member-image" style="width: 500px; height: 350px;">
+                                        </a>
+                                        <div class="gallary-title text-center">
+                                            <h6><a href="work-single.html">@product.productname</a></h6>
+                                            <span class="text-muted">@product.Category</span>
                                         </div>
                                     </div>
-                                }
-                            </div>
+                                </div>
+                            }
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
-    </section>
-    <!-- WORK END -->
-    <!-- PARTNER START -->
- 
-    <!-- PARTNER END -->
-    <!-- FOOTER START -->
-  
-    <!-- FOOTER END -->
-    <!-- Back to top -->
-  @*    <a href="#" class="back-to-top" id="back-to-top">
-        <i class="mdi mdi-chevron-up"> </i>
-    </a>
-    <!-- Back to top -->
-    <!-- js placed at the end of the document so the pages load faster -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <!-- Portfolio -->
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/isotope.js"></script>
-    <script src="js/portfolio-filter.js"></script>
-    <!-- Carousel -->
-    <script src="js/slick.min.js"></script>
-    <script src="js/slick.init.js"></script>
-    <!--custom script-->
-    <script src="js/app.js"></script>
-
-</body>
-
-
-<!-- work-col-three12-->
-</html> *@
+    </div>
+</section>
