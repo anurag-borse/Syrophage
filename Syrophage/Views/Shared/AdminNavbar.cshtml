@@ -1,4 +1,7 @@
-﻿
+﻿@{
+    var admin = ViewData["Admin"] as Admin;
+}
+
 <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
 <link href="~/admin/dist/css/style.css" rel="stylesheet" />
 <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
@@ -192,7 +195,7 @@
                        role="button"
                        data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="../assets/images/users/1.jpg"
+                        <img src="@admin.ProfileImageUrl"
                              alt="user"
                              class="rounded-circle"
                              width="31" />

@@ -11,6 +11,7 @@ using Syrophage.Models;
 using Syrophage.Models.ViewModel;
 using Syrophage.Repository.IRepository;
 using Syrophage.Services;
+using Syrophage.Repository;
 
 namespace Syrophage.Controllers
 {
@@ -33,9 +34,24 @@ namespace Syrophage.Controllers
             this._webHostEnvironment = _webHostEnvironment;
         }
 
+        public void setAdminData()
+        {
+            var AdminId = HttpContext.Session.GetInt32("AdminId");
+            var Admin = unitofworks.Admin.GetById(AdminId ?? 0);
+           
+            ViewData["Admin"] = Admin;
+        }
+
+
+
 
         public IActionResult Dashboard()
         {
+
+            setAdminData();
+
+
+
 
             var newslettersCount = unitofworks.Newsletter.GetAll().Count();
             var activeUsersCount = unitofworks.User.GetAll().Where(x => x.IsActivated == true).Count();
@@ -976,6 +992,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult MyProfile()
         {
+            setAdminData();
+
             var logedadmin = HttpContext.Session.GetInt32("AdminId");
 
             var user = unitofworks.Admin.GetById(logedadmin ?? 0);
