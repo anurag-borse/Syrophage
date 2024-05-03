@@ -103,6 +103,26 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark"
+                       href="javascript:void(0)"
+                       aria-expanded="false">
+                        <i class="bi bi-columns-gap"></i><span class="hide-menu">Services </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a asp-action="AddService" asp-controller="Admin" class="sidebar-link">
+                                <i class="mdi mdi-note-outline"></i><span class="hide-menu"> Add-Services </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-action="ManageService" asp-controller="Admin" class="sidebar-link">
+                                <i class="mdi mdi-note-plus"></i><span class="hide-menu"> Manage Services</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             
 
 
@@ -111,7 +131,16 @@
                     <a class="sidebar-link waves-effect waves-dark sidebar-link"
                        asp-action="Categories" asp-controller="Admin"
                        aria-expanded="false">
-                        <i class="mdi mdi-compare"></i><span class="hide-menu">Categories</span>
+                        <i class="mdi mdi-compare"></i><span class="hide-menu"> Products Categories</span>
+                    </a>
+                </li>
+
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                       asp-action="ServiceCategories" asp-controller="Admin"
+                       aria-expanded="false">
+                        <i class="bi bi-front"></i><span class="hide-menu"> Service Categories</span>
                     </a>
                 </li>
 

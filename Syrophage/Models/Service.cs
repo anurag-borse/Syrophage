@@ -3,18 +3,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Syrophage.Models
 {
-    public class Product
+    public class Service
     {
         [Key]
         public int id { get; set; }
+
         [Required]
-        public string productname { get; set; }
+        public string servicename { get; set; }
         [Required]
         public string Description { get; set; }
         [Required]
         public string Category { get; set; }
-        [Required]
-        public string Company { get; set; }
 
         [ValidateNever]
         public string productImageUrl { get; set; }

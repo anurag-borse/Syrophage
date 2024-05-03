@@ -1,4 +1,4 @@
-﻿@model List<Syrophage.Models.Order>
+﻿@model List<Syrophage.Models.Service>
 
 
 
@@ -59,7 +59,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Manage Orders</h4>
+                        <h4 class="page-title">Manage Product</h4>
                         <div class="ms-auto text-end">
                         </div>
                     </div>
@@ -72,16 +72,14 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title mb-0">Contacts</h5>
+                                <h5 class="card-title mb-0">Products</h5>
                             </div>
                             <table class="table" id="manageOrderData">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Username</th>
                                         <th scope="col">ProductName</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Category</th>
                                         <th scope="col">ProductImage</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -91,19 +89,17 @@
                                     {
                                         <tr>
 
-                                            <td>@user.username</td>
-                                            <td>@user.ProductName</td>
-                                            <td>@user.date.ToString("dd-MM-yyyy")</td>
-                                            <td>@user.Status</td>
-                                            <td>@user.quantity</td>
+                                            <td>@user.servicename</td>
+                                            <td>@user.Description</td>
+                                            <td>@user.Category</td>
                                             <td>
-                                                <img src="@user.ProductImageurl" height="70px" width="70px" />
+                                                <img src="@user.productImageUrl" height="70px" width="70px" />
                                             </td>
                                             <td>
 
-                                                <a type="button" class="btn btn-primary" asp-action="EidtOrder" asp-controller="Admin" asp-route-id="@user.id"><i class="bi bi-pencil-fill"></i></a>
+                                                <a type="button" class="btn btn-primary" asp-action="EidtService" asp-controller="Admin" asp-route-id="@user.id"><i class="bi bi-pencil-fill"></i></a>
 
-
+                                                <a type="button" class="btn btn-danger" asp-action="DeleteProduct" asp-controller="Admin" asp-route-id="@user.id"><i class="bi bi-trash-fill"></i></a>
                                             </td>
 
 
