@@ -35,7 +35,6 @@ namespace Syrophage.Repository
             Orders = new OrderRepository(_db);
             Coupon = new CouponRepository(_db);
             Product = new ProductsRepository(_db);
-
             UserCoupon = new UserCouponRepository(_db);
             Categories = new CategoriesRepository(_db);
         }

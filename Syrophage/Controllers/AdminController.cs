@@ -18,7 +18,6 @@ namespace Syrophage.Controllers
     //[Authorize]
     public class AdminController : Controller
     {
-        public readonly ApplicationDbContext _db;
         private readonly IUnitofWorks unitofworks;
         private readonly IServices services;
 
