@@ -23,6 +23,11 @@
 
         IProductsRepository Product { get; }
 
+        IServicesCategoriesRepository ServiceCategories { get; }
+
+        IServicesRepository Services { get; }
+
+
 
         public void Save();
     }

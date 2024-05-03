@@ -1,4 +1,4 @@
-﻿@model List<Syrophage.Models.Categories>
+﻿@model List<Syrophage.Models.ServiceCategory>
 
 @{
     Layout = null;
@@ -91,7 +91,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form method="post" asp-action="AddCategory" asp-controller="Admin" enctype="multipart/form-data">
+                                    <form method="post" asp-action="AddServiceCategory" asp-controller="Admin" enctype="multipart/form-data">
 
 
                                         <div class="mb-3">
@@ -109,7 +109,7 @@
                                         <div class="mb-3">
                                             <label for="formFile" class="form-label">Category Picture </label>
 
-                                            <input class="form-control" type="file" id="formFile" name="CategoryPicture" />
+                                            <input class="form-control" type="file" id="formFile" name="file" />
                                         </div>
 
 
@@ -134,7 +134,7 @@
 
 
 
-            <div class="container-fluid" >
+            <div class="container-fluid">
 
                 <div class="row">
                     <div class="col-12">
@@ -151,7 +151,7 @@
                                         <th scope="col">Description</th>
                                         <th scope="col">Image</th>
                                         <th scope="col">Action</th>
-                                       
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -169,7 +169,7 @@
                                             </td>
 
                                             <td>
-                                                <a asp-route-id="@categories.Id" data-id="@categories.Id" asp-action="EditCategory" asp-controller="Admin" class="btn btn-primary"> <i class="bi bi-pencil-fill"></i></a>
+                                                <a asp-route-id="@categories.Id" data-id="@categories.Id" asp-action="EditServiceCategories" asp-controller="Admin" class="btn btn-primary"> <i class="bi bi-pencil-fill"></i></a>
                                                 <a asp-route-id="@categories.Id" data-id="@categories.Id" asp-action="DeleteCategory" asp-controller="Admin" class="btn btn-danger delete-btn"> <i class="bi bi-trash-fill"></i></a>
                                             </td>
 
@@ -210,12 +210,6 @@
                     });
             });
         });
-
-
-
-        $(document).ready(function () {
-            $('#categoriesData').DataTable();
-        });
     </script>
 
 
@@ -240,7 +234,12 @@
 <!-- Static Coupons -->
 
 
+<script>
 
+    $(document).ready(function () {
+        $('#categoriesData').DataTable();
+    });
+</script>
 
 @if (TempData["Success"] != null)
 {
