@@ -32,6 +32,8 @@ namespace Syrophage.Controllers
             this.services = services;
             this._webHostEnvironment = _webHostEnvironment;
         }
+
+
         public IActionResult Dashboard()
         {
 
