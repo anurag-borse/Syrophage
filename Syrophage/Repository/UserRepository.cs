@@ -15,6 +15,11 @@ namespace Syrophage.Repository
             _db = db;
         }
 
+        public int Count()
+        {
+            return _db.Users.Count();
+        }
+
         public Users GetById(int Id)
         {
             return _db.Users.Find(Id);

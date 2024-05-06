@@ -12,6 +12,11 @@ namespace Syrophage.Repository
             _db = db;
         }
 
+        public int Count()
+        {
+            return _db.Coupons.Count(); 
+        }
+
         public Coupon GetById(int id)
         {
             return _db.Coupons.Find(id);
