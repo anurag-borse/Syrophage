@@ -86,6 +86,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult ViewContact()
         {
+            setAdminData();
+
             var Contacts = unitofworks.Contact.GetAll().ToList();
             return View(Contacts);
         }
@@ -96,6 +98,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult ViewUsers()
         {
+            setAdminData();
+
             var user = unitofworks.User.GetAll().ToList();
             ViewBag.Coupons = unitofworks.Coupon.GetAll().ToList();
 
@@ -104,6 +108,8 @@ namespace Syrophage.Controllers
         [HttpPost]
         public IActionResult AddCoupon(Coupon coupon)
         {
+
+
             if (ModelState.IsValid)
             {
 
@@ -145,6 +151,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult ViewNewsLetter()
         {
+            setAdminData();
+
             var Newsletter = unitofworks.Newsletter.GetAll().ToList();
             return View(Newsletter);
         }
@@ -155,6 +163,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult ViewTokens()
         {
+            setAdminData();
+
             var Token = unitofworks.Token.GetAll().ToList();
             return View(Token);
         }
@@ -219,6 +229,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult Coupons()
         {
+            setAdminData();
+
             var coupons = unitofworks.Coupon.GetAll().ToList();
             return View(coupons);
         }
@@ -320,6 +332,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult AddOrder()
         {
+            setAdminData();
+
             var User = unitofworks.User.GetAll().ToList();
             return View(User);
         }
@@ -374,6 +388,9 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult ManageOrder()
         {
+            setAdminData();
+
+
             var Orders = unitofworks.Orders.GetAll().ToList();
             return View(Orders);
         }
@@ -381,6 +398,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult EidtOrder(int id)
         {
+            setAdminData();
+
             var Orders = unitofworks.Orders.GetById(id);
             return View(Orders);
         }
@@ -409,6 +428,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult Categories()
         {
+            setAdminData();
+
             var categories = unitofworks.Categories.GetAll().ToList();
 
 
@@ -488,6 +509,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult EditCategory(int id)
         {
+            setAdminData();
+
             var category = unitofworks.Categories.GetById(id);
 
             return View(category);
@@ -556,6 +579,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult ServiceCategories()
         {
+            setAdminData();
+
             var categories = unitofworks.ServiceCategories.GetAll().ToList();
             return View(categories);
         }
@@ -598,6 +623,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult EditServiceCategories(int id)
         {
+            setAdminData();
+
             var categories = unitofworks.ServiceCategories.GetById(id);
             return View(categories);
         }
@@ -657,6 +684,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult AddService()
         {
+            setAdminData();
+
             var categories = unitofworks.ServiceCategories.GetAll().ToList();
             return View(categories);
         }
@@ -664,6 +693,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult ManageService()
         {
+            setAdminData();
+
             var services = unitofworks.Services.GetAll().ToList();
             return View(services);
         }
@@ -713,6 +744,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult EidtService(int id)
         {
+            setAdminData();
+
             var services = unitofworks.Services.GetById(id);
             return View(services);
         }
@@ -806,6 +839,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult Addproduct()
         {
+            setAdminData();
+
             var categories = unitofworks.Categories.GetAll().ToList();
             return View(categories);
         }
@@ -854,6 +889,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult ManageProduct()
         {
+            setAdminData();
+
             var products = unitofworks.Product.GetAll().ToList();
             return View(products);
         }
@@ -861,6 +898,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult EidtProduct(int id)
         {
+            setAdminData();
+
             var products = unitofworks.Product.GetById(id);
             return View(products);
         }
