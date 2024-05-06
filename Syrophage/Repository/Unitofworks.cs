@@ -29,6 +29,8 @@ namespace Syrophage.Repository
 
         public IServicesRepository Services { get; set; }
 
+        public IAdminRepository Admin { get; set;}
+
         public Unitofworks(ApplicationDbContext _db)
         {
             this._db = _db;
@@ -43,6 +45,7 @@ namespace Syrophage.Repository
             Categories = new CategoriesRepository(_db);
             ServiceCategories = new ServicesCategoriesRepository(_db);
             Services = new ServicesRepository(_db);
+            Admin = new AdminRepository(_db);
         }
 
         public void Save()

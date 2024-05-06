@@ -11,14 +11,14 @@ using Syrophage.Models;
 using Syrophage.Models.ViewModel;
 using Syrophage.Repository.IRepository;
 using Syrophage.Services;
+using Syrophage.Repository;
 
 namespace Syrophage.Controllers
 {
 
-    //[Authorize]
+    //  [Authorize]
     public class AdminController : Controller
     {
-        public readonly ApplicationDbContext _db;
         private readonly IUnitofWorks unitofworks;
         private readonly IServices services;
 
@@ -33,8 +33,25 @@ namespace Syrophage.Controllers
             this.services = services;
             this._webHostEnvironment = _webHostEnvironment;
         }
+
+        public void setAdminData()
+        {
+            var AdminId = HttpContext.Session.GetInt32("AdminId");
+            var Admin = unitofworks.Admin.GetById(AdminId ?? 0);
+           
+            ViewData["Admin"] = Admin;
+        }
+
+
+
+
         public IActionResult Dashboard()
         {
+
+            setAdminData();
+
+
+
 
             var newslettersCount = unitofworks.Newsletter.GetAll().Count();
             var activeUsersCount = unitofworks.User.GetAll().Where(x => x.IsActivated == true).Count();
@@ -133,7 +150,7 @@ namespace Syrophage.Controllers
         }
 
 
-     
+
         /*=============================================users==============================================================*/
 
         /*=============================================NewsLetter==============================================================*/
@@ -750,7 +767,7 @@ namespace Syrophage.Controllers
                 if (file != null)
                 {
 
-          
+
 
 
                     string OldImagepath = service1.productImageUrl;
@@ -785,7 +802,7 @@ namespace Syrophage.Controllers
                         Service.Category = obj.Category;
                         Service.Description = obj.Description;
                         Service.productImageUrl = @"\ServicesImages\" + filename;
-    
+
                     }
 
 
@@ -815,8 +832,8 @@ namespace Syrophage.Controllers
                     TempData["success"] = "Service updated successfully.";
                     return RedirectToAction("ManageService", "Admin");
                 }
-     
-        }
+
+            }
             TempData["Error"] = "Service not Added";
             return RedirectToAction("ManageService", "Admin");
         }
@@ -1026,13 +1043,79 @@ namespace Syrophage.Controllers
                 unitofworks.Product.Remove(product);
                 unitofworks.Save();
 
-                return Json(new { success = true});
+                return Json(new { success = true });
             }
             return Json(new { success = false });
         }
 
 
 
+
+
+
+        [HttpGet]
+        public IActionResult MyProfile()
+        {
+            setAdminData();
+
+            var logedadmin = HttpContext.Session.GetInt32("AdminId");
+
+            var user = unitofworks.Admin.GetById(logedadmin ?? 0);
+            return View(user);
+
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProfile(Admin admin)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var admininDb = unitofworks.Admin.GetById(admin.Id);
+
+                if (admininDb != null)
+                {
+                    admininDb.Name = admin.Name;
+                    admininDb.Email = admin.Email;
+                    admininDb.Contact = admin.Contact;
+                    admininDb.Address = admin.Address;
+                    admininDb.Password = admin.Password;
+                }
+                if (admin.ProfileImage != null)
+                {
+                    if (admininDb.ProfileImageUrl != null)
+                    {
+                        var filePathProfileImageUrl = Path.Combine(_webHostEnvironment.WebRootPath, admininDb.ProfileImageUrl.TrimStart('/'));
+                        if (System.IO.File.Exists(filePathProfileImageUrl))
+                        {
+                            System.IO.File.Delete(filePathProfileImageUrl);
+                        }
+                    }
+
+                    var file = admin.ProfileImage;
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    var fileName = Guid.NewGuid().ToString() + file.FileName;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "AdminProfileImages", fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    admininDb.ProfileImageUrl = Path.Combine("/AdminProfileImages", fileName).Replace("\\", "/");
+
+                }
+
+                unitofworks.Admin.Update(admininDb);
+                unitofworks.Save();
+
+
+                TempData["Success"] = "Profile Updated Successfully";
+                return RedirectToAction("MyProfile", "Admin");
+            }
+            TempData["Error"] = "Profile Not Updated";
+            return RedirectToAction("MyProfile", "Admin");
+
+        }
 
 
 

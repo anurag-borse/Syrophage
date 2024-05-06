@@ -9,9 +9,11 @@ using Syrophage.Services;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Syrophage.Controllers
 {
+
     public class LoginController : Controller
     {
         public readonly ApplicationDbContext _db;
@@ -41,6 +43,7 @@ namespace Syrophage.Controllers
             var role = _db.Roles.FirstOrDefault(r => r.email == vm.Email)?.role;
 
 
+
             if (role == "Admin")
             {
 
@@ -50,23 +53,22 @@ namespace Syrophage.Controllers
                 if (existingAdmin != null && existingAdmin.Password == vm.Password)
                 {
                     HttpContext.Session.SetInt32("AdminId", existingAdmin.Id);
-                    HttpContext.Session.SetString("AdminEmail",existingAdmin.Email);
+                    HttpContext.Session.SetString("AdminEmail", existingAdmin.Email);
 
 
                     //-------------------------------------------------
 
-                    var claims = new List<Claim>
-                    {
-                            new Claim(ClaimTypes.Name, existingAdmin.Email)
-                    };
+                    var adminClaims = new List<Claim>
+                        {
+            new Claim(ClaimTypes.Name, existingAdmin.Email),
+            // Add any additional claims specific to admin if needed
+                        };
 
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var adminClaimsIdentity = new ClaimsIdentity(adminClaims, "AdminAuthentication");
 
-                    var authProperties = new AuthenticationProperties();
+                    var adminAuthProperties = new AuthenticationProperties();
 
-                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-
-
+                    HttpContext.SignInAsync("AdminCookieScheme", new ClaimsPrincipal(adminClaimsIdentity), adminAuthProperties);
 
                     TempData["AdminSuccess"] = "Login Successfully";
                     // Redirect to admin dashboard
@@ -92,6 +94,22 @@ namespace Syrophage.Controllers
                     HttpContext.Session.SetInt32("UserId", existingUser.Id);
                     HttpContext.Session.SetString("UserEmail", existingUser.Email);
                     HttpContext.Session.SetString("UserName", existingUser.Name);
+                    //------------------------------------------------------
+
+                    var adminClaims = new List<Claim>
+{
+    new Claim(ClaimTypes.Name, existingUser.Email),
+    // Add any additional claims specific to admin if needed
+};
+
+                    var adminClaimsIdentity = new ClaimsIdentity(adminClaims, "UserAuthentication");
+
+                    var adminAuthProperties = new AuthenticationProperties();
+
+                    HttpContext.SignInAsync("AdminCookieScheme", new ClaimsPrincipal(adminClaimsIdentity), adminAuthProperties);
+
+
+
 
                     TempData["Success"] = "Login Successfully";
                     return RedirectToAction("Index", "Home");
@@ -99,15 +117,15 @@ namespace Syrophage.Controllers
             }
 
 
-      
-                else
-                {
-                    TempData["Error"] = "Login Failed Invalide Creadentials ";
-                    return RedirectToAction("Login", "Login");
 
-                }
-            
-            
+            else
+            {
+                TempData["Error"] = "Login Failed Invalide Creadentials ";
+                return RedirectToAction("Login", "Login");
+
+            }
+
+
 
 
             TempData["failed"] = "Login Failed: Invalid Credentials";
@@ -147,51 +165,51 @@ namespace Syrophage.Controllers
                 TempData["Message"] = "Phone no. is Already Exists";
                 return RedirectToAction("Register", "Login");
             }
-           
- 
-            
 
-          
+
+
+
+
             if (model.Password != model.ConfirmPassword)
 
 
-            if (model != null)
-            {
-                var reg = new Users
+                if (model != null)
                 {
-                    Name = model.Name,
-                    Email = model.Email,
-                    Password = model.Password,
-                    ConfirmPassword = model.ConfirmPassword,
-                    Phone = model.Phone,
-                    IsActivated = false,
-                    RegId = services.GenerateRegId(),
-                    Address = "",
-                    ProfileImageUrl = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-                };
-                model.IsActivated = false; // Set IsActivated to false when a new user is registered
-                _db.Users.Add(reg);
-                _db.SaveChanges();
+                    var reg = new Users
+                    {
+                        Name = model.Name,
+                        Email = model.Email,
+                        Password = model.Password,
+                        ConfirmPassword = model.ConfirmPassword,
+                        Phone = model.Phone,
+                        IsActivated = false,
+                        RegId = services.GenerateRegId(),
+                        Address = "",
+                        ProfileImageUrl = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                    };
+                    model.IsActivated = false; // Set IsActivated to false when a new user is registered
+                    _db.Users.Add(reg);
+                    _db.SaveChanges();
 
-                var role = new Role
+                    var role = new Role
+                    {
+                        email = model.Email,
+                        role = "User"
+                    };
+                    _db.Roles.Add(role);
+                    _db.SaveChanges();
+
+
+                    //service.SendRegistrationEmail(RL.Registration.Email);
+                    TempData["Success"] = "Your account has been registered successfully. Please wait for account verification.";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
                 {
-                    email = model.Email,
-                    role = "User"
-                };
-                _db.Roles.Add(role);
-                _db.SaveChanges();
 
-
-                //service.SendRegistrationEmail(RL.Registration.Email);
-                TempData["Success"] = "Your account has been registered successfully. Please wait for account verification.";
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-
-                TempData["Error"] = "Registration Failed";
-                return RedirectToAction("Register", "Login");
-            }
+                    TempData["Error"] = "Registration Failed";
+                    return RedirectToAction("Register", "Login");
+                }
 
             TempData["Error"] = "Someting Error Happen";
             return RedirectToAction("Register", "Login");
@@ -205,8 +223,10 @@ namespace Syrophage.Controllers
         public IActionResult Logout()
         {
 
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
-            TempData["Success"] = "Logout Successfully";
+
+            TempData["clear"] = "Yor Are Logout :";
             return RedirectToAction("Index", "Home");
         }
 

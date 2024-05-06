@@ -16,6 +16,7 @@
         IOrderRepository Orders { get; }
 
 
+
         IUserCouponRepository UserCoupon { get; }
 
         ICategoriesRepository Categories { get; }
@@ -26,6 +27,7 @@
 
         IServicesRepository Services { get; }
 
+        IAdminRepository Admin { get; }
 
 
         public void Save();

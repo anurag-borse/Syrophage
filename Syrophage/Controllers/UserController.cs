@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using Syrophage.Models;
@@ -25,7 +26,7 @@ namespace Syrophage.Controllers
             this._httpContextAccessor = _httpContextAccessor;
         }
 
-
+        [Authorize]
         public IActionResult Profile()
         {
             SetLayoutModel();
@@ -197,7 +198,7 @@ namespace Syrophage.Controllers
 
 
 
-
+        [Authorize]
         [HttpGet]
         public IActionResult Coupons()
         {

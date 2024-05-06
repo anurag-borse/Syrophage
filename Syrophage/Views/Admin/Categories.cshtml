@@ -210,6 +210,12 @@
                     });
             });
         });
+
+
+
+        $(document).ready(function () {
+            $('#categoriesData').DataTable();
+        });
     </script>
 
 
@@ -234,12 +240,7 @@
 <!-- Static Coupons -->
 
 
-<script>
 
-    $(document).ready(function () {
-        $('#categoriesData').DataTable();
-    });
-</script>
 
 @if (TempData["Success"] != null)
 {
