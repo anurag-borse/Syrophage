@@ -7,7 +7,7 @@
 
 @{
     var layoutModel = Context.Items["LayoutModel"] as LayoutVM; var firstname =
-        layoutModel?.FirstName; var lastName = layoutModel?.LastName;string profileimg = layoutModel?.profilepic;
+        layoutModel?.FirstName; var lastName = layoutModel?.LastName; string profileimg = layoutModel?.profilepic;
 }
 
 
@@ -81,7 +81,7 @@
                             <span></span>
                             <span></span>
                         </div>
-                        
+
                     </a>
                     <!-- End mobile menu toggle-->
                 </div>
@@ -103,23 +103,25 @@
                     </li>
 
                     <li class="has-submenu">
-                        <a asp-action="Contact" asp-controller="Home">Contact</a>
+                        <a asp-action="Services" asp-controller="Home">Services</a>
                     </li>
 
                     <li class="has-submenu">
-                        <a asp-action="Services" asp-controller="Home">Services</a>
+                        <a asp-action="Contact" asp-controller="Home">Contact</a>
                     </li>
-                
 
 
-                
+
+
+
+
 
 
                     @{
                         if (userEmail != null)
                         {
                             <li class="has-submenu">
-                                <a asp-action ="Profile" asp-controller="User">@username</a>
+                                <a asp-action="Profile" asp-controller="User">@username</a>
                                 <ul class="submenu">
                                     <li><a asp-action="Profile" asp-controller="User">Profile</a></li>
 
@@ -129,12 +131,12 @@
                                 </ul>
                             </li>
                             <li>
-                            <img src="@profileimg" style="width: 40px; height: 40px; border-radius:40px; margin-top:15px" alt="Profile Image" />
+                                <img src="@profileimg" style="width: 40px; height: 40px; border-radius:40px; margin-top:15px" alt="Profile Image" />
 
                             </li>
-                            
 
-                 
+
+
                         }
                         else
                         {
@@ -148,9 +150,9 @@
                         }
                     }
 
-                <!-- End navigation menu-->
+                    <!-- End navigation menu-->
             </div>
-  
+
     </header>
 
 
@@ -204,7 +206,7 @@
                                     <li><a asp-action="Products" asp-controller="Home"><i class="fas fa-chevron-right mr-2"></i> Products</a></li>
 
                                     @{
-                                        if(userEmail != null)
+                                        if (userEmail != null)
                                         {
                                             <li><a asp-action="Orders" asp-controller="User"><i class="fas fa-chevron-right mr-2"></i> Orders </a></li>
                                             <li><a asp-action="Coupons" asp-controller="User"><i class="fas fa-chevron-right mr-2"></i> Coupons </a></li>
@@ -231,14 +233,14 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <!-- End Footer Info -->
                     </div>
-                    <!-- End Footer Info -->
                 </div>
-            </div>
-            <hr>
+                <hr>
 
 
-            <!-- End Copyright Bar -->
+                <!-- End Copyright Bar -->
         </footer>
     </footer>
 
