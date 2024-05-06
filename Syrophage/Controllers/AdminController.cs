@@ -13,6 +13,7 @@ using Syrophage.Repository.IRepository;
 using Syrophage.Services;
 using Syrophage.Repository;
 using System.Reflection;
+using Newtonsoft.Json.Linq;
 
 namespace Syrophage.Controllers
 {
@@ -1182,11 +1183,29 @@ namespace Syrophage.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public IActionResult AddServiceQua(Qua_Service obj)
+        
+
+
+
+        [HttpPost]
+        public IActionResult GenerateQuotationPDF([FromBody] JObject formData)
         {
+            if (formData == null)
+            {
+                return BadRequest("FormData is null");
+            }
+
+            // Extract data from the JSON object
+            var quotationBy = formData["quotationBy"].ToString();
+            var preparedBy = formData["preparedBy"].ToString();
+
             return View();
         }
+
+
+
+
+
 
 
 
