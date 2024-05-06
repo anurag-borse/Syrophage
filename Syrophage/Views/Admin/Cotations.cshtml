@@ -1,0 +1,290 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+    <title>Admin Dashboard</title>
+    <!-- Include necessary CSS libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
+    <link href="~/admin/assets/libs/jquery-steps/steps.css" rel="stylesheet" />
+    <link href="~/admin/assets/libs/jquery-steps/jquery.steps.css" rel="stylesheet" />
+
+    <style>
+        .step-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .step-item {
+            flex: 1;
+            text-align: center;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+            .step-item.active {
+                color: #333;
+                text-decoration: underline;
+            }
+    </style>
+</head>
+<body>
+
+
+    <div id="main-wrapper"
+         data-layout="vertical"
+         data-navbarbg="skin5"
+         data-sidebartype="full"
+         data-sidebar-position="absolute"
+         data-header-position="absolute"
+         data-boxed-layout="full">
+        <!-- Your navbar and sidebar code here -->
+        <partial name="AdminNavbar" />
+
+
+
+
+        <partial name="AdminSidebar" />
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <!-- Page breadcrumb code here -->
+            </div>
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-body wizard-content">
+                        <h4 class="card-title">Multi-step Form Example</h4>
+                        <!-- Navigation bar for steps -->
+                        <div class="step-navigation">
+                            <div id="step-item-1" class="step-item active" onclick="goToStep(1)">Account</div>
+                            <div id="step-item-2" class="step-item" onclick="goToStep(2)">Profile</div>
+                            <div id="step-item-3" class="step-item" onclick="goToStep(3)">Hints</div>
+                            <div id="step-item-4" class="step-item" onclick="goToStep(4)">Finish</div>
+                        </div>
+
+
+
+
+                        <form id="form-step-1" class="mt-5">
+                            <div class="row">
+                                <!-- Column for admin data -->
+                                <div class="col-md-6">
+                                    <h3>Quotation By</h3>
+
+                                    <label for="quotationBy">Company Name</label>
+                                    <input id="quotationBy" name="quotationBy" type="text" class="form-control" value="SYROPHAGE IN PRIVATE LIMITED" readonly />
+
+                                    <label for="preparedBy">Prepared By</label>
+                                    <input id="preparedBy" name="preparedBy" type="text" class="form-control" value="" readonly />
+
+                                    <label for="role">Role</label>
+                                    <input id="role" name="role" type="text" class="form-control" value="Marketing Head" readonly />
+
+                                    <label for="contact">Contact</label>
+                                    <input id="contact" name="contact" type="text" class="form-control" value="9175387953" readonly />
+
+                                    <label for="email">Email</label>
+                                    <input id="email" name="email" type="text" class="form-control" value="hrushim15@gmail.com" readonly />
+                                </div>
+
+                                <!-- Column for "Quotation To" details -->
+                                <div class="col-md-6">
+                                    <h3>Quotation To</h3>
+
+                                    <label for="companyName">Company Name *</label>
+                                    <input id="companyName" name="companyName" type="text" class="required form-control" />
+
+                                    <label for="preparedFor">Prepared For *</label>
+                                    <input id="preparedFor" name="preparedFor" type="text" class="required form-control" />
+
+                                    <label for="contactTo">Contact *</label>
+                                    <input id="contactTo" name="contactTo" type="text" class="required form-control" />
+
+                                    <label for="emailTo">Email *</label>
+                                    <input id="emailTo" name="emailTo" type="text" class="required email form-control" />
+                                </div>
+                            </div>
+
+                           
+
+
+
+                            <button type="button" class="btn btn-primary" onclick="nextStep(1)"   style="margin-top:20px"  >Next</button>
+                        </form>
+
+
+
+
+                        <form id="form-step-2" class="mt-5" style="display: none;">
+                            <!-- Form for section 2 -->
+                            <h3>About And Requirement Section</h3>
+                            <label for="name">First name *</label>
+                            <input id="name" name="name" type="text" class="required form-control" />
+                            <label for="surname">Last name *</label>
+                            <input id="surname" name="surname" type="text" class="required form-control" />
+                            <label for="email">Email *</label>
+                            <input id="email" name="email" type="text" class="required email form-control" />
+                            <label for="address">Address</label>
+                            <input id="address" name="address" type="text" class="form-control" />
+                            <p>(*) Mandatory</p>
+                            <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Previous</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
+                        </form>
+
+
+
+
+                        <form id="form-step-3" class="mt-5" style="display: none;">
+                            <!-- Form for section 3 -->
+                            <h3>Charges</h3>
+                            <ul>
+                                <li>Foo</li>
+                                <li>Bar</li>
+                                <li>Foobar</li>
+                            </ul>
+                            <button type="button" class="btn btn-secondary" onclick="prevStep(3)">Previous</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next</button>
+                        </form>
+
+
+
+
+
+
+
+                        <form id="form-step-4" class="mt-5" style="display: none;">
+                            <!-- Form for section 4 -->
+                            <h3>Terms And Conditions</h3>
+                            <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required" />
+                            <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                            <button type="button" class="btn btn-secondary" onclick="prevStep(4)">Previous</button>
+                            <button type="button" class="btn btn-success" onclick="submitForm()">Finish</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include necessary JavaScript libraries -->
+    <script src="~/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/admin/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/admin/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/admin/assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="~/admin/dist/js/waves.js"></script>
+    <script src="~/admin/dist/js/sidebarmenu.js"></script>
+    <script src="~/admin/dist/js/custom.min.js"></script>
+    <script src="~/admin/dist/js/pages/dashboards/dashboard1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="~/admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/admin/assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
+    <script src="~/admin/assets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
+
+    <script>
+        function nextStep(step) {
+            // Hide current step form
+            document.getElementById("form-step-" + step).style.display = "none";
+            // Show next step form
+            document.getElementById("form-step-" + (step + 1)).style.display = "block";
+            // Highlight current step in navigation
+            updateNavigation(step + 1);
+        }
+
+        function prevStep(step) {
+            // Hide current step form
+            document.getElementById("form-step-" + step).style.display = "none";
+            // Show previous step form
+            document.getElementById("form-step-" + (step - 1)).style.display = "block";
+            // Highlight current step in navigation
+            updateNavigation(step - 1);
+        }
+
+        function submitForm() {
+            // Gather form data
+            var formData = {
+                userName: document.getElementById("userName").value,
+                password: document.getElementById("password").value,
+                confirm: document.getElementById("confirm").value,
+                name: document.getElementById("name").value,
+                surname: document.getElementById("surname").value,
+                email: document.getElementById("email").value,
+                address: document.getElementById("address").value,
+                acceptTerms: document.getElementById("acceptTerms").checked
+            };
+            // You can perform additional validation here if needed
+
+            // Send form data or do something else with it
+            console.log(formData);
+            // For example, you can send it to a backend endpoint using AJAX
+
+            // After submitting, you can redirect or show a success message
+            alert("Form submitted successfully!");
+        }
+
+        function goToStep(step) {
+            // Hide all forms
+            document.querySelectorAll('form[id^="form-step"]').forEach(form => {
+                form.style.display = "none";
+            });
+            // Show selected step form
+            document.getElementById("form-step-" + step).style.display = "block";
+            // Highlight current step in navigation
+            updateNavigation(step);
+        }
+
+        function updateNavigation(currentStep) {
+            document.querySelectorAll('.step-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.getElementById('step-item-' + currentStep).classList.add('active');
+            // Dim other steps
+            for (var i = 1; i <= 4; i++) {
+                if (i !== currentStep) {
+                    document.getElementById('step-item-' + i).style.opacity = "0.5";
+                } else {
+                    document.getElementById('step-item-' + i).style.opacity = "1";
+                }
+            }
+        }
+
+        // Basic Example with form
+        var form = $("#example-form");
+        form.validate({
+            errorPlacement: function errorPlacement(error, element) {
+                element.before(error);
+            },
+            rules: {
+                confirm: {
+                    equalTo: "#password",
+                },
+            },
+        });
+        form.children("div").steps({
+            headerTag: "h3",
+            bodyTag: "section",
+            transitionEffect: "slideLeft",
+            onStepChanging: function (event, currentIndex, newIndex) {
+                form.validate().settings.ignore = ":disabled,:hidden";
+                return form.valid();
+            },
+            onFinishing: function (event, currentIndex) {
+                form.validate().settings.ignore = ":disabled";
+                return form.valid();
+            },
+            onFinished: function (event, currentIndex) {
+                alert("Submitted!");
+            },
+        });
+    </script>
+
+</body>
+</html>

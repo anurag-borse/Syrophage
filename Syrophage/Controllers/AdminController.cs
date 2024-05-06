@@ -1096,6 +1096,14 @@ namespace Syrophage.Controllers
 
 
 
+        [HttpGet]
+        public IActionResult Cotations()
+        {
+            setAdminData();
+
+            return View();
+        }
+
 
 
     }
