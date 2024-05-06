@@ -41,10 +41,21 @@ namespace Syrophage.Controllers
             ViewData["Admin"] = Admin;
         }
         [Authorize]
+        public void setAdminData()
+        {
+            var AdminId = HttpContext.Session.GetInt32("AdminId");
+            var Admin = unitofworks.Admin.GetById(AdminId ?? 0);
+
+            ViewData["Admin"] = Admin;
+        }
+
+
+
+
         public IActionResult Dashboard()
         {
 
-            
+
             setAdminData();
 
 
@@ -79,6 +90,8 @@ namespace Syrophage.Controllers
             HttpContext.Session.Clear();
 
             TempData["Success"] = "Yor Are Logout :";
+
+            TempData["clear"] = "Yor Are Logout :";
             return RedirectToAction("Index", "Home");
 
         }
@@ -911,6 +924,7 @@ namespace Syrophage.Controllers
         }
 
 
+
         [HttpPost]
         public IActionResult EditProduct(Product obj, IFormFile file)
         {
@@ -1022,9 +1036,6 @@ namespace Syrophage.Controllers
 
 
 
-
-
-
         [HttpGet]
         public IActionResult MyProfile()
         {
@@ -1088,6 +1099,7 @@ namespace Syrophage.Controllers
             return RedirectToAction("MyProfile", "Admin");
 
         }
+
 
 
 
