@@ -45,7 +45,6 @@ namespace Syrophage.Controllers
 
 
 
-
         public IActionResult Dashboard()
         {
 
@@ -83,9 +82,9 @@ namespace Syrophage.Controllers
         public IActionResult Logout()
         {
 
-             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
-           
+
             TempData["clear"] = "Yor Are Logout :";
             return RedirectToAction("Index", "Home");
 
@@ -492,7 +491,7 @@ namespace Syrophage.Controllers
                     unitofworks.Save();
 
                     TempData["success"] = "product Added";
-                    return RedirectToAction("ManageProduct","Admin");
+                    return RedirectToAction("ManageProduct", "Admin");
 
                 }
             }
@@ -524,12 +523,12 @@ namespace Syrophage.Controllers
             var products = unitofworks.Product.GetAll().Where(j => j.Category == category.CategoryName).ToList();
 
 
-            foreach(var prod in products)
+            foreach (var prod in products)
             {
                 unitofworks.Product.Remove(prod);
             }
 
-            if(category != null)
+            if (category != null)
             {
                 unitofworks.Categories.Remove(category);
                 unitofworks.Save();
@@ -540,7 +539,7 @@ namespace Syrophage.Controllers
 
 
             TempData["Error"] = "Category  not Deleted";
-            return RedirectToAction("Categories","Admin");
+            return RedirectToAction("Categories", "Admin");
         }
         [HttpPost]
         public IActionResult EditProduct(Product obj, IFormFile file)
