@@ -65,10 +65,10 @@
                         <h4 class="card-title">Multi-step Form Example</h4>
                         <!-- Navigation bar for steps -->
                         <div class="step-navigation">
-                            <div id="step-item-1" class="step-item active" onclick="goToStep(1)">Account</div>
-                            <div id="step-item-2" class="step-item" onclick="goToStep(2)">Profile</div>
-                            <div id="step-item-3" class="step-item" onclick="goToStep(3)">Hints</div>
-                            <div id="step-item-4" class="step-item" onclick="goToStep(4)">Finish</div>
+                            <div id="step-item-1" class="step-item active" onclick="goToStep(1)">Quotation By</div>
+                            <div id="step-item-2" class="step-item" onclick="goToStep(2)">About And Requirement Section</div>
+                            <div id="step-item-3" class="step-item" onclick="goToStep(3)">Charges</div>
+                            <div id="step-item-4" class="step-item" onclick="goToStep(4)">Terms And Conditions</div>
                         </div>
 
 
@@ -114,27 +114,35 @@
                                 </div>
                             </div>
 
-                           
 
 
 
-                            <button type="button" class="btn btn-primary" onclick="nextStep(1)"   style="margin-top:20px"  >Next</button>
+
+                            <button type="button" class="btn btn-primary" onclick="nextStep(1)" style="margin-top:20px">Next</button>
                         </form>
 
 
 
+                        <form id="form-step-2" class="mt-5" style="display:none">
+                            <div class="row">
+                                <!-- Column for "About Us" and "Methodology" -->
+                                <div class="col-md-6">
+                                    <h3>About Us</h3>
+                                    <textarea id="aboutUs" name="aboutUs" class="form-control" rows="5" readonly>@* @ViewBag.AboutUs *@</textarea>
 
-                        <form id="form-step-2" class="mt-5" style="display: none;">
-                            <!-- Form for section 2 -->
-                            <h3>About And Requirement Section</h3>
-                            <label for="name">First name *</label>
-                            <input id="name" name="name" type="text" class="required form-control" />
-                            <label for="surname">Last name *</label>
-                            <input id="surname" name="surname" type="text" class="required form-control" />
-                            <label for="email">Email *</label>
-                            <input id="email" name="email" type="text" class="required email form-control" />
-                            <label for="address">Address</label>
-                            <input id="address" name="address" type="text" class="form-control" />
+                                    <h3>Methodology</h3>
+                                    <textarea id="methodology" name="methodology" class="form-control" rows="5" readonly>@* @ViewBag.Methodology *@</textarea>
+                                </div>
+
+                                <!-- Column for "About Pioneer" and "Expectation" -->
+                                <div class="col-md-6">
+                                    <h3>About Pioneer *</h3>
+                                    <textarea id="aboutPioneer" name="aboutPioneer" class="required form-control" rows="5"></textarea>
+
+                                    <h3>Expectation *</h3>
+                                    <textarea id="expectation" name="expectation" class="required form-control" rows="5"></textarea>
+                                </div>
+                            </div>
                             <p>(*) Mandatory</p>
                             <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Previous</button>
                             <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
@@ -142,15 +150,13 @@
 
 
 
-
                         <form id="form-step-3" class="mt-5" style="display: none;">
                             <!-- Form for section 3 -->
-                            <h3>Charges</h3>
-                            <ul>
-                                <li>Foo</li>
-                                <li>Bar</li>
-                                <li>Foobar</li>
-                            </ul>
+                            
+
+
+
+
                             <button type="button" class="btn btn-secondary" onclick="prevStep(3)">Previous</button>
                             <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next</button>
                         </form>
@@ -163,7 +169,6 @@
 
                         <form id="form-step-4" class="mt-5" style="display: none;">
                             <!-- Form for section 4 -->
-                            <h3>Terms And Conditions</h3>
                             <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required" />
                             <label for="acceptTerms">I agree with the Terms and Conditions.</label>
                             <button type="button" class="btn btn-secondary" onclick="prevStep(4)">Previous</button>
@@ -211,14 +216,30 @@
         function submitForm() {
             // Gather form data
             var formData = {
-                userName: document.getElementById("userName").value,
-                password: document.getElementById("password").value,
-                confirm: document.getElementById("confirm").value,
-                name: document.getElementById("name").value,
-                surname: document.getElementById("surname").value,
+
+                quotationBy: document.getElementById("quotationBy").value,
+                preparedBy: document.getElementById("preparedBy").value,
+                role: document.getElementById("role").value,
+                contact: document.getElementById("contact").value,
                 email: document.getElementById("email").value,
-                address: document.getElementById("address").value,
-                acceptTerms: document.getElementById("acceptTerms").checked
+                companyName: document.getElementById("companyName").value,
+                preparedFor: document.getElementById("preparedFor").value,
+                contactTo: document.getElementById("contactTo").checked,
+                emailTo: document.getElementById("emailTo").checked,
+
+
+
+                aboutUs: document.getElementById("aboutUs").checked,
+                methodology: document.getElementById("methodology").checked,
+                aboutPioneer: document.getElementById("aboutPioneer").checked,
+                expectation: document.getElementById("expectation").checked,
+
+
+
+                contactTo: document.getElementById("contactTo").checked,
+
+
+
             };
             // You can perform additional validation here if needed
 
