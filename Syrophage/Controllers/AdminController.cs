@@ -33,6 +33,10 @@ namespace Syrophage.Controllers
             this.services = services;
             this._webHostEnvironment = _webHostEnvironment;
         }
+        public void setAdminData()
+        {
+            var AdminId = HttpContext.Session.GetInt32("AdminId");
+            var Admin = unitofworks.Admin.GetById(AdminId ?? 0);
 
 
         public void setAdminData()

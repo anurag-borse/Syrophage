@@ -4,7 +4,7 @@ namespace Syrophage.Repository.IRepository
 {
     public interface IUserRepository : IRepository<Users>
     {
-
+        int Count();
         Users GetById(int Id);
 
         Users GetByname(string Name);
@@ -12,6 +12,7 @@ namespace Syrophage.Repository.IRepository
 
         void Update(Users obj);
 
+        
         
     }
 }

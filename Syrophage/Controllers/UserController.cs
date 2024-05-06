@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Syrophage.Models;
 using Syrophage.Models.ViewModel;
@@ -201,6 +202,81 @@ namespace Syrophage.Controllers
 
 
         [HttpGet]
+
+        public IActionResult TotalU()
+        {
+            int totalUserCount = GetUserCountFromDatabase();
+
+            return Json(new { totalUsers = totalUserCount });
+        }
+        private int GetUserCountFromDatabase()
+        {
+            // Replace this with your actual logic to fetch total user count from your database
+            // For example, using Entity Framework or any other data access method
+            return unitofworks.User.Count();
+        }
+
+
+
+
+        [HttpGet]
+
+        public IActionResult TotalCoupons()
+        {
+            int totalCouponCount = GetCouponCountFromDatabase();
+
+            return Json(new { totalCoupons = totalCouponCount });
+        }
+        private int GetCouponCountFromDatabase()
+        {
+            // Replace this with your actual logic to fetch total user count from your database
+            // For example, using Entity Framework or any other data access method
+            return unitofworks.Coupon.Count();
+        }
+
+
+
+        [HttpGet]
+
+        public IActionResult TotalNews()
+        {
+            int totalCouponCount = GetNewsCountFromDatabase();
+
+            return Json(new { totalNews = totalCouponCount });
+        }
+        private int GetNewsCountFromDatabase()
+        {
+            // Replace this with your actual logic to fetch total user count from your database
+            // For example, using Entity Framework or any other data access method
+            return unitofworks.Newsletter.Count();
+        }
+
+
+        [HttpGet]
+
+        public IActionResult TotalContact()
+        {
+            int totalCouponCount = GetContactCountFromDatabase();
+
+            return Json(new { totalContact = totalCouponCount });
+        }
+        private int GetContactCountFromDatabase()
+        {
+            // Replace this with your actual logic to fetch total user count from your database
+            // For example, using Entity Framework or any other data access method
+            return unitofworks.Contact.Count();
+        }
+
+
+
+
+
+
+
+
+
+
+        [HttpGet]
         public IActionResult Coupons()
         {
             SetLayoutModel();
@@ -221,6 +297,8 @@ namespace Syrophage.Controllers
             return View(coupons);
 
         }
+
+     
 
     }
 }

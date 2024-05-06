@@ -16,6 +16,17 @@
     </div>
 </div>
 
+<style>
+    #video-player {
+        width: 450px; /* Set width */
+        height: 300px; /* Set height */
+        position: fixed; /* Position fixed to keep it centered */
+        top: 50%; /* Position from top */
+        left: 50%; /* Position from left */
+        transform: translate(-50%, -50%); /* Center the video */
+        z-index: 9999; /* Ensure it's above other content */
+    }
+</style>
 
 
 @* -------------------------------------- *@
@@ -55,8 +66,8 @@
                             <h1 class="">Revolutionize Your Business Experience</h1>
                             <p class="text-white-50 mx-auto">From HR to Gifts to Supplies: Your All-in-one Business Partner</p>
                                     <div class="mt-3">
-                                        <a href="#" class="btn btn-custom mr-3">Contact Us</a>
-                                        <a href="#" class="btn btn-outline-white">About Us</a>
+                                <a href="https://localhost:7293/Home/Contact" class="btn btn-custom mr-3">Contact Us</a>
+                                <a href="https://localhost:7293/Home/About" class="btn btn-outline-white">About Us</a>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +132,7 @@
                     <div class="col-lg-5 col-md-6">
                         <div class="about-pic">
                     <img src="~/assets/images/about/about-pic.jpg" class="img-fluid" alt="">
-                            <div class="watch-video about-video text-center">
+                          @*   <div class="watch-video about-video text-center">
                                 <div class="project-video">
                                     <div class="project-video-border">
                                         <div class="project-video-icon">
@@ -129,7 +140,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> *@
                         </div>
                     </div>
 
@@ -256,20 +267,29 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="watch-video text-center">
-                            <div class="project-video">
-                                <div class="project-video-border">
-                                    <div class="project-video-icon">
-                                        <a href="" class="video-play-icon text-white text-center" title="Watch Now"><i class="mdi mdi-play play-icon play h2 mb-0 mx-auto"></i></a>
-                                    </div>
-                                </div>
-                            </div>
+@*         <div class="row">
+            <div class="col-lg-12">
+                <div class="watch-video text-center">
+                    <div class="project-video">
+                        <div class="project-video-border">
+                            <!-- Button to trigger video display and playback -->
+                            <button id="play-video-button" class="btn btn-primary">Play Video</button>
+
+                            <button id="stop-video-button" class="btn btn-danger" style="display:none;">Stop Video</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Video element with controls (hidden initially) -->
+        <video id="video-player" controls style="display:none;">
+            <source src="~/video_loader/s.mp4" type="video/mp4" />  
+            Your browser does not support the video tag.
+
+        </video> *@
+
+
         </section>
         <!-- CTA END -->
 
@@ -510,3 +530,5 @@
         }, false);
     });
 </script>
+
+

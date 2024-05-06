@@ -52,7 +52,7 @@ namespace Syrophage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Admins");
+                    b.ToTable("Admins", (string)null);
 
                     b.HasData(
                         new
@@ -83,7 +83,7 @@ namespace Syrophage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Syrophage.Models.Contact", b =>
@@ -112,7 +112,7 @@ namespace Syrophage.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("contacttb");
+                    b.ToTable("contacttb", (string)null);
                 });
 
             modelBuilder.Entity("Syrophage.Models.Coupon", b =>
@@ -156,7 +156,7 @@ namespace Syrophage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Coupons");
+                    b.ToTable("Coupons", (string)null);
                 });
 
             modelBuilder.Entity("Syrophage.Models.Newsletter", b =>
@@ -173,7 +173,7 @@ namespace Syrophage.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Newsletters");
+                    b.ToTable("Newsletters", (string)null);
                 });
 
             modelBuilder.Entity("Syrophage.Models.Order", b =>
@@ -211,7 +211,7 @@ namespace Syrophage.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Syrophage.Models.Product", b =>
@@ -244,7 +244,7 @@ namespace Syrophage.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Syrophage.Models.Quatation_details_fix", b =>
@@ -309,7 +309,7 @@ namespace Syrophage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
 
                     b.HasData(
                         new
@@ -346,7 +346,7 @@ namespace Syrophage.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
                 });
 
             modelBuilder.Entity("Syrophage.Models.ServiceCategory", b =>
@@ -370,7 +370,7 @@ namespace Syrophage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceCategories");
+                    b.ToTable("ServiceCategories", (string)null);
                 });
 
             modelBuilder.Entity("Syrophage.Models.Token", b =>
@@ -410,7 +410,7 @@ namespace Syrophage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tokens");
+                    b.ToTable("Tokens", (string)null);
                 });
 
             modelBuilder.Entity("Syrophage.Models.UserCoupon", b =>
@@ -433,7 +433,7 @@ namespace Syrophage.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserCoupons");
+                    b.ToTable("UserCoupons", (string)null);
                 });
 
             modelBuilder.Entity("Syrophage.Models.Users", b =>
@@ -483,7 +483,7 @@ namespace Syrophage.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Syrophage.Models.UserCoupon", b =>
