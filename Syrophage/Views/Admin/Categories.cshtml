@@ -169,7 +169,8 @@
                                             </td>
 
                                             <td>
-                                                <a asp-route-id="@categories.Id" data-id="@categories.Id" asp-action="DeleteCategory" asp-controller="Admin" class="btn btn-danger delete-btn"> <i class="bi bi-trash-fill"></i>Delete</a>
+                                                <a asp-route-id="@categories.Id" data-id="@categories.Id" asp-action="EditCategory" asp-controller="Admin" class="btn btn-primary"> <i class="bi bi-pencil-fill"></i></a>
+                                                <a asp-route-id="@categories.Id" data-id="@categories.Id" asp-action="DeleteCategory" asp-controller="Admin" class="btn btn-danger delete-btn"> <i class="bi bi-trash-fill"></i></a>
                                             </td>
 
 
@@ -209,6 +210,12 @@
                     });
             });
         });
+
+
+
+        $(document).ready(function () {
+            $('#categoriesData').DataTable();
+        });
     </script>
 
 
@@ -233,9 +240,67 @@
 <!-- Static Coupons -->
 
 
-<script>
 
-    $(document).ready(function () {
-        $('#categoriesData').DataTable();
-    });
-</script>
+
+@if (TempData["Success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Success"]');
+    </script>
+}
+
+
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.error('@TempData["Error"]');
+    </script>
+}

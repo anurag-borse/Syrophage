@@ -1,0 +1,162 @@
+﻿@model Syrophage.Models.Admin
+
+@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+
+    <title>Admin Dashboard</title>
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
+
+
+
+
+
+</head>
+
+<body>
+
+    <div id="main-wrapper"
+         data-layout="vertical"
+         data-navbarbg="skin5"
+         data-sidebartype="full"
+         data-sidebar-position="absolute"
+         data-header-position="absolute"
+         data-boxed-layout="full">
+
+
+        <partial name="AdminNavbar" />
+
+
+
+
+        <partial name="AdminSidebar" />
+
+
+
+
+
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Admin Profile</h4>
+                        <div class="ms-auto text-end">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="card-body">
+                            <h4 class="card-title">Personal Info</h4>
+                            <form id="imageUploadForm" enctype="multipart/form-data" asp-action="UpdateProfile" asp-controller="Admin">
+                                <input type="type" name="Id" value="@Model.Id" hidden />
+
+
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <!-- Upload Image Section -->
+                                        <div class="text-center">
+                                            <img src="@Model.ProfileImageUrl" class="img-fluid mb-3" alt="User Image" style="width: 200px; height: 200px; object-fit: cover;">
+                                            <div class="mb-3">
+                                                <br />
+                                              
+                                                <input type="file" class="form-control" id="imageUpload" name="ProfileImage" accept="image/*">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <!-- Personal Info Fields -->
+                                        <div class="form-group row">
+                                            <label for="fname" class="col-sm-4 text-end control-label col-form-label">Full Name</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="fname" value="@Model.Name" placeholder="First Name Here" name="Name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="lname" class="col-sm-4 text-end control-label col-form-label">Email Name</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="lname" value="@Model.Email" placeholder="Last Name Here" name="Email">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="password" class="col-sm-4 text-end control-label col-form-label">Password</label>
+                                            <div class="col-sm-8">
+                                                <input type="password" class="form-control" id="password"  placeholder="Password Here" name="Password" value="@Model.Password">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="address" class="col-sm-4 text-end control-label col-form-label">Address</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="address" placeholder="Company Name Here" name="Address" value="@Model.Address">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="contact" class="col-sm-4 text-end control-label col-form-label">Contact No</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="contact" placeholder="Contact No Here" name="Contact" value="@Model.Contact">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-top">
+                                    <div class="card-body">
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                       
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
+    <script src="~/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/admin/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/admin/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/admin/assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="~/admin/dist/js/waves.js"></script>
+    <script src="~/admin/dist/js/sidebarmenu.js"></script>
+    <script src="~/admin/dist/js/custom.min.js"></script>
+    <script src="~/admin/dist/js/pages/dashboards/dashboard1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="~/js/chart.js"></script>
+
+
+
+    <partial name="_Toastr" />
+
+</body>
+</html>
+

@@ -16,23 +16,15 @@ namespace Syrophage.Data
         public DbSet<Token> Tokens { get; set; }
 
         public DbSet<Admin> Admins { get; set; }    
-
         public DbSet<Coupon> Coupons { get; set; }
-
         public DbSet<Role> Roles { get; set; }
         public DbSet<Order> Orders { get; set; }
-
-
         public DbSet<UserCoupon> UserCoupons { get; set; }
-
         public DbSet<Categories> Categories { get; set; }
-
-
-
-
-
-
+        public DbSet<ServiceCategory> ServiceCategories { get; set; }
         public DbSet<Product> Products { get; set; }
+
+        public DbSet<Service> Services { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

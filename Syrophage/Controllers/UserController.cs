@@ -9,6 +9,7 @@ using Syrophage.Services;
 
 namespace Syrophage.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
 
@@ -26,7 +27,7 @@ namespace Syrophage.Controllers
             this._httpContextAccessor = _httpContextAccessor;
         }
 
-        [Authorize]
+       
         public IActionResult Profile()
         {
             SetLayoutModel();
@@ -198,7 +199,7 @@ namespace Syrophage.Controllers
 
 
 
-        [Authorize]
+
         [HttpGet]
         public IActionResult Coupons()
         {

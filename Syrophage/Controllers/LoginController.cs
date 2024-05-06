@@ -39,14 +39,12 @@ namespace Syrophage.Controllers
         [HttpPost]
         public IActionResult Login(LoginViewModel vm)
         {
-
             var role = _db.Roles.FirstOrDefault(r => r.email == vm.Email)?.role;
+
 
 
             if (role == "Admin")
             {
-
-                // Retrieve the admin based on the email
                 var existingAdmin = _db.Admins.SingleOrDefault(u => u.Email == vm.Email);
 
                 if (existingAdmin != null && existingAdmin.Password == vm.Password)
@@ -54,83 +52,64 @@ namespace Syrophage.Controllers
                     HttpContext.Session.SetInt32("AdminId", existingAdmin.Id);
                     HttpContext.Session.SetString("AdminEmail", existingAdmin.Email);
 
+                    var claims = new List<Claim>
+                    {
+                            new Claim(ClaimTypes.Name, existingAdmin.Email)
+                    };
 
                     //-------------------------------------------------
 
                     var adminClaims = new List<Claim>
-        {
+                        {
             new Claim(ClaimTypes.Name, existingAdmin.Email),
             // Add any additional claims specific to admin if needed
-        };
+                        };
 
-                    var adminClaimsIdentity = new ClaimsIdentity(adminClaims, "AdminAuthentication");
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    var adminAuthProperties = new AuthenticationProperties();
+                    var authProperties = new AuthenticationProperties();
 
-                    HttpContext.SignInAsync("AdminCookieScheme", new ClaimsPrincipal(adminClaimsIdentity), adminAuthProperties);
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
                     TempData["AdminSuccess"] = "Login Successfully";
-                    // Redirect to admin dashboard
                     return RedirectToAction("Dashboard", "Admin");
                 }
             }
             else if (role == "User")
             {
-                // Retrieve the user based on the email
                 var existingUser = _db.Users.SingleOrDefault(u => u.Email == vm.Email);
 
                 if (existingUser != null && existingUser.IsActivated == false)
                 {
                     TempData["Error"] = "Not Authorized to Login !!!";
                     return RedirectToAction("Login", "Login");
-
                 }
 
                 if (existingUser != null && existingUser.Password == vm.Password)
                 {
                     HttpContext.Session.SetInt32("UserId", existingUser.Id);
-                    // Set session variables for user
-                    HttpContext.Session.SetInt32("UserId", existingUser.Id);
                     HttpContext.Session.SetString("UserEmail", existingUser.Email);
                     HttpContext.Session.SetString("UserName", existingUser.Name);
-                    //------------------------------------------------------
 
-                    var adminClaims = new List<Claim>
-{
-    new Claim(ClaimTypes.Name, existingUser.Email),
-    // Add any additional claims specific to admin if needed
-};
+                    var claims = new List<Claim>
+                    {
+                            new Claim(ClaimTypes.Name, existingUser.Email)
+                    };
 
-                    var adminClaimsIdentity = new ClaimsIdentity(adminClaims, "UserAuthentication");
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    var adminAuthProperties = new AuthenticationProperties();
+                    var authProperties = new AuthenticationProperties();
 
-                    HttpContext.SignInAsync("AdminCookieScheme", new ClaimsPrincipal(adminClaimsIdentity), adminAuthProperties);
-
-
-
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
                     TempData["Success"] = "Login Successfully";
                     return RedirectToAction("Index", "Home");
                 }
             }
 
-
-
-            else
-            {
-                TempData["Error"] = "Login Failed Invalide Creadentials ";
-                return RedirectToAction("Login", "Login");
-
-            }
-
-
-
-
-            TempData["failed"] = "Login Failed: Invalid Credentials";
-            return View();
+            TempData["Error"] = "Login Failed: Invalid Credentials";
+            return RedirectToAction("Login", "Login");
         }
-
 
 
 
