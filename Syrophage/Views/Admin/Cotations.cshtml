@@ -1,4 +1,8 @@
-﻿@{
+﻿@model Tuple<List<Syrophage.Models.Quatation_details_fix>, List<Syrophage.Models.Admin>>
+
+
+
+@{
     Layout = null;
 }
 
@@ -81,19 +85,19 @@
                                     <h3>Quotation By</h3>
 
                                     <label for="quotationBy">Company Name</label>
-                                    <input id="quotationBy" name="quotationBy" type="text" class="form-control" value="SYROPHAGE IN PRIVATE LIMITED" readonly />
+                                    <input id="quotationBy" name="quotationBy" type="text" class="form-control" value="@Model.Item1[0].Cname" readonly />
 
                                     <label for="preparedBy">Prepared By</label>
-                                    <input id="preparedBy" name="preparedBy" type="text" class="form-control" value="" readonly />
+                                    <input id="preparedBy" name="preparedBy" type="text" class="form-control" value="@Model.Item2[0].Name" readonly />
 
                                     <label for="role">Role</label>
                                     <input id="role" name="role" type="text" class="form-control" value="Marketing Head" readonly />
 
                                     <label for="contact">Contact</label>
-                                    <input id="contact" name="contact" type="text" class="form-control" value="9175387953" readonly />
+                                    <input id="contact" name="contact" type="text" class="form-control" value="@Model.Item2[0].Contact" readonly />
 
                                     <label for="email">Email</label>
-                                    <input id="email" name="email" type="text" class="form-control" value="hrushim15@gmail.com" readonly />
+                                    <input id="email" name="email" type="text" class="form-control" value="@Model.Item2[0].Email" readonly />
                                 </div>
 
                                 <!-- Column for "Quotation To" details -->

@@ -12,6 +12,7 @@ using Syrophage.Models.ViewModel;
 using Syrophage.Repository.IRepository;
 using Syrophage.Services;
 using Syrophage.Repository;
+using System.Reflection;
 
 namespace Syrophage.Controllers
 {
@@ -35,13 +36,7 @@ namespace Syrophage.Controllers
         }
 
 
-        public void setAdminData()
-        {
-            var AdminId = HttpContext.Session.GetInt32("AdminId");
-            var Admin = unitofworks.Admin.GetById(AdminId ?? 0);
 
-            ViewData["Admin"] = Admin;
-        }
 
         [Authorize]
         public void setAdminData()
@@ -1174,7 +1169,20 @@ namespace Syrophage.Controllers
         {
             setAdminData();
 
-            return View();
+
+
+            var Quatation = unitofworks.QuatationFix.GetAll().ToList();
+
+            var Admin = unitofworks.Admin.GetAll().ToList();
+
+
+
+            var model = new Tuple<List<Quatation_details_fix>, List<Admin>>(Quatation, Admin);
+
+
+
+
+            return View(model);
         }
 
 
