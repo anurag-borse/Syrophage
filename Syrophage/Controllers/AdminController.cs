@@ -1180,21 +1180,6 @@ namespace Syrophage.Controllers
 
 
 
-        [HttpPost]
-        public IActionResult GenerateQuotationPDF([FromBody] JObject formData)
-        {
-            if (formData == null)
-            {
-                return BadRequest("FormData is null");
-            }
-
-            // Extract data from the JSON object
-            var quotationBy = formData["quotationBy"].ToString();
-            var preparedBy = formData["preparedBy"].ToString();
-
-            return View();
-        }
-
 
 
 
@@ -1204,8 +1189,6 @@ namespace Syrophage.Controllers
 
     }
 }
-
-
 
 
 
