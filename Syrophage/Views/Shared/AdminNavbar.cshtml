@@ -81,98 +81,72 @@
                 <!-- ============================================================== -->
                 <!-- Messages -->
                 <!-- ============================================================== -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark"
-                       href="#"
-                       id="2"
-                       role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        <i class="font-24 mdi mdi-comment-processing"></i>
-                    </a>
-                    <ul class="
-                    dropdown-menu dropdown-menu-end
-                    mailbox
-                    animated
-                    bounceInDown
-                  "
-                        aria-labelledby="2">
-                        <ul class="list-style-none">
-                            <li>
-                                <div class="">
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)" class="link border-top">
-                                        <div class="d-flex no-block align-items-center p-10">
-                                            <span class="
-                                btn btn-success btn-circle
-                                d-flex
-                                align-items-center
-                                justify-content-center
-                              ">
-                                                <i class="mdi mdi-calendar text-white fs-4"></i>
-                                            </span>
-                                            <div class="ms-2">
-                                                <h5 class="mb-0">Event today</h5>
-                                                <span class="mail-desc">Just a reminder that event</span>
-                                            </div>
-                                        </div>
+
+
+                <header class="topbar" data-navbarbg="skin5">
+                    <!-- Navbar markup -->
+                    <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                            <ul class="navbar-nav float-end">
+                                <!-- Messages Dropdown -->
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" id="messagesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="font-24 mdi mdi-comment-processing"></i>
                                     </a>
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)" class="link border-top">
-                                        <div class="d-flex no-block align-items-center p-10">
-                                            <span class="
-                                btn btn-info btn-circle
-                                d-flex
-                                align-items-center
-                                justify-content-center
-                              ">
-                                                <i class="mdi mdi-settings fs-4"></i>
-                                            </span>
-                                            <div class="ms-2">
-                                                <h5 class="mb-0">Settings</h5>
-                                                <span class="mail-desc">You can customize this template</span>
+                                    <ul class="dropdown-menu dropdown-menu-end mailbox animated bounceInDown" aria-labelledby="messagesDropdown">
+                                        <li>
+                                            <div class="message-center">
+                                                <div class="d-flex no-block align-items-center p-10">
+                                                    <span class="btn btn-primary btn-circle d-flex align-items-center justify-content-center">
+                                                        <i class="mdi mdi-account fs-4"></i>
+                                                    </span>
+                                                    <div class="ms-2">
+                                                        <h5 class="mb-0">Total Users </h5>
+                                                        <span class="mail-desc" id="totalUsersCount">Loading...</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex no-block align-items-center p-10">
+                                                    <span class="btn btn-success btn-circle d-flex align-items-center justify-content-center">
+                                                        <i class="mdi mdi-ticket fs-4"></i>
+                                                    </span>
+                                                    <div class="ms-2">
+                                                        <h5 class="mb-0">Total Coupons </h5>
+                                                        <span class="mail-desc" id="totalCouponsCount">Loading...</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex no-block align-items-center p-10">
+                                                    <span class="btn btn-success btn-circle d-flex align-items-center justify-content-center">
+                                                        <i class="mdi mdi-newspaper fs-4"></i>
+                                                    </span>
+                                                    <div class="ms-2">
+                                                        <h5 class="mb-0">Total News </h5>
+                                                        <span class="mail-desc" id="totalNewsCount">Loading...</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex no-block align-items-center p-10">
+                                                    <span class="btn btn-success btn-circle d-flex align-items-center justify-content-center">
+                                                        <i class="mdi mdi-account fs-4"></i>
+                                                    </span>
+                                                    <div class="ms-2">
+                                                        <h5 class="mb-0">Total Contact </h5>
+                                                        <span class="mail-desc" id="totalContactCount">Loading...</span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)" class="link border-top">
-                                        <div class="d-flex no-block align-items-center p-10">
-                                            <span class="
-                                btn btn-primary btn-circle
-                                d-flex
-                                align-items-center
-                                justify-content-center
-                              ">
-                                                <i class="mdi mdi-account fs-4"></i>
-                                            </span>
-                                            <div class="ms-2">
-                                                <h5 class="mb-0">Pavan kumar</h5>
-                                                <span class="mail-desc">Just see the my admin!</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)" class="link border-top">
-                                        <div class="d-flex no-block align-items-center p-10">
-                                            <span class="
-                                btn btn-danger btn-circle
-                                d-flex
-                                align-items-center
-                                justify-content-center
-                              ">
-                                                <i class="mdi mdi-link fs-4"></i>
-                                            </span>
-                                            <div class="ms-2">
-                                                <h5 class="mb-0">Luanch Admin</h5>
-                                                <span class="mail-desc">Just see the my new admin!</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </ul>
-                </li>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </header>
+
+
+
+           
                 <!-- ============================================================== -->
                 <!-- End Messages -->
                 <!-- ============================================================== -->
@@ -236,3 +210,94 @@
 <script src="~/admin/dist/js/sidebarmenu.js"></script>
 <script src="~/admin/dist/js/custom.min.js"></script>
 <script src="~/admin/dist/js/pages/dashboards/dashboard1.js"></script>
+
+
+
+
+
+
+@* -------------------------------- *@
+
+<script>
+    $(document).ready(function () {
+        // Preload total user count when the page loads
+        preloadTotalUserCount();
+
+        // Preload total coupons count when the page loads
+        preloadTotalCouponsCount();
+
+        preloadTotalNewsCount();
+
+        preloadTotalContactCount();
+
+
+    });
+
+    function preloadTotalUserCount() {
+        // Perform AJAX request to fetch total user count
+        $.ajax({
+            url: '/User/TotalU', // URL to your action method which fetches the total user count
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // Update HTML to display total user count
+                $('#totalUsersBadge').html(data.totalUsers);
+                $('#totalUsersCount').html('Total Users: ' + data.totalUsers);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching total users count:', error);
+            }
+        });
+    }
+
+    function preloadTotalCouponsCount() {
+        // Perform AJAX request to fetch total coupons count
+        $.ajax({
+            url: '/User/TotalCoupons', // URL to your action method which fetches the total coupons count
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // Update HTML to display total coupons count
+                $('#totalCouponsBadge').html(data.totalCoupons);
+                $('#totalCouponsCount').html('Total Coupons: ' + data.totalCoupons);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching total coupons count:', error);
+            }
+        });
+    }
+
+    function preloadTotalNewsCount() {
+        // Perform AJAX request to fetch total coupons count
+        $.ajax({
+            url: '/User/TotalNews', // URL to your action method which fetches the total coupons count
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // Update HTML to display total coupons count
+                $('#totalCouponsBadge').html(data.totalCoupons);
+                $('#totalNewsCount').html('Total Coupons: ' + data.totalNews);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching total coupons count:', error);
+            }
+        });
+    }
+
+    function preloadTotalContactCount() {
+        // Perform AJAX request to fetch total coupons count
+        $.ajax({
+            url: '/User/TotalContact', // URL to your action method which fetches the total coupons count
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // Update HTML to display total coupons count
+                $('#totalCouponsBadge').html(data.totalCoupons);
+                $('#totalContactCount').html('Total Coupons: ' + data.totalContact);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching total coupons count:', error);
+            }
+        });
+    }
+</script>

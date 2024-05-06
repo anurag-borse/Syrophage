@@ -12,6 +12,11 @@ namespace Syrophage.Repository
             _db = db;
         }
 
+        public int Count()
+        {
+            return _db.contacttb.Count();   
+        }
+
         public Contact GetById(int Id)
         {
             return _db.contacttb.Find(Id);

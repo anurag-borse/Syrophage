@@ -16,6 +16,17 @@
     </div>
 </div>
 
+<style>
+    #video-player {
+        width: 450px; /* Set width */
+        height: 300px; /* Set height */
+        position: fixed; /* Position fixed to keep it centered */
+        top: 50%; /* Position from top */
+        left: 50%; /* Position from left */
+        transform: translate(-50%, -50%); /* Center the video */
+        z-index: 9999; /* Ensure it's above other content */
+    }
+</style>
 
 
 @* -------------------------------------- *@
@@ -505,3 +516,5 @@
         }, false);
     });
 </script>
+
+
