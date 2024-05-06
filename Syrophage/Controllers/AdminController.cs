@@ -37,12 +37,7 @@ namespace Syrophage.Controllers
 
 
 
-        {
-            var AdminId = HttpContext.Session.GetInt32("AdminId");
-            var Admin = unitofworks.Admin.GetById(AdminId ?? 0);
-
-            ViewData["Admin"] = Admin;
-        }
+        
 
         [Authorize]
         public void setAdminData()
