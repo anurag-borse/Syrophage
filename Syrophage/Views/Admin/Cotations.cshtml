@@ -127,16 +127,17 @@
 
 
 
-                     
+                 
+
                         <form id="form-step-2" class="mt-5" style="display:none">
                             <div class="row">
                                 <!-- Column for "About Us" and "Methodology" -->
                                 <div class="col-md-6">
                                     <h3>About Us</h3>
-                                    <textarea id="aboutUs" name="CAboutUs" class="form-control" rows="5" readonly> @Model.Item1[0].CAboutUs </textarea>
+                                    <textarea id="aboutUs" name="aboutUs" class="form-control" rows="5" >@Model.Item1[0].CAboutUs</textarea>
 
                                     <h3>Methodology</h3>
-                                    <textarea id="methodology" name="CMethodology" class="form-control" rows="5" readonly> @Model.Item1[0].CMethodology </textarea>
+                                                <textarea id="methodology" name="methodology" class="form-control" rows="5" readonly>@Model.Item1[0].CMethodology</textarea>
                                 </div>
 
                                 <!-- Column for "About Pioneer" and "Expectation" -->
@@ -282,14 +283,15 @@
                 email: document.getElementById("email").value,
                 companyName: document.getElementById("companyName").value,
                 preparedFor: document.getElementById("preparedFor").value,
-                contactTo: document.getElementById("contactTo").checked,
-                emailTo: document.getElementById("emailTo").checked,
+                contactTo: document.getElementById("contactTo").value,
+                emailTo: document.getElementById("emailTo").value,
 
 
 
-                aboutUs: document.getElementById("aboutUs").checked,
-                methodology: document.getElementById("methodology").checked,
-                expectation: document.getElementById("expectation").checked,
+                aboutUs: document.getElementById("aboutUs").value,
+                methodology: document.getElementById("methodology").value,
+                aboutPioneer: document.getElementById("aboutPioneer").value,
+                expectation: document.getElementById("expectation").value,
 
 
 

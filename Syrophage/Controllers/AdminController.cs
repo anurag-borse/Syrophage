@@ -1163,8 +1163,10 @@ namespace Syrophage.Controllers
 
         }
 
+        /*=============================================product==============================================================*/
 
 
+        /*=============================================Quatation==============================================================*/
         [HttpGet]
         public IActionResult Cotations()
         {
@@ -1175,15 +1177,15 @@ namespace Syrophage.Controllers
             var Quatation = unitofworks.QuatationFix.GetAll().ToList();
 
             var Admin = unitofworks.Admin.GetAll().ToList();
-
-
-
             var model = new Tuple<List<Quatation_details_fix>, List<Admin>>(Quatation, Admin);
 
-
-
-
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult AddServiceQua(Qua_Service obj)
+        {
+            return View();
         }
 
 
@@ -1191,4 +1193,10 @@ namespace Syrophage.Controllers
     }
 }
 
-/*=============================================product==============================================================*/
+
+
+
+
+
+
+

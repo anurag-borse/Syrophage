@@ -32,6 +32,9 @@
         IQuatationFixRepository QuatationFix { get; }
 
 
+        IQuatationServiceRepository QuaService { get; }
+
+
         public void Save();
     }
 }
