@@ -29,6 +29,8 @@
 
         IAdminRepository Admin { get; }
 
+        IQuatationFixRepository QuatationFix { get; }
+
 
         public void Save();
     }
