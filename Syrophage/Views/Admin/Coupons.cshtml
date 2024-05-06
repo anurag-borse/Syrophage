@@ -7,7 +7,7 @@
 
 
 
-<h3>Add Coupons To User</h3>
+
 
 <!-- Form to assign existing coupon to user -->
 
@@ -16,7 +16,10 @@
 <head>
 
     <title>Admin Dashboard</title>
-<hr />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
 
 
@@ -71,18 +74,14 @@
 
 
 
-<!-- User Details -->
-<h2>User Details</h2>
             <div>
                 <div>
 
                     <div class="container">
 
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@Model">Generate New Coupon  </button>
+                        <button type="button" class="btn btn-primary ml-5" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@Model">Generate New Coupon  </button>
 
-  @*   <p><strong>Name:</strong> @Model.Name</p>
-    <p><strong>Email:</strong> @Model.Email</p> *@
-    <!-- Add other properties as needed -->
+
                     </div>
 
 <hr />
@@ -257,9 +256,11 @@
                                 );
                             }
                         });
+                        toastr.success(response.message);
                     } else {
                         // Handle error
                         console.error('Failed to toggle activation status');
+                        toastr.error(response.message);
                     }
                 }
             });
@@ -283,9 +284,12 @@
                                 );
                             }
                         });
+                        toastr.success(response.message);
                     } else {
                         // Handle error
                         console.error('Failed to delete coupon');
+                        toastr.error(response.message);
+
                     }
                 }
             });
@@ -295,8 +299,93 @@
             $('#couponsTable').DataTable();
         });
 
+
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+
+
     </script>
 
 </body>
 </html>
 <!-- Static Coupons -->
+@if (TempData["Success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Success"]');
+    </script>
+}
+
+
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.error('@TempData["Error"]');
+    </script>
+}

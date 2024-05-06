@@ -41,6 +41,8 @@ namespace Syrophage.Controllers
         {
             var role = _db.Roles.FirstOrDefault(r => r.email == vm.Email)?.role;
 
+
+
             if (role == "Admin")
             {
                 var existingAdmin = _db.Admins.SingleOrDefault(u => u.Email == vm.Email);
@@ -54,6 +56,14 @@ namespace Syrophage.Controllers
                     {
                             new Claim(ClaimTypes.Name, existingAdmin.Email)
                     };
+
+                    //-------------------------------------------------
+
+                    var adminClaims = new List<Claim>
+                        {
+            new Claim(ClaimTypes.Name, existingAdmin.Email),
+            // Add any additional claims specific to admin if needed
+                        };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 

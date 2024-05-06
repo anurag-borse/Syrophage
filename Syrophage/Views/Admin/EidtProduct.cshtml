@@ -98,6 +98,13 @@
                                     </div>
 
 
+                                    <div class="form-group row" hidden>
+                                        <label for="fname" class="col-sm-3 text-end control-label col-form-label">Company</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" value="@Model.id" id="fname" asp-for="id" />
+                                        </div>
+                                    </div>
+
 
 
                                     <div class="form-group row">
@@ -109,10 +116,12 @@
                                     </div>
 
 
+
+
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-end control-label col-form-label">Category</label>
                                         <div class="col-sm-9">
-                                            <input readonly value="@Model.Category" asp-for="Category" type="text" class="form-control" id="fname" name="Company" />
+                                            <input readonly value="@Model.Category" asp-for="Category" type="text" class="form-control" id="fname" name="Category" />
                                         </div>
                                     </div>
 

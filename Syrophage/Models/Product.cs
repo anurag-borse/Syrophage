@@ -7,7 +7,6 @@ namespace Syrophage.Models
     {
         [Key]
         public int id { get; set; }
-
         [Required]
         public string productname { get; set; }
         [Required]
@@ -16,7 +15,6 @@ namespace Syrophage.Models
         public string Category { get; set; }
         [Required]
         public string Company { get; set; }
-
 
         [ValidateNever]
         public string productImageUrl { get; set; }

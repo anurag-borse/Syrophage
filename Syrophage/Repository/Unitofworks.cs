@@ -19,11 +19,17 @@ namespace Syrophage.Repository
 
         public ICouponRepository Coupon { get; set; }
 
-        public IUserCouponRepository UserCoupon { get; set;}
+        public IUserCouponRepository UserCoupon { get; set; }
 
-        public ICategoriesRepository Categories{ get; set; }
+        public ICategoriesRepository Categories { get; set; }
 
         public IProductsRepository Product { get; set; }
+
+        public IServicesCategoriesRepository ServiceCategories { get; set; }
+
+        public IServicesRepository Services { get; set; }
+
+        public IAdminRepository Admin { get; set;}
 
         public Unitofworks(ApplicationDbContext _db)
         {
@@ -35,9 +41,11 @@ namespace Syrophage.Repository
             Orders = new OrderRepository(_db);
             Coupon = new CouponRepository(_db);
             Product = new ProductsRepository(_db);
-
             UserCoupon = new UserCouponRepository(_db);
             Categories = new CategoriesRepository(_db);
+            ServiceCategories = new ServicesCategoriesRepository(_db);
+            Services = new ServicesRepository(_db);
+            Admin = new AdminRepository(_db);
         }
 
         public void Save()
