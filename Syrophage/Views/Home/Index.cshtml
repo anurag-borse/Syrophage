@@ -267,7 +267,7 @@
                     </div>
                 </div>
 
-        <div class="row">
+@*         <div class="row">
             <div class="col-lg-12">
                 <div class="watch-video text-center">
                     <div class="project-video">
@@ -287,7 +287,7 @@
             <source src="~/video_loader/s.mp4" type="video/mp4" />  
             Your browser does not support the video tag.
 
-        </video>
+        </video> *@
 
 
         </section>
@@ -532,21 +532,3 @@
 </script>
 
 
-<script>
-    document.getElementById('play-video-button').addEventListener('click', function () {
-        var videoPlayer = document.getElementById('video-player');
-        videoPlayer.style.display = 'block';
-        videoPlayer.play();
-        document.getElementById('play-video-button').style.display = 'none';
-        document.getElementById('stop-video-button').style.display = 'block';
-    });
-
-    document.getElementById('stop-video-button').addEventListener('click', function () {
-        var videoPlayer = document.getElementById('video-player');
-        videoPlayer.pause();
-        videoPlayer.currentTime = 0;
-        videoPlayer.style.display = 'none';
-        document.getElementById('play-video-button').style.display = 'block';
-        document.getElementById('stop-video-button').style.display = 'none';
-    });
-</script>
