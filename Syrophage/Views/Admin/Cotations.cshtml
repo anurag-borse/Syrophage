@@ -152,7 +152,42 @@
 
                         <form id="form-step-3" class="mt-5" style="display: none;">
                             <!-- Form for section 3 -->
-                            
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="service">Service *</label>
+                                    <input id="service" name="service" type="text" class="required form-control" />
+
+                                    <label for="description">Description *</label>
+                                    <textarea id="description" name="description" class="required form-control" rows="3"></textarea>
+
+                                    <label for="oneTimeCharges">One Time Charges *</label>
+                                    <input id="oneTimeCharges" name="oneTimeCharges" type="number" class="required form-control" />
+
+                                    <label for="halfYearlyCharges">Half-Yearly Charges *</label>
+                                    <input id="halfYearlyCharges" name="halfYearlyCharges" type="number" class="required form-control" />
+
+                                    <label for="annualCharges">Annual Charges *</label>
+                                    <input id="annualCharges" name="annualCharges" type="number" class="required form-control" />
+
+                                    <button type="button" class="btn btn-primary" onclick="addService()" style="margin-top:20px">Add</button>
+                                </div>
+                            </div>
+
+                            <table class="table table-hover mt-5" id="servicesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Service</th>
+                                        <th>Description</th>
+                                        <th>One Time Charges</th>
+                                        <th>Half-Yearly Charges</th>
+                                        <th>Annual Charges</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Rows will be added here dynamically -->
+                                </tbody>
+                            </table>
 
 
 
@@ -169,11 +204,31 @@
 
                         <form id="form-step-4" class="mt-5" style="display: none;">
                             <!-- Form for section 4 -->
+
+
+                            <label for="term1">Term 1 *</label>
+                            <input id="term1" name="terms[]" type="text" class="required form-control" />
+
+                            <label for="term2">Term 2 *</label>
+                            <input id="term2" name="terms[]" type="text" class="required form-control" />
+
+                            <label for="term3">Term 3 *</label>
+                            <input id="term3" name="terms[]" type="text" class="required form-control" />
+
                             <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required" />
                             <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+
+
+
+                            <br />
+
                             <button type="button" class="btn btn-secondary" onclick="prevStep(4)">Previous</button>
                             <button type="button" class="btn btn-success" onclick="submitForm()">Finish</button>
                         </form>
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -236,7 +291,13 @@
 
 
 
-                contactTo: document.getElementById("contactTo").checked,
+
+
+
+                term1: document.getElementById("term1").value,
+                term2: document.getElementById("term2").value,
+                term3: document.getElementById("term3").value,
+
 
 
 
@@ -276,6 +337,64 @@
                 }
             }
         }
+
+
+
+
+        function addService() {
+            // Get values from input fields
+            var service = document.getElementById("service").value;
+            var description = document.getElementById("description").value;
+            var oneTimeCharges = document.getElementById("oneTimeCharges").value;
+            var halfYearlyCharges = document.getElementById("halfYearlyCharges").value;
+            var annualCharges = document.getElementById("annualCharges").value;
+
+            // Create a new row
+            var row = document.createElement("tr");
+            row.innerHTML = "<td>" + service + "</td><td>" + description + "</td><td>" + oneTimeCharges + "</td><td>" + halfYearlyCharges + "</td><td>" + annualCharges + "</td>";
+
+            // Add the new row to the table
+            document.getElementById("servicesTable").getElementsByTagName('tbody')[0].appendChild(row);
+
+            // Create hidden input fields for each service property
+            var form = document.getElementById("form-step-3");
+            form.appendChild(createHiddenInput("services[]", service));
+            form.appendChild(createHiddenInput("descriptions[]", description));
+            form.appendChild(createHiddenInput("oneTimeCharges[]", oneTimeCharges));
+            form.appendChild(createHiddenInput("halfYearlyCharges[]", halfYearlyCharges));
+            form.appendChild(createHiddenInput("annualCharges[]", annualCharges));
+
+            // Clear input fields
+            document.getElementById("service").value = "";
+            document.getElementById("description").value = "";
+            document.getElementById("oneTimeCharges").value = "";
+            document.getElementById("halfYearlyCharges").value = "";
+            document.getElementById("annualCharges").value = "";
+        }
+
+        function createHiddenInput(name, value) {
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = name;
+            input.value = value;
+            return input;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // Basic Example with form
         var form = $("#example-form");
