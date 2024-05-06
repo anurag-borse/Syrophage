@@ -66,7 +66,7 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-body wizard-content">
-                        <h4 class="card-title">Multi-step Form Example</h4>
+                        <h4 class="card-title">New Qotation For Client</h4>
                         <!-- Navigation bar for steps -->
                         <div class="step-navigation">
                             <div id="step-item-1" class="step-item active" onclick="goToStep(1)">Quotation By</div>
@@ -104,16 +104,16 @@
                                 <div class="col-md-6">
                                     <h3>Quotation To</h3>
 
-                                    <label for="companyName">Company Name *</label>
+                                    <label for="companyName">Company Name </label>
                                     <input id="companyName" name="companyName" type="text" class="required form-control" />
 
-                                    <label for="preparedFor">Prepared For *</label>
+                                    <label for="preparedFor">Prepared For </label>
                                     <input id="preparedFor" name="preparedFor" type="text" class="required form-control" />
 
-                                    <label for="contactTo">Contact *</label>
+                                    <label for="contactTo">Contact </label>
                                     <input id="contactTo" name="contactTo" type="number" class="required form-control" />
 
-                                    <label for="emailTo">Email *</label>
+                                    <label for="emailTo">Email </label>
                                     <input id="emailTo" name="emailTo" type="email" class="required email form-control" />
                                 </div>
                             </div>
@@ -127,29 +127,27 @@
 
 
 
-                 
+
 
                         <form id="form-step-2" class="mt-5" style="display:none">
                             <div class="row">
                                 <!-- Column for "About Us" and "Methodology" -->
                                 <div class="col-md-6">
                                     <h3>About Us</h3>
-                                    <textarea id="aboutUs" name="aboutUs" class="form-control" rows="5" >@Model.Item1[0].CAboutUs</textarea>
+                                    <textarea id="aboutUs" name="aboutUs" class="form-control" rows="5">@Model.Item1[0].CAboutUs</textarea>
 
                                     <h3>Methodology</h3>
-                                                <textarea id="methodology" name="methodology" class="form-control" rows="5" readonly>@Model.Item1[0].CMethodology</textarea>
+                                    <textarea id="methodology" name="methodology" class="form-control" rows="5" readonly>@Model.Item1[0].CMethodology</textarea>
                                 </div>
 
                                 <!-- Column for "About Pioneer" and "Expectation" -->
                                 <div class="col-md-6">
-                                    <h3>About Pioneer *</h3>
-                                    <textarea id="aboutPioneer" name="aboutPioneer" class="required form-control" rows="5"></textarea>
 
-                                    <h3>Expectation *</h3>
+                                    <h3>Expectation </h3>
                                     <textarea id="expectation" name="expectation" class="required form-control" rows="5"></textarea>
                                 </div>
                             </div>
-                            <p>(*) Mandatory</p>
+
                             <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Previous</button>
                             <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
                         </form>
@@ -158,22 +156,23 @@
 
                         <form id="form-step-3" class="mt-5" style="display: none;">
                             <!-- Form for section 3 -->
+                            <input type="hidden" id="servicesArray" name="servicesArray" />
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label for="service">Service *</label>
+                                    <label for="service">Service </label>
                                     <input id="service" name="service" type="text" class="required form-control" />
 
-                                    <label for="description">Description *</label>
+                                    <label for="description">Description </label>
                                     <textarea id="description" name="description" class="required form-control" rows="3"></textarea>
 
-                                    <label for="oneTimeCharges">One Time Charges *</label>
+                                    <label for="oneTimeCharges">One Time Charges </label>
                                     <input id="oneTimeCharges" name="oneTimeCharges" type="number" class="required form-control" />
 
-                                    <label for="halfYearlyCharges">Half-Yearly Charges *</label>
+                                    <label for="halfYearlyCharges">Half-Yearly Charges </label>
                                     <input id="halfYearlyCharges" name="halfYearlyCharges" type="number" class="required form-control" />
 
-                                    <label for="annualCharges">Annual Charges *</label>
+                                    <label for="annualCharges">Annual Charges </label>
                                     <input id="annualCharges" name="annualCharges" type="number" class="required form-control" />
 
                                     <button type="button" class="btn btn-primary" onclick="addService()" style="margin-top:20px">Add</button>
@@ -212,16 +211,17 @@
                             <!-- Form for section 4 -->
 
 
-                            <label for="term1">Term 1 *</label>
+                            <label for="term1">Term 1 </label>
                             <input id="term1" name="terms[]" type="text" class="required form-control" />
 
-                            <label for="term2">Term 2 *</label>
+                            <label for="term2">Term 2 </label>
                             <input id="term2" name="terms[]" type="text" class="required form-control" />
 
-                            <label for="term3">Term 3 *</label>
+                            <label for="term3">Term 3 </label>
                             <input id="term3" name="terms[]" type="text" class="required form-control" />
 
-                            <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required" />
+                            <input type="checkbox" id="termsCheckbox" />
+
                             <label for="acceptTerms">I agree with the Terms and Conditions.</label>
 
 
@@ -229,7 +229,7 @@
                             <br />
 
                             <button type="button" class="btn btn-secondary" onclick="prevStep(4)">Previous</button>
-                            <button type="button" class="btn btn-success" onclick="submitForm()">Finish</button>
+                            <button type="button" class="btn btn-success" id="finishButton" disabled onclick="submitForm()">Finish</button>
                         </form>
 
 
@@ -255,7 +255,25 @@
     <script src="~/admin/assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
     <script src="~/admin/assets/libs/jquery-validation/dist/jquery.validate.min.js"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
     <script>
+
+        $(document).ready(function () {
+            $('#termsCheckbox').change(function () {
+                if (this.checked) {
+                    $('#finishButton').prop('disabled', false);
+                } else {
+                    $('#finishButton').prop('disabled', true);
+                }
+            });
+        });
+
+
+        var servicesArray = [];
+
+
         function nextStep(step) {
             // Hide current step form
             document.getElementById("form-step-" + step).style.display = "none";
@@ -263,6 +281,9 @@
             document.getElementById("form-step-" + (step + 1)).style.display = "block";
             // Highlight current step in navigation
             updateNavigation(step + 1);
+            // Pass servicesArray to the next form as hidden input
+            document.getElementById("servicesArray").value = JSON.stringify(servicesArray);
+
         }
 
         function prevStep(step) {
@@ -292,17 +313,17 @@
 
                 aboutUs: document.getElementById("aboutUs").value,
                 methodology: document.getElementById("methodology").value,
-                aboutPioneer: document.getElementById("aboutPioneer").value,
                 expectation: document.getElementById("expectation").value,
 
 
 
-
+                services: servicesArray,
 
 
                 term1: document.getElementById("term1").value,
                 term2: document.getElementById("term2").value,
                 term3: document.getElementById("term3").value,
+
 
 
 
@@ -316,6 +337,27 @@
 
             // After submitting, you can redirect or show a success message
             alert("Form submitted successfully!");
+
+            
+            // Convert formData to JSON
+            var jsonData = JSON.stringify(formData);
+
+
+            // AJAX POST request to send data to the controller action
+            $.ajax({
+                type: "POST",
+                url: "/Admin/GenerateQuotationPDF",
+                contentType: "application/json",
+                data: jsonData,
+                success: function (response) {
+                    // Handle success response
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response
+                    console.error(xhr.responseText);
+                }
+            });
         }
 
         function goToStep(step) {
@@ -355,6 +397,16 @@
             var halfYearlyCharges = document.getElementById("halfYearlyCharges").value;
             var annualCharges = document.getElementById("annualCharges").value;
 
+            // Push the service details into the array
+            servicesArray.push({
+                service: service,
+                description: description,
+                oneTimeCharges: oneTimeCharges,
+                halfYearlyCharges: halfYearlyCharges,
+                annualCharges: annualCharges
+            });
+
+
             // Create a new row
             var row = document.createElement("tr");
             row.innerHTML = "<td>" + service + "</td><td>" + description + "</td><td>" + oneTimeCharges + "</td><td>" + halfYearlyCharges + "</td><td>" + annualCharges + "</td>";
@@ -386,22 +438,6 @@
             return input;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         // Basic Example with form
         var form = $("#example-form");
         form.validate({
@@ -430,6 +466,22 @@
                 alert("Submitted!");
             },
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </script>
 
 </body>
