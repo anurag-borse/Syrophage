@@ -34,6 +34,15 @@ namespace Syrophage.Controllers
             this._webHostEnvironment = _webHostEnvironment;
         }
 
+
+        public void setAdminData()
+        {
+            var AdminId = HttpContext.Session.GetInt32("AdminId");
+            var Admin = unitofworks.Admin.GetById(AdminId ?? 0);
+
+            ViewData["Admin"] = Admin;
+        }
+
         [Authorize]
         public void setAdminData()
         {
@@ -60,6 +69,9 @@ namespace Syrophage.Controllers
             var nonActiveUsersCount = unitofworks.User.GetAll().Where(x => x.IsActivated == false).Count();
             var couponNames = unitofworks.Coupon.GetAll().Select(c => c.Name).ToList();
             var coupondiscounts = unitofworks.Coupon.GetAll().Select(c => c.Discount).ToList();
+
+
+
             ViewBag.CouponNames = couponNames;
             ViewBag.coupondiscounts = coupondiscounts;
 
@@ -490,10 +502,6 @@ namespace Syrophage.Controllers
             string wwwRootPath = _webHostEnvironment.WebRootPath;
             var products = unitofworks.Product.GetAll().Where(j => j.Category == category.CategoryName).ToList();
 
-
-
-
-
             var filePath = Path.Combine(_webHostEnvironment.WebRootPath, category.CategoryPictureUrl.TrimStart('/'));
 
             if (System.IO.File.Exists(filePath))
@@ -513,7 +521,6 @@ namespace Syrophage.Controllers
                 TempData["Success"] = "Category Deleted Successfully";
                 return RedirectToAction("Categories", "Admin");
             }
-
 
             TempData["Error"] = "Category  not Deleted";
             return RedirectToAction("Categories", "Admin");
@@ -596,6 +603,38 @@ namespace Syrophage.Controllers
 
             var categories = unitofworks.ServiceCategories.GetAll().ToList();
             return View(categories);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteServiceCategory(int id)
+        {
+            var category = unitofworks.ServiceCategories.GetById(id);
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+            var services = unitofworks.Services.GetAll().Where(j => j.Category == category.CategoryName).ToList();
+
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, category.CategoryPictureUrl.TrimStart('/'));
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+            foreach (var prod in services)
+            {
+                unitofworks.Services.Remove(prod);
+            }
+
+            if (category != null)
+            {
+                unitofworks.ServiceCategories.Remove(category);
+                unitofworks.Save();
+
+                TempData["Success"] = "Category Deleted Successfully";
+                return RedirectToAction("ServiceCategories", "Admin");
+            }
+
+            TempData["Error"] = "Category  not Deleted";
+            return RedirectToAction("ServiceCategories", "Admin");
         }
         [HttpPost]
         public IActionResult AddServiceCategory(ServiceCategory obj, IFormFile file)
@@ -844,6 +883,40 @@ namespace Syrophage.Controllers
             TempData["Error"] = "Service not Added";
             return RedirectToAction("ManageService", "Admin");
         }
+
+
+        
+        [HttpGet]
+        public IActionResult DeleteService(int id)
+        {
+            var service = unitofworks.Services.GetById(id);
+            if (service != null)
+            {
+                // Get the physical path of the file
+                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, service.productImageUrl.TrimStart('/'));
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                unitofworks.Services.Remove(service);
+                unitofworks.Save();
+
+
+                TempData["success"] = "Service Deleted Succesfully";
+                return RedirectToAction("ManageService", "Admin");
+            }
+            TempData["Error"] = "Service Not Deleted";
+            return RedirectToAction("ManageService", "Admin");
+        }
+
+
+
+
+
+
+
         /*=============================================Services==============================================================*/
 
 

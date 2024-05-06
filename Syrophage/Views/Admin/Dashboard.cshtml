@@ -134,9 +134,9 @@
                         <div class="card card-hover">
                             <div class="box bg-info text-center">
                                 <h1 class="font-light text-white">
-                                    <i class="fa fa-cart-plus"></i>
+                                    <i class="mdi mdi-compare"></i>
                                 </h1>
-                                <a class="text-white" asp-action="AddOrder" asp-controller="Admin">Add-Orders</a>
+                                <a class="text-white" asp-action="Categories" asp-controller="Admin">Add-Product-category</a>
                             </div>
                         </div>
                     </div>
@@ -145,9 +145,9 @@
                         <div class="card card-hover">
                             <div class="box bg-cyan text-center">
                                 <h1 class="font-light text-white">
-                                    <i class="fa fa-eye"></i>
+                                    <i class="bi bi-front"></i>
                                 </h1>
-                                <a class="text-white" asp-action="ManageOrder" asp-controller="Admin">Manage-Order</a>
+                                <a class="text-white" asp-action="ServiceCategories" asp-controller="Admin">Add-Service-category</a>
                             </div>
                         </div>
                     </div>
@@ -156,20 +156,21 @@
                         <div class="card card-hover">
                             <div class="box bg-success text-center">
                                 <h1 class="font-light text-white">
-                                    <i class="mdi mdi-calendar-check"></i>
+                                    <i class="mdi mdi-glass-tulip"></i>
                                 </h1>
-                                <h6 class="text-white">Calnedar</h6>
+                                <a class="text-white" asp-action="ManageProduct" asp-controller="Admin">Products</a>
                             </div>
                         </div>
                     </div>
                     <!-- Column -->
                     <div class="col-md-6 col-lg-2 col-xlg-3">
+                        
                         <div class="card card-hover">
                             <div class="box bg-warning text-center">
                                 <h1 class="font-light text-white">
-                                    <i class="mdi mdi-alert"></i>
+                                    <i class="bi bi-columns-gap"></i>
                                 </h1>
-                                <h6 class="text-white">Errors</h6>
+                                <a class="text-white"  asp-action="ManageService" asp-controller="Admin">Services</a>
                             </div>
                         </div>
                     </div>
@@ -196,12 +197,16 @@
                     <div class="col-md-12 col-lg-7">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title mb-1">Discount Percentage Per Coupon (Bar Chart)</h4>
+                                <h4 class="card-title mb-1">Discount Percentage Per Coupon</h4>
                                 <canvas id="barChart"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
+
 
 
 

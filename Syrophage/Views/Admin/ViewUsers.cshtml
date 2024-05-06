@@ -86,7 +86,6 @@
                                             <td>@user.Phone</td>
                                             <td>@user.Address</td>
                                             <td>@user.RegId</td>
-
                                             <td>
                                                 <button data-activated="@(user.IsActivated ?? false)" onclick="toggleActivation(@user.Id, this)" class="btn btn-@(user.IsActivated == true ? "success" : "danger")">@(user.IsActivated == true ? "De-Activate" : "Activate")</button>
                                             </td>

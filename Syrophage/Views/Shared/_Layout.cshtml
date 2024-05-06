@@ -7,7 +7,7 @@
 
 @{
     var layoutModel = Context.Items["LayoutModel"] as LayoutVM; var firstname =
-        layoutModel?.FirstName; var lastName = layoutModel?.LastName;string profileimg = layoutModel?.profilepic;
+        layoutModel?.FirstName; var lastName = layoutModel?.LastName; string profileimg = layoutModel?.profilepic;
 }
 
 
@@ -81,7 +81,7 @@
                             <span></span>
                             <span></span>
                         </div>
-                        
+
                     </a>
                     <!-- End mobile menu toggle-->
                 </div>
@@ -103,23 +103,25 @@
                     </li>
 
                     <li class="has-submenu">
-                        <a asp-action="Contact" asp-controller="Home">Contact</a>
+                        <a asp-action="Services" asp-controller="Home">Services</a>
                     </li>
 
                     <li class="has-submenu">
-                        <a asp-action="Services" asp-controller="Home">Services</a>
+                        <a asp-action="Contact" asp-controller="Home">Contact</a>
                     </li>
-                
 
 
-                
+
+
+
+
 
 
                     @{
                         if (userEmail != null)
                         {
                             <li class="has-submenu">
-                                <a asp-action ="Profile" asp-controller="User">@username</a>
+                                <a asp-action="Profile" asp-controller="User">@username</a>
                                 <ul class="submenu">
                                     <li><a asp-action="Profile" asp-controller="User">Profile</a></li>
 
@@ -129,12 +131,12 @@
                                 </ul>
                             </li>
                             <li>
-                            <img src="@profileimg" style="width: 40px; height: 40px; border-radius:40px; margin-top:15px" alt="Profile Image" />
+                                <img src="@profileimg" style="width: 40px; height: 40px; border-radius:40px; margin-top:15px" alt="Profile Image" />
 
                             </li>
-                            
 
-                 
+
+
                         }
                         else
                         {
@@ -148,9 +150,9 @@
                         }
                     }
 
-                <!-- End navigation menu-->
+                    <!-- End navigation menu-->
             </div>
-  
+
     </header>
 
 
@@ -161,87 +163,100 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <footer class="footer">
-            <div class="section-two">
-                <div class="container">
-                    <!--Footer Info -->
-                    <div class="row footer-info">
-                        <div class="col-lg-3 col-md-12 col-sm-12">
-                            <div class="">
-                                <a href="index-2.html" class="logo">
-                                    <img src="~/screenshot_2024-04-26_152838-removebg-preview.png" alt="missing_logo" height="50">
-                                </a>
-                            </div>
-                            <p class="text-footer-clr mt-3">These cases are perfectly simple and easy to free hour, when nothing prevents distinguish.</p>
-                            <div>
-                                <ul class="list-unstyled social-icon">
-                                    <li class="list-inline-item"><a href="#"><i class="fab fa-apple"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fab fa-dribbble"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-sm-4">
-                            <div class="footer-head">
-                                <h5 class="text-light">Company</h5>
-                            </div>
-                            <div class="footer-item mt-3">
-                                <ul class="list-unstyled">
-                                    <li><a asp-action="About" asp-controller="Home"><i class="fas fa-chevron-right mr-2"></i> About us</a></li>
-                                    <li><a asp-action="Services" asp-controller="Home"><i class="fas fa-chevron-right mr-2"></i> Services</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-sm-4">
-                            <div class="footer-head">
-                                <h5 class="text-light">Useful</h5>
-                            </div>
-                            <div class="footer-item mt-3">
-                                <ul class="list-unstyled">
-                                    <li><a asp-action="Products" asp-controller="Home"><i class="fas fa-chevron-right mr-2"></i> Products</a></li>
 
-                                    @{
-                                        if(userEmail != null)
-                                        {
-                                            <li><a asp-action="Orders" asp-controller="User"><i class="fas fa-chevron-right mr-2"></i> Orders </a></li>
-                                            <li><a asp-action="Coupons" asp-controller="User"><i class="fas fa-chevron-right mr-2"></i> Coupons </a></li>
+    <footer class="footer">
+        <div class="section-two">
+            <div class="container">
+                <!--Footer Info -->
+                <div class="row footer-info">
+                    <div class="col-lg-3 col-md-12 col-sm-12">
+                        <div class="">
+                            <a href="index-2.html" class="logo">
+                                <img src="~/screenshot_2024-04-26_152838-removebg-preview.png" alt="missing_logo" height="50">
+                            </a>
+                        </div>
+                        <p class="text-footer-clr mt-3">These cases are perfectly simple and easy to free hour, when nothing prevents distinguish.</p>
+                        <div>
+                            <ul class="list-unstyled social-icon">
+                                <li class="list-inline-item"><a href="#"><i class="fab fa-apple"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fab fa-dribbble"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-4">
+                        <div class="footer-head">
+                            <h5 class="text-light">Company</h5>
+                        </div>
+                        <div class="footer-item mt-3">
+                            <ul class="list-unstyled">
+                                <li><a asp-action="About" asp-controller="Home"><i class="fas fa-chevron-right mr-2"></i> About us</a></li>
+                                <li><a asp-action="Services" asp-controller="Home"><i class="fas fa-chevron-right mr-2"></i> Services</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-4">
+                        <div class="footer-head">
+                            <h5 class="text-light">Useful</h5>
+                        </div>
+                        <div class="footer-item mt-3">
+                            <ul class="list-unstyled">
+                                <li><a asp-action="Products" asp-controller="Home"><i class="fas fa-chevron-right mr-2"></i> Products</a></li>
+                                <li><a asp-action="Services" asp-controller="Home"><i class="fas fa-chevron-right mr-2"></i> Services</a></li>
 
-                                        }
+                                @{
+                                    if (userEmail != null)
+                                    {
+                                        <li><a asp-action="Orders" asp-controller="User"><i class="fas fa-chevron-right mr-2"></i> Orders </a></li>
+                                        <li><a asp-action="Coupons" asp-controller="User"><i class="fas fa-chevron-right mr-2"></i> Coupons </a></li>
+
                                     }
+                                }
 
-                                </ul>
-                            </div>
+                            </ul>
                         </div>
+                    </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-12">
-                            <div class="footer-head">
-                                <h5 class="text-light">Newsletter</h5>
-                            </div>
-                            <div class="footer-news mt-3">
-                                <p class="text-footer-clr">Subscribe to our email newsletter to receive useful articles and special offers.</p>
-                                <div class="subscribed-form">
-                                    <div class="subcribed-form">
-                                        <form asp-action="Newsletter" asp-controller="Home">
-                                            <input name="email" type="email" placeholder="Your Email" id="email" required="">
-                                            <button type="submit" class=""><span class="fab fa-telegram-plane"></span></button>
-                                        </form>
-                                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="footer-head">
+                            <h5 class="text-light">Newsletter</h5>
+                        </div>
+                        <div class="footer-news mt-3">
+                            <p class="text-footer-clr">Subscribe to our email newsletter to receive useful articles and special offers.</p>
+                            <div class="subscribed-form">
+                                <div class="subcribed-form">
+                                    <form asp-action="Newsletter" asp-controller="Home">
+                                        <input name="email" type="email" placeholder="Your Email" id="email" required="">
+                                        <button type="submit" class=""><span class="fab fa-telegram-plane"></span></button>
+                                    </form>
                                 </div>
                             </div>
+                        </div>
                     </div>
-                    <!-- End Footer Info -->
+                </div>
+                <!-- End Footer Info -->
+            </div>
+        </div>
+        <hr>
+        <section class="section-30">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="text-center">
+                            <p class="copy-rights text-white mb-0"><a href="" target="_blank">&copy;2024 Syrophage | All Rights Reserved</a></p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <hr>
+        </section>
 
-
-            <!-- End Copyright Bar -->
-        </footer>
+        <!-- End Copyright Bar -->
     </footer>
-
+    <a href="#" class="back-to-top" id="back-to-top">
+        <i class="mdi mdi-chevron-up"> </i>
+    </a>
 
 
 
