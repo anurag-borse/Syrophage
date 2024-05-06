@@ -1172,9 +1172,6 @@ namespace Syrophage.Controllers
         public IActionResult Cotations()
         {
             setAdminData();
-
-
-
             var Quatation = unitofworks.QuatationFix.GetAll().ToList();
 
             var Admin = unitofworks.Admin.GetAll().ToList();
@@ -1188,17 +1185,14 @@ namespace Syrophage.Controllers
 
 
         [HttpPost]
-        public IActionResult GenerateQuotationPDF([FromBody] JObject formData)
+        public IActionResult GenerateQuotationPDF([FromBody] QuotationFormData formData)
         {
             if (formData == null)
             {
                 return BadRequest("FormData is null");
             }
 
-            // Extract data from the JSON object
-            var quotationBy = formData["quotationBy"].ToString();
-            var preparedBy = formData["preparedBy"].ToString();
-
+            
             return View();
         }
 

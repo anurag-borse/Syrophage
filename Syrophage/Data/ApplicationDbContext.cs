@@ -9,12 +9,9 @@ namespace Syrophage.Data
         {
         }
         public DbSet<Users> Users { get; set; }
-
         public DbSet<Contact> contacttb { get; set; }
-
         public DbSet<Newsletter> Newsletters { get; set; }
         public DbSet<Token> Tokens { get; set; }
-
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<Role> Roles { get; set; }
