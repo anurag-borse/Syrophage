@@ -918,6 +918,7 @@ namespace Syrophage.Controllers
         }
 
 
+
         [HttpPost]
         public IActionResult EditProduct(Product obj, IFormFile file)
         {
@@ -938,185 +939,166 @@ namespace Syrophage.Controllers
                     {
                         System.IO.File.Delete(oldImagePath);
                     }
-                    foreach (var prod in products)
+
+
+
+
+
+
+
+                    // Generate a unique filename for the new image
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"ProductImage");
+
+                    // Save the new image
+                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
                     {
-                        unitofworks.Product.Remove(prod);
+                        file.CopyTo(fileStream);
                     }
 
+                    // Update product details including the new image URL
+
+                    var product = unitofworks.Product.GetById(obj.id);
 
 
-                    if (category != null)
-                    {
-                        unitofworks.Categories.Remove(category);
-                        unitofworks.Save();
-
-
-
-                        TempData["Error"] = "Category  not Deleted";
-                        return RedirectToAction("Categories", "Admin");
-                    }
-                    [HttpPost]
-                    public IActionResult EditProduct(Product obj, IFormFile file)
-                    {
-                        if (ModelState.IsValid)
-                        {
-                            string wwwRootPath = _webHostEnvironment.WebRootPath;
-
-                            // Generate a unique filename for the new image
-                            string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                            string productPath = Path.Combine(wwwRootPath, @"ProductImage");
-
-                            // Save the new image
-                            using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
-                            {
-                                file.CopyTo(fileStream);
-                            }
-
-                            // Update product details including the new image URL
-
-                            var product = unitofworks.Product.GetById(obj.id);
-
-
-                            if (product != null)
-                            {
-                                product.productname = obj.productname;
-                                product.Category = obj.Category;
-                                product.Description = obj.Description;
-                                product.productImageUrl = @"\ProductImage\" + filename;
-                                product.Company = obj.Company;
-
-                            }
-
-
-                            // Update the product in the database
-                            unitofworks.Product.Update(product);
-                            unitofworks.Save();
-
-                            TempData["success"] = "Product updated successfully.";
-                            return RedirectToAction("ManageProduct", "Admin");
-                        }
-                        else
-                        {
-
-                            var product = new Product
-                            {
-                                id = obj.id,
-                                productname = obj.productname,
-                                Description = obj.Description,
-                                Category = obj.Category,
-                                Company = obj.Company,
-                                productImageUrl = obj.productImageUrl
-                            };
-
-                            // Update the product in the database
-                            unitofworks.Product.Update(product);
-                            unitofworks.Save();
-
-                            TempData["success"] = "Product updated successfully.";
-                            return RedirectToAction("ManageProduct", "Admin");
-                        }
-                    }
-
-                    TempData["Error"] = "Failed to update product.";
-                    return RedirectToAction("EditProduct", "Admin", new { id = obj.id }); // Redirect to the edit page with the product ID
-                }
-
-
-                [HttpPost]
-                public JsonResult DeleteProduct(int id)
-                {
-                    var product = unitofworks.Product.GetById(id);
                     if (product != null)
                     {
-                        // Get the physical path of the file
-                        var filePath = Path.Combine(_webHostEnvironment.WebRootPath, product.productImageUrl.TrimStart('/'));
+                        product.productname = obj.productname;
+                        product.Category = obj.Category;
+                        product.Description = obj.Description;
+                        product.productImageUrl = @"\ProductImage\" + filename;
+                        product.Company = obj.Company;
 
-                        if (System.IO.File.Exists(filePath))
-                        {
-                            System.IO.File.Delete(filePath);
-                        }
-
-                        unitofworks.Product.Remove(product);
-                        unitofworks.Save();
-
-                        return Json(new { success = true });
                     }
-                    return Json(new { success = false });
+
+
+                    // Update the product in the database
+                    unitofworks.Product.Update(product);
+                    unitofworks.Save();
+
+                    TempData["success"] = "Product updated successfully.";
+                    return RedirectToAction("ManageProduct", "Admin");
                 }
-
-
-
-
-
-
-                [HttpGet]
-                public IActionResult MyProfile()
+                else
                 {
-                    setAdminData();
 
-                    var logedadmin = HttpContext.Session.GetInt32("AdminId");
-
-                    var user = unitofworks.Admin.GetById(logedadmin ?? 0);
-                    return View(user);
-
-                }
-
-                [HttpPost]
-                public IActionResult UpdateProfile(Admin admin)
-                {
-                    if (ModelState.IsValid)
+                    var product = new Product
                     {
+                        id = obj.id,
+                        productname = obj.productname,
+                        Description = obj.Description,
+                        Category = obj.Category,
+                        Company = obj.Company,
+                        productImageUrl = obj.productImageUrl
+                    };
 
-                        var admininDb = unitofworks.Admin.GetById(admin.Id);
+                    // Update the product in the database
+                    unitofworks.Product.Update(product);
+                    unitofworks.Save();
 
-                        if (admininDb != null)
+                    TempData["success"] = "Product updated successfully.";
+                    return RedirectToAction("ManageProduct", "Admin");
+                }
+            }
+
+            TempData["Error"] = "Failed to update product.";
+            return RedirectToAction("EditProduct", "Admin", new { id = obj.id }); // Redirect to the edit page with the product ID
+        }
+
+
+        [HttpPost]
+        public JsonResult DeleteProduct(int id)
+        {
+            var product = unitofworks.Product.GetById(id);
+            if (product != null)
+            {
+                // Get the physical path of the file
+                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, product.productImageUrl.TrimStart('/'));
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                unitofworks.Product.Remove(product);
+                unitofworks.Save();
+
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+
+
+
+        [HttpGet]
+        public IActionResult MyProfile()
+        {
+            setAdminData();
+
+            var logedadmin = HttpContext.Session.GetInt32("AdminId");
+
+            var user = unitofworks.Admin.GetById(logedadmin ?? 0);
+            return View(user);
+
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProfile(Admin admin)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var admininDb = unitofworks.Admin.GetById(admin.Id);
+
+                if (admininDb != null)
+                {
+                    admininDb.Name = admin.Name;
+                    admininDb.Email = admin.Email;
+                    admininDb.Contact = admin.Contact;
+                    admininDb.Address = admin.Address;
+                    admininDb.Password = admin.Password;
+                }
+                if (admin.ProfileImage != null)
+                {
+                    if (admininDb.ProfileImageUrl != null)
+                    {
+                        var filePathProfileImageUrl = Path.Combine(_webHostEnvironment.WebRootPath, admininDb.ProfileImageUrl.TrimStart('/'));
+                        if (System.IO.File.Exists(filePathProfileImageUrl))
                         {
-                            admininDb.Name = admin.Name;
-                            admininDb.Email = admin.Email;
-                            admininDb.Contact = admin.Contact;
-                            admininDb.Address = admin.Address;
-                            admininDb.Password = admin.Password;
+                            System.IO.File.Delete(filePathProfileImageUrl);
                         }
-                        if (admin.ProfileImage != null)
-                        {
-                            if (admininDb.ProfileImageUrl != null)
-                            {
-                                var filePathProfileImageUrl = Path.Combine(_webHostEnvironment.WebRootPath, admininDb.ProfileImageUrl.TrimStart('/'));
-                                if (System.IO.File.Exists(filePathProfileImageUrl))
-                                {
-                                    System.IO.File.Delete(filePathProfileImageUrl);
-                                }
-                            }
-
-                            var file = admin.ProfileImage;
-                            string wwwRootPath = _webHostEnvironment.WebRootPath;
-                            var fileName = Guid.NewGuid().ToString() + file.FileName;
-                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "AdminProfileImages", fileName);
-
-                            using (var fileStream = new FileStream(filePath, FileMode.Create))
-                            {
-                                file.CopyTo(fileStream);
-                            }
-                            admininDb.ProfileImageUrl = Path.Combine("/AdminProfileImages", fileName).Replace("\\", "/");
-
-                        }
-
-                        unitofworks.Admin.Update(admininDb);
-                        unitofworks.Save();
-
-
-                        TempData["Success"] = "Profile Updated Successfully";
-                        return RedirectToAction("MyProfile", "Admin");
                     }
-                    TempData["Error"] = "Profile Not Updated";
-                    return RedirectToAction("MyProfile", "Admin");
+
+                    var file = admin.ProfileImage;
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    var fileName = Guid.NewGuid().ToString() + file.FileName;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "AdminProfileImages", fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    admininDb.ProfileImageUrl = Path.Combine("/AdminProfileImages", fileName).Replace("\\", "/");
 
                 }
 
+                unitofworks.Admin.Update(admininDb);
+                unitofworks.Save();
 
 
-
+                TempData["Success"] = "Profile Updated Successfully";
+                return RedirectToAction("MyProfile", "Admin");
             }
+            TempData["Error"] = "Profile Not Updated";
+            return RedirectToAction("MyProfile", "Admin");
+
         }
+
+
+
+
+
+    }
+}
 
 /*=============================================product==============================================================*/
