@@ -96,10 +96,10 @@
                                             <div class="message-center">
                                                 <div class="d-flex no-block align-items-center p-10">
                                                     <span class="btn btn-success btn-circle d-flex align-items-center justify-content-center">
-                                                         <i class="mdi mdi-account fs-4"></i>
+                                                        <i class="mdi mdi-account fs-4"></i>
                                                     </span>
                                                     <div class="ms-2">
-                                                     @*    <h5 class="mb-0">Total Users </h5> *@
+                                                        @*    <h5 class="mb-0">Total Users </h5> *@
                                                         <h4 class="mail-desc" id="totalUsersCount">Loading...</h4>
                                                     </div>
                                                 </div>
@@ -109,7 +109,7 @@
                                                         <i class="mdi mdi-ticket fs-4"></i>
                                                     </span>
                                                     <div class="ms-2">
-                                                @*         <h5 class="mb-0">Total Coupons </h5> *@
+                                                        @*         <h5 class="mb-0">Total Coupons </h5> *@
                                                         <h4 class="mail-desc" id="totalCouponsCount">Loading...</h4>
                                                     </div>
                                                 </div>
@@ -119,18 +119,18 @@
                                                         <i class="mdi mdi-newspaper fs-4"></i>
                                                     </span>
                                                     <div class="ms-2">
-                                                      @*   <h5 class="mb-0">Total News </h5> *@
+                                                        @*   <h5 class="mb-0">Total News </h5> *@
                                                         <h4 class="mail-desc" id="totalNewsCount">Loading...  </h4>
                                                     </div>
                                                 </div>
 
                                                 <div class="d-flex no-block align-items-center p-10">
                                                     <span class="btn btn-success btn-circle d-flex align-items-center justify-content-center">
-                                                     @*    <i class="mdi mdi-account fs-4"></i> *@
+                                                        @*    <i class="mdi mdi-account fs-4"></i> *@
                                                         <span class="mdi mdi-account-card-details"></span>
                                                     </span>
                                                     <div class="ms-2">
-                                                     @*    <h5 class="mb-0">Total Contact </h5> *@
+                                                        @*    <h5 class="mb-0">Total Contact </h5> *@
                                                         <h4 class="mail-desc" id="totalContactCount">Loading...</h4>
                                                     </div>
                                                 </div>
@@ -142,51 +142,65 @@
                         </div>
                     </nav>
                 </header>
+
+
+
+
+                <!-- ============================================================== -->
+                <!-- End Messages -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- User profile and search -->
+                <!-- ============================================================== -->
+
+
+
+                <li class="nav-item dropdown">
+                    <a class="
+                    nav-link
+                    dropdown-toggle
+                    text-muted
+                    waves-effect waves-dark
+                    pro-pic
+                  "
+                       href="#"
+                       id="navbarDropdown"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <img src="@admin.ProfileImageUrl"
+                             alt="user"
+                             class="rounded-circle"
+                             width="31" />
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end user-dd animated"
+                        aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" asp-action="MyProfile" asp-controller="Admin"><i class="mdi mdi-account me-1 ms-1"></i> My Profile</a>
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-wallet me-1 ms-1"></i> My Balance</a>
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email me-1 ms-1"></i> Inbox</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="javascript:void(0)">
+                            <i class="mdi mdi-settings me-1 ms-1"></i> Account
+                            Setting
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-action="Logout" asp-controller="Admin">
+                            <i class="fa fa-power-off me-1 ms-1"></i> Logout
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <div class="ps-4 p-10">
+                            <a href="javascript:void(0)"
+                               class="btn btn-sm btn-success btn-rounded text-white">View Profile</a>
+                        </div>
+                    </ul>
+                </li>
+                <!-- ============================================================== -->
+                <!-- User profile and search -->
+                <!-- ============================================================== -->
             </ul>
         </div>
-        <li class="nav-item dropdown">
-            <a class="
-    nav-link
-    dropdown-toggle
-    text-muted
-    waves-effect waves-dark
-    pro-pic
-  "
-               href="#"
-               id="navbarDropdown"
-               role="button"
-               data-bs-toggle="dropdown"
-               aria-expanded="false">
-                <img src="@admin.ProfileImageUrl"
-                     alt="user"
-                     class="rounded-circle"
-                     width="31" />
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end user-dd animated"
-                aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" asp-action="MyProfile" asp-controller="Admin"><i class="mdi mdi-account me-1 ms-1"></i> My Profile</a>
-                <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-wallet me-1 ms-1"></i> My Balance</a>
-                <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email me-1 ms-1"></i> Inbox</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0)">
-                    <i class="mdi mdi-settings me-1 ms-1"></i> Account
-                    Setting
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" asp-action="Logout" asp-controller="Admin">
-                    <i class="fa fa-power-off me-1 ms-1"></i> Logout
-                </a>
-                <div class="dropdown-divider"></div>
-                <div class="ps-4 p-10">
-                    <a href="javascript:void(0)"
-                       class="btn btn-sm btn-success btn-rounded text-white">View Profile</a>
-                </div>
-            </ul>
-        </li>
-
     </nav>
 </header>
-
 
 <script src="~/admin/assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="~/admin/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
