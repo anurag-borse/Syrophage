@@ -175,5 +175,50 @@ namespace Syrophage.Services
         }
 
 
+
+
+        public bool SendQuotationEmail(string email, string subject, string body, Stream attachmentStream, string attachmentFileName)
+        {
+            var fromEmail = new MailAddress("syrophage@gmail.com", "SYROPHAGE");
+            var toEmail = new MailAddress(email);
+            var fromEmailPassword = "unrjpaiutcscfree"; // This should be replaced with your actual email password
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587, // Gmail SMTP port
+                EnableSsl = true,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+            };
+
+            using (var message = new MailMessage(fromEmail, toEmail)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+            })
+            {
+                // Attach PDF
+                if (attachmentStream != null)
+                {
+                    message.Attachments.Add(new Attachment(attachmentStream, attachmentFileName));
+                }
+
+                try
+                {
+                    smtp.Send(message);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    // Handle exception or log error
+                    return false;
+                }
+            }
+        }
+
+
+
     }
 }

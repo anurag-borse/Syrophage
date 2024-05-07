@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Syrophage.Data;
 
@@ -11,9 +12,11 @@ using Syrophage.Data;
 namespace Syrophage.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240507044830_AddQuatation")]
+    partial class AddQuatation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -495,7 +498,7 @@ namespace Syrophage.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("QuotationFormDataId")
+                    b.Property<int?>("QuotationFormDataid")
                         .HasColumnType("int");
 
                     b.Property<string>("Service")
@@ -504,7 +507,7 @@ namespace Syrophage.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuotationFormDataId");
+                    b.HasIndex("QuotationFormDataid");
 
                     b.ToTable("ServiceData");
                 });
@@ -624,13 +627,9 @@ namespace Syrophage.Migrations
 
             modelBuilder.Entity("Syrophage.Models.ServiceData", b =>
                 {
-                    b.HasOne("Syrophage.Models.QuotationFormData", "QuotationFormData")
+                    b.HasOne("Syrophage.Models.QuotationFormData", null)
                         .WithMany("Services")
-                        .HasForeignKey("QuotationFormDataId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("QuotationFormData");
+                        .HasForeignKey("QuotationFormDataid");
                 });
 
             modelBuilder.Entity("Syrophage.Models.UserCoupon", b =>

@@ -9,7 +9,7 @@
 
 
         public bool SendActivationEmail(string email, string password);
-
+        public bool SendQuotationEmail(string email, string subject, string body, Stream attachmentStream, string attachmentFileName);
 
         public string GenerateCouponCode();
 

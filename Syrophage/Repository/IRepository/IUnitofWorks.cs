@@ -34,6 +34,8 @@
 
         IQuatationServiceRepository QuaService { get; }
 
+        IQuatationFormRepository QuaForm { get; }
+
 
         public void Save();
     }

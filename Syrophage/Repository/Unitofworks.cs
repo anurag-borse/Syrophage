@@ -35,6 +35,8 @@ namespace Syrophage.Repository
 
         public IQuatationServiceRepository QuaService { get; set; }
 
+        public IQuatationFormRepository QuaForm { get; set; }
+
         public Unitofworks(ApplicationDbContext _db)
         {
             this._db = _db;
@@ -52,6 +54,8 @@ namespace Syrophage.Repository
             Admin = new AdminRepository(_db);
             QuatationFix = new QuatationFixRepository(_db);
             QuaService = new QuatationServiceRepository(_db);
+            QuaForm = new QuatationFormRepository(_db);
+
         }
 
         public void Save()

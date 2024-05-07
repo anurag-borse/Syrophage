@@ -295,7 +295,68 @@
             updateNavigation(step - 1);
         }
 
-      
+
+        function submitForm() {
+            // Gather form data
+            var formData = {
+
+                quotationBy: document.getElementById("quotationBy").value,
+                preparedBy: document.getElementById("preparedBy").value,
+                role: document.getElementById("role").value,
+                contact: document.getElementById("contact").value,
+                email: document.getElementById("email").value,
+                companyName: document.getElementById("companyName").value,
+                preparedFor: document.getElementById("preparedFor").value,
+                contactTo: document.getElementById("contactTo").value,
+                emailTo: document.getElementById("emailTo").value,
+
+
+
+                aboutUs: document.getElementById("aboutUs").value,
+                methodology: document.getElementById("methodology").value,
+                expectation: document.getElementById("expectation").value,
+
+
+
+                services: servicesArray,
+
+
+                term1: document.getElementById("term1").value,
+                term2: document.getElementById("term2").value,
+                term3: document.getElementById("term3").value,
+
+            };
+            // You can perform additional validation here if needed
+
+            // Send form data or do something else with it
+            console.log(formData);
+            // For example, you can send it to a backend endpoint using AJAX
+
+            // After submitting, you can redirect or show a success message
+            alert("Form submitted successfully!");
+
+
+            // Convert formData to JSON
+            var jsonData = JSON.stringify(formData);
+
+            console.log(jsonData);
+            // AJAX POST request to send data to the controller action
+            $.ajax({
+                type: "POST",
+                url: "/Admin/GenerateQuotationPDF",
+                contentType: "application/json",
+                data: jsonData,
+                success: function (response) {
+
+                    console.log(response);
+                    window.location.href = "/Admin/SendQuatationMail"
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response
+                    console.error(xhr.responseText);
+                }
+            });
+        }
 
 
 

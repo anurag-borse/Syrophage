@@ -4,6 +4,8 @@ using Syrophage.Data;
 using Syrophage.Repository.IRepository;
 using Syrophage.Repository;
 using Syrophage.Services;
+using Microsoft.Extensions.Hosting.Internal;
+using Rotativa.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,10 +48,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseSession();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
+var hostingEnvironment = app.Services.GetRequiredService<IWebHostEnvironment>();
+RotativaConfiguration.Setup(hostingEnvironment.WebRootPath, @"C:\Program Files\wkhtmltopdf\bin");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
