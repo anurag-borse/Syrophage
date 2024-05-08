@@ -31,5 +31,9 @@ namespace Syrophage.Models
 
         public string Title { get; set; }
 
+
+        [ValidateNever]
+        public bool? IsDisplay { get; set; }
+
     }
 }

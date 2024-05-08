@@ -241,6 +241,30 @@ namespace Syrophage.Controllers
             return Json(new { success = false });
 
         }
+
+
+        [HttpPost]
+        public JsonResult ToggleActivation1(int id, bool isActivated)
+        {
+            var blog = unitofworks.Blog.GetById(id);
+            if (blog != null)
+            {
+                blog.IsDisplay = !isActivated;
+                unitofworks.Blog.Update(blog);
+                unitofworks.Save();
+
+
+
+
+
+
+                return Json(new { success = true });
+
+            }
+            TempData["Error"] = "Blog did not Displayed";
+            return Json(new { success = false });
+
+        }
         /*=============================================Tokens==============================================================*/
 
         /*=============================================Coupons==============================================================*/
@@ -988,7 +1012,7 @@ namespace Syrophage.Controllers
         [HttpPost]
         public IActionResult EditProduct(Product obj, IFormFile file)
         {
-            if (ModelState.IsValid)
+            if (obj != null)
             {
                 var product1 = unitofworks.Product.GetById(obj.id);
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
@@ -1005,12 +1029,6 @@ namespace Syrophage.Controllers
                     {
                         System.IO.File.Delete(oldImagePath);
                     }
-
-
-
-
-
-
 
                     // Generate a unique filename for the new image
                     string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
@@ -1047,16 +1065,18 @@ namespace Syrophage.Controllers
                 }
                 else
                 {
+                    var product = unitofworks.Product.GetById(obj.id);
 
-                    var product = new Product
+
+                    if (product != null)
                     {
-                        id = obj.id,
-                        productname = obj.productname,
-                        Description = obj.Description,
-                        Category = obj.Category,
-                        Company = obj.Company,
-                        productImageUrl = obj.productImageUrl
-                    };
+                        product.productname = obj.productname;
+                        product.Category = obj.Category;
+                        product.Description = obj.Description;
+                        product.productImageUrl = product1.productImageUrl;
+                        product.Company = obj.Company;
+
+                    }
 
                     // Update the product in the database
                     unitofworks.Product.Update(product);
@@ -1068,7 +1088,7 @@ namespace Syrophage.Controllers
             }
 
             TempData["Error"] = "Failed to update product.";
-            return RedirectToAction("EditProduct", "Admin", new { id = obj.id }); // Redirect to the edit page with the product ID
+            return RedirectToAction("EidtProduct", "Admin", new { id = obj.id }); // Redirect to the edit page with the product ID
         }
 
 

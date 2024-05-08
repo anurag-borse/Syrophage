@@ -69,7 +69,10 @@ namespace Syrophage.Controllers
         {
             SetLayoutModel();
 
-            var blogs = unitofworks.Blog.GetAll().ToList();
+            var blogs = unitofworks.Blog.GetAll().Where(blog => blog.IsDisplay == true).ToList();
+
+
+
             return View(blogs);
         }
 
@@ -215,7 +218,8 @@ namespace Syrophage.Controllers
                         Like = GenerateNum(),
                         ImageUrl = @"\BlogImage\" + filename,
                         Type = obj.Type,
-                        Title = obj.Title
+                        Title = obj.Title,
+                        IsDisplay = false,
                     };
 
                     unitofworks.Blog.Add(blog);
@@ -234,6 +238,9 @@ namespace Syrophage.Controllers
             TempData["Error"] = "Blog Not Added";
             return RedirectToAction("Blogs", "Home");
         }
+
+
+
 
         public static int GenerateNum()
         {
