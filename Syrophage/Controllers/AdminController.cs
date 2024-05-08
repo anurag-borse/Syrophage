@@ -1296,6 +1296,16 @@ namespace Syrophage.Controllers
 
 
 
+        [HttpGet]
+        public IActionResult AllBlog()
+        {
+            setAdminData();
+
+            var blogs = unitofworks.Blog.GetAll().ToList();
+            return View(blogs);
+
+        }
+
 
     }
 }

@@ -86,7 +86,6 @@ namespace Syrophage.Controllers
                 user.Address = obj.Address;
                 user.ProfileImageUrl = @"\UserProfilePic\" + filename;
 
-
                 unitofworks.User.Update(user);
                 unitofworks.Save();
 
