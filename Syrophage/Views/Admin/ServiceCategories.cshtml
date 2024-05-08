@@ -75,7 +75,7 @@
 
                     <div class="container">
 
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@Model">Generate New Category  </button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@Model">Generate New Service Category  </button>
 
 
                     </div>
@@ -96,12 +96,12 @@
 
                                         <div class="mb-3">
                                             <label for="Name" class="col-form-label">Category Name:</label>
-                                            <input type="text" class="form-control" name="CategoryName">
+                                            <input type="text" class="form-control" name="ServiceCategoryName">
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="CouponDescription" class="col-form-label">Category Description :</label>
-                                            <input type="text" class="form-control" name="CategoryDescription">
+                                            <input type="text" class="form-control" name="ServiceCategoryDescription">
                                         </div>
 
 
@@ -109,7 +109,7 @@
                                         <div class="mb-3">
                                             <label for="formFile" class="form-label">Category Picture </label>
 
-                                            <input class="form-control" type="file" id="formFile" name="file" />
+                                            <input class="form-control" type="file" id="formFile" name="ServiceCategoryPicture" />
                                         </div>
 
 
@@ -160,12 +160,12 @@
                                         <tr>
                                             <td>@categories.Id</td>
 
-                                            <td>@categories.CategoryName</td>
-                                            <td>@categories.CategoryDescription</td>
+                                            <td>@categories.ServiceCategoryName</td>
+                                            <td>@categories.ServiceCategoryDescription</td>
 
 
                                             <td>
-                                                <img src="@categories.CategoryPictureUrl" height="70px" width="70px" />
+                                                <img src="@categories.ServiceCategoryPictureUrl" height="70px" width="70px" />
                                             </td>
 
                                             <td>
@@ -240,66 +240,4 @@
         $('#categoriesData').DataTable();
     });
 </script>
-
-@if (TempData["Success"] != null)
-{
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
-    <script type="text/javascript">
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-
-
-        // Display the Toastr notification
-        toastr.success('@TempData["Success"]');
-    </script>
-}
-
-
-@if (TempData["Error"] != null)
-{
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
-    <script type="text/javascript">
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-
-
-        // Display the Toastr notification
-        toastr.error('@TempData["Error"]');
-    </script>
-}
+<partial name="_Toastr" />

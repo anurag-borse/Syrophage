@@ -70,12 +70,12 @@ namespace Syrophage.Controllers
 
 
 
-                TempData["Success"] = "user updated Successfully";
+                TempData["Success"] = "User Updated Successfully";
                 return RedirectToAction("Profile", "User");
             }
 
 
-            TempData["Error"] = "user Not Updated";
+            TempData["Error"] = "User Not Updated";
             return RedirectToAction("Profile", "User");
         }
 

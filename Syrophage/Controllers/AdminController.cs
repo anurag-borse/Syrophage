@@ -80,20 +80,7 @@ namespace Syrophage.Controllers
             return View();
         }
 
-        [HttpGet]
 
-        public IActionResult Logout()
-        {
-
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Session.Clear();
-
-            TempData["Success"] = "Yor Are Logout :";
-
-            TempData["clear"] = "Yor Are Logout :";
-            return RedirectToAction("Index", "Home");
-
-        }
 
 
 
@@ -484,7 +471,7 @@ namespace Syrophage.Controllers
             }
 
             TempData["Error"] = "Category Not Added";
-            return View();
+            return RedirectToAction("Categories");
         }
 
 
@@ -492,20 +479,24 @@ namespace Syrophage.Controllers
         public IActionResult DeleteCategory(int id)
         {
             var category = unitofworks.Categories.GetById(id);
-            string wwwRootPath = _webHostEnvironment.WebRootPath;
-            var products = unitofworks.Product.GetAll().Where(j => j.Category == category.CategoryName).ToList();
 
-            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, category.CategoryPictureUrl.TrimStart('/'));
-
-            if (System.IO.File.Exists(filePath))
+            if (category.CategoryPictureUrl != null)
             {
-                System.IO.File.Delete(filePath);
-            }
-            foreach (var prod in products)
-            {
-                unitofworks.Product.Remove(prod);
-            }
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                var products = unitofworks.Product.GetAll().Where(j => j.Category == category.CategoryName).ToList();
 
+                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, category.CategoryPictureUrl.TrimStart('/'));
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                foreach (var prod in products)
+                {
+                    unitofworks.Product.Remove(prod);
+                }
+            }
             if (category != null)
             {
                 unitofworks.Categories.Remove(category);
@@ -531,52 +522,52 @@ namespace Syrophage.Controllers
 
 
         [HttpPost]
-        public IActionResult EditCategory(Categories obj, IFormFile file)
+        public IActionResult EditCategory(Categories category)
         {
 
             if (ModelState.IsValid)
             {
-                var categories1 = unitofworks.Categories.GetById(obj.Id);
+                var categoryinDb = unitofworks.Categories.GetById(category.Id);
+
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
 
-
-                if (file != null)
+                if (category.CategoryPicture != null)
                 {
-                    string OldImagepath = categories1.CategoryPictureUrl;
 
-                    string oldImagePath = Path.Combine(wwwRootPath, OldImagepath.TrimStart('\\'));
-                    if (System.IO.File.Exists(oldImagePath))
+                    if (categoryinDb.CategoryPictureUrl != null)
                     {
-                        System.IO.File.Delete(oldImagePath);
+                        string OldImagepath = categoryinDb.CategoryPictureUrl;
+                        string oldImagePath = Path.Combine(wwwRootPath, OldImagepath.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
                     }
 
-
-
-                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(category.CategoryPicture.FileName);
                     string productPath = Path.Combine(wwwRootPath, @"CategoryPictures");
 
                     using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
                     {
-                        file.CopyTo(fileStream);
+                        category.CategoryPicture.CopyTo(fileStream);
                     }
 
+                    category.CategoryPictureUrl = Path.Combine("/CategoryPictures", filename).Replace("\\", "/"); ;
 
-                    var category = unitofworks.Categories.GetById(obj.Id);
-
-                    if (category != null)
-                    {
-                        category.CategoryName = obj.CategoryName;
-                        category.CategoryDescription = obj.CategoryDescription;
-                        category.CategoryPictureUrl = @"\CategoryPictures\" + filename;
-                    }
-
-                    unitofworks.Categories.Update(category);
-                    unitofworks.Save();
-
-
-                    TempData["Success"] = "Category updated successfully";
-                    return RedirectToAction("Categories", "Admin");
                 }
+                if (category != null)
+                {
+                    categoryinDb.CategoryName = category.CategoryName;
+                    categoryinDb.CategoryDescription = category.CategoryDescription;
+                    categoryinDb.CategoryPictureUrl = category.CategoryPictureUrl;
+                }
+
+                unitofworks.Categories.Update(categoryinDb);
+                unitofworks.Save();
+
+                TempData["Success"] = "Category updated successfully";
+                return RedirectToAction("Categories", "Admin");
+
             }
 
 
@@ -604,9 +595,9 @@ namespace Syrophage.Controllers
             var category = unitofworks.ServiceCategories.GetById(id);
             string wwwRootPath = _webHostEnvironment.WebRootPath;
 
-            var services = unitofworks.Services.GetAll().Where(j => j.Category == category.CategoryName).ToList();
+            var services = unitofworks.Services.GetAll().Where(j => j.Category == category.ServiceCategoryName).ToList();
 
-            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, category.CategoryPictureUrl.TrimStart('/'));
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, category.ServiceCategoryPictureUrl.TrimStart('/'));
 
             if (System.IO.File.Exists(filePath))
             {
@@ -629,40 +620,42 @@ namespace Syrophage.Controllers
             TempData["Error"] = "Category  not Deleted";
             return RedirectToAction("ServiceCategories", "Admin");
         }
+
+
         [HttpPost]
-        public IActionResult AddServiceCategory(ServiceCategory obj, IFormFile file)
+        public IActionResult AddServiceCategory(ServiceCategory obj)
         {
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if (file != null)
+                if (obj.ServiceCategoryPicture != null)
                 {
-                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(obj.ServiceCategoryPicture.FileName);
                     string productPath = Path.Combine(wwwRootPath, @"ServiceCategoryImages");
 
                     using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
                     {
-                        file.CopyTo(fileStream);
+                        obj.ServiceCategoryPicture.CopyTo(fileStream);
                     }
 
                     var cate = new ServiceCategory
                     {
-                        CategoryName = obj.CategoryName,
-                        CategoryDescription = obj.CategoryDescription,
-                        CategoryPictureUrl = @"\ServiceCategoryImages\" + filename
+                        ServiceCategoryName = obj.ServiceCategoryName,
+                        ServiceCategoryDescription = obj.ServiceCategoryDescription,
+                        ServiceCategoryPictureUrl = @"\ServiceCategoryImages\" + filename
                     };
 
 
                     unitofworks.ServiceCategories.Add(cate);
                     unitofworks.Save();
 
-                    TempData["Success"] = "category Added Succesfully";
+                    TempData["Success"] = "Category Added Succesfully";
                     return RedirectToAction("ServiceCategories", "Admin");
                 }
             }
 
 
-            TempData["Error"] = "category Not Added";
+            TempData["Error"] = "Category Not Added";
             return RedirectToAction("ServiceCategories", "Admin");
         }
         [HttpGet]
@@ -673,51 +666,54 @@ namespace Syrophage.Controllers
             var categories = unitofworks.ServiceCategories.GetById(id);
             return View(categories);
         }
+
         [HttpPost]
-        public IActionResult EditServiceCategory(ServiceCategory obj, IFormFile file)
+        public IActionResult EditServiceCategory(ServiceCategory obj)
         {
 
             if (ModelState.IsValid)
             {
-                var categories1 = unitofworks.ServiceCategories.GetById(obj.Id);
+                var categoryinDb = unitofworks.ServiceCategories.GetById(obj.Id);
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if (file != null)
+
+                if (obj.ServiceCategoryPicture != null)
                 {
-
-                    string OldImagepath = categories1.CategoryPictureUrl;
-
-                    string oldImagePath = Path.Combine(wwwRootPath, OldImagepath.TrimStart('\\'));
-                    if (System.IO.File.Exists(oldImagePath))
+                    if (categoryinDb.ServiceCategoryPictureUrl != null)
                     {
-                        System.IO.File.Delete(oldImagePath);
+                        string OldImagepath = categoryinDb.ServiceCategoryPictureUrl;
+                        string oldImagePath = Path.Combine(wwwRootPath, OldImagepath.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
                     }
 
-
-                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(obj.ServiceCategoryPicture.FileName);
                     string productPath = Path.Combine(wwwRootPath, @"ServiceCategoryImages");
 
                     using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
                     {
-                        file.CopyTo(fileStream);
+                        obj.ServiceCategoryPicture.CopyTo(fileStream);
                     }
 
-                    var category = unitofworks.ServiceCategories.GetById(obj.Id);
-
-                    if (category != null)
-                    {
-                        category.CategoryName = obj.CategoryName;
-                        category.CategoryDescription = obj.CategoryDescription;
-                        category.CategoryPictureUrl = @"\ServiceCategoryImages\" + filename;
-                    }
-
-                    unitofworks.ServiceCategories.Update(category);
-                    unitofworks.Save();
-
-
-                    TempData["Success"] = "Category updated successfully";
-                    return RedirectToAction("Servicecategories", "Admin");
+                    obj.ServiceCategoryPictureUrl = Path.Combine("/ServiceCategoryImages", filename).Replace("\\", "/"); 
 
                 }
+
+                if (obj != null)
+                {
+                    categoryinDb.ServiceCategoryName = obj.ServiceCategoryName;
+                    categoryinDb.ServiceCategoryDescription = obj.ServiceCategoryDescription;
+                    categoryinDb.ServiceCategoryPictureUrl = obj.ServiceCategoryPictureUrl;
+                }
+
+                unitofworks.ServiceCategories.Update(categoryinDb);
+                unitofworks.Save();
+
+
+                TempData["Success"] = "Category updated successfully";
+                return RedirectToAction("Servicecategories", "Admin");
+
             }
             TempData["Error"] = "Category Not updated ";
             return RedirectToAction("Servicecategories", "Admin");
@@ -849,7 +845,7 @@ namespace Syrophage.Controllers
                     unitofworks.Services.Update(Service);
                     unitofworks.Save();
 
-                    TempData["success"] = "Services updated successfully.";
+                    TempData["Success"] = "Services updated successfully.";
                     return RedirectToAction("ManageService", "Admin");
                 }
                 else
@@ -868,7 +864,7 @@ namespace Syrophage.Controllers
                     unitofworks.Services.Update(service);
                     unitofworks.Save();
 
-                    TempData["success"] = "Service updated successfully.";
+                    TempData["Success"] = "Service updated successfully.";
                     return RedirectToAction("ManageService", "Admin");
                 }
 
@@ -878,7 +874,7 @@ namespace Syrophage.Controllers
         }
 
 
-        
+
         [HttpGet]
         public IActionResult DeleteService(int id)
         {
@@ -897,7 +893,7 @@ namespace Syrophage.Controllers
                 unitofworks.Save();
 
 
-                TempData["success"] = "Service Deleted Succesfully";
+                TempData["Success"] = "Service Deleted Succesfully";
                 return RedirectToAction("ManageService", "Admin");
             }
             TempData["Error"] = "Service Not Deleted";
@@ -955,7 +951,7 @@ namespace Syrophage.Controllers
                     unitofworks.Product.Add(product);
                     unitofworks.Save();
 
-                    TempData["success"] = "product Added";
+                    TempData["Success"] = "product Added";
                     return RedirectToAction("ManageProduct", "Admin");
 
                 }
@@ -1042,7 +1038,7 @@ namespace Syrophage.Controllers
                     unitofworks.Product.Update(product);
                     unitofworks.Save();
 
-                    TempData["success"] = "Product updated successfully.";
+                    TempData["Success"] = "Product updated successfully.";
                     return RedirectToAction("ManageProduct", "Admin");
                 }
                 else
@@ -1062,13 +1058,13 @@ namespace Syrophage.Controllers
                     unitofworks.Product.Update(product);
                     unitofworks.Save();
 
-                    TempData["success"] = "Product updated successfully.";
+                    TempData["Success"] = "Product updated successfully.";
                     return RedirectToAction("ManageProduct", "Admin");
                 }
             }
 
             TempData["Error"] = "Failed to update product.";
-            return RedirectToAction("EditProduct", "Admin", new { id = obj.id }); // Redirect to the edit page with the product ID
+            return RedirectToAction("EidtProduct", "Admin", new { id = obj.id }); // Redirect to the edit page with the product ID
         }
 
 
@@ -1228,7 +1224,7 @@ namespace Syrophage.Controllers
                     string Subject = "Product Invoice";
                     string Body = obj.Description;
 
-                    bool emailSent =   services.SendQuotationEmail(obj.Email, Subject, Body, stream, "Attachment.pdf");
+                    bool emailSent = services.SendQuotationEmail(obj.Email, Subject, Body, stream, "Attachment.pdf");
 
 
                     if (emailSent)
@@ -1288,7 +1284,7 @@ namespace Syrophage.Controllers
                 unitofworks.Save();
 
 
-                return Json(new {success = true});
+                return Json(new { success = true });
             }
             catch (Exception ex)
             {
