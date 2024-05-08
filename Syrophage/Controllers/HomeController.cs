@@ -6,6 +6,8 @@ using Syrophage.Repository;
 using Syrophage.Repository.IRepository;
 using Syrophage.Services;
 using System.Diagnostics;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace Syrophage.Controllers
 {
@@ -208,11 +210,13 @@ namespace Syrophage.Controllers
 
                     DateTime dateTime = DateTime.Now;
 
+                    string plainTextContent = ExtractPlainTextFromHtml(obj.BlogDesc);
+
                     var blog = new Blog
                     {
                         Name = obj.Name,
                         email = obj.email,
-                        BlogDesc = obj.BlogDesc,
+                        BlogDesc = plainTextContent,
                         date = DateOnly.FromDateTime(dateTime),
                         Comments = GenerateNum(),
                         Like = GenerateNum(),
@@ -240,7 +244,13 @@ namespace Syrophage.Controllers
         }
 
 
-
+        private string ExtractPlainTextFromHtml(string htmlContent)
+        {
+            // Remove HTML tags and decode HTML entities to get plain text
+            string plainText = Regex.Replace(htmlContent, "<.*?>", String.Empty);
+            plainText = WebUtility.HtmlDecode(plainText);
+            return plainText;
+        }
 
         public static int GenerateNum()
         {
