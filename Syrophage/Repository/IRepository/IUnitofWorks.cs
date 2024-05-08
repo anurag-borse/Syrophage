@@ -36,6 +36,8 @@
 
         IQuatationFormRepository QuaForm { get; }
 
+        IBlogRepository Blog { get; }
+
 
         public void Save();
     }

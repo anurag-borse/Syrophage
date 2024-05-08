@@ -27,6 +27,7 @@
     <Folder Include="wwwroot\CouponImages\" />
     <Folder Include="wwwroot\CategoryPictures\" />
     <Folder Include="wwwroot\AdminProfileImages\" />
+    <Folder Include="wwwroot\BlogImage\" />
     <Folder Include="wwwroot\ServicesImages\" />
     <Folder Include="wwwroot\ServiceCategoryImages\" />
     <Folder Include="wwwroot\ProductImage\" />

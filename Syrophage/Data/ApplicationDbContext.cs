@@ -28,6 +28,8 @@ namespace Syrophage.Data
         public DbSet<Qua_Service> Quatations_Services { get; set; }
 
         public DbSet<QuotationFormData> Quatations_Data { get; set; }
+
+        public DbSet<Blog> Blogs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasData(new Role { Id = 1, email = "admin@gmail.com", role = "Admin" });

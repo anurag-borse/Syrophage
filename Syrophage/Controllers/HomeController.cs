@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Syrophage.Models;
 using Syrophage.Models.ViewModel;
@@ -14,11 +15,13 @@ namespace Syrophage.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUnitofWorks unitofworks;
         private readonly IServices services;
-        public HomeController(IUnitofWorks unitofworks, IServices services, IHttpContextAccessor _httpContextAccessor)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public HomeController(IUnitofWorks unitofworks, IServices services, IHttpContextAccessor _httpContextAccessor, IWebHostEnvironment _webHostEnvironment)
         {
             this.unitofworks = unitofworks;
             this.services = services;
             this._httpContextAccessor = _httpContextAccessor;
+            this._webHostEnvironment = _webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -30,14 +33,14 @@ namespace Syrophage.Controllers
         public IActionResult Products(Categories categories)
         {
             SetLayoutModel();
-            var Allcategories = unitofworks.Categories.GetAll();    
+            var Allcategories = unitofworks.Categories.GetAll();
             return View(Allcategories);
         }
 
         public IActionResult ViewCategorie_Product(string name)
         {
-            var categorie_product=unitofworks.Product.GetByCategoryName(name);  
-            return View(categorie_product);  
+            var categorie_product = unitofworks.Product.GetByCategoryName(name);
+            return View(categorie_product);
             var carte = unitofworks.Categories.GetAll().ToList();
             return View(carte);
         }
@@ -61,6 +64,15 @@ namespace Syrophage.Controllers
             SetLayoutModel();
             return View();
         }
+
+        public IActionResult Blogs()
+        {
+            SetLayoutModel();
+
+            var blogs = unitofworks.Blog.GetAll().ToList();
+            return View(blogs);
+        }
+
 
 
 
@@ -171,6 +183,63 @@ namespace Syrophage.Controllers
             var services = unitofworks.Services.GetByCategoryName(name).ToList();
             return View(services);
         }
-        
+
+
+        [HttpPost]
+        public IActionResult AddBlog(Blog obj, IFormFile file)
+        {
+            if (ModelState.IsValid)
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+                if (file != null)
+                {
+
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"BlogImage");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    DateTime dateTime = DateTime.Now;
+
+                    var blog = new Blog
+                    {
+                        Name = obj.Name,
+                        email = obj.email,
+                        BlogDesc = obj.BlogDesc,
+                        date = DateOnly.FromDateTime(dateTime),
+                        Comments = GenerateNum(),
+                        Like = GenerateNum(),
+                        ImageUrl = @"\BlogImage\" + filename,
+                        Type = obj.Type,
+                        Title = obj.Title
+                    };
+
+                    unitofworks.Blog.Add(blog);
+                    unitofworks.Save();
+
+
+                    TempData["Success"] = "Blog Sent to admin";
+                    return RedirectToAction("Blogs", "Home");
+
+                }
+
+                TempData["Error"] = "Blog Not Added";
+                return RedirectToAction("Blogs", "Home");
+
+            }
+            TempData["Error"] = "Blog Not Added";
+            return RedirectToAction("Blogs", "Home");
+        }
+
+        public static int GenerateNum()
+        {
+            Random rand = new Random();
+            return rand.Next(1, 101); // Generates a random number between 1 and 100
+        }
+
     }
 }
