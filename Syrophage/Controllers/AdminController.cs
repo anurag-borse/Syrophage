@@ -1301,8 +1301,9 @@ namespace Syrophage.Controllers
         {
             setAdminData();
 
+            var blogs = unitofworks.Blog.GetAll().ToList();
+            return View(blogs);
 
-            return View();
         }
 
 

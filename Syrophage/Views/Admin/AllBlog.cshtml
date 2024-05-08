@@ -1,0 +1,132 @@
+﻿@model List<Syrophage.Models.Blog>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+
+    <title>Admin Dashboard</title>
+
+    <link href="~/admin/assets/libs/flot/css/float-chart.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.css" rel="stylesheet" />
+    <link href="~/admin/dist/css/style.min.css" rel="stylesheet" />
+
+    <link href="~/admin/assets/libs/datatables.net-bs4/css/datatables.bootstrap4.css" rel="stylesheet" />
+
+    <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
+
+    <link href="~/assets/css/flash.css" rel="stylesheet" />
+
+</head>
+<body>
+
+
+    <div id="main-wrapper"
+         data-layout="vertical"
+         data-navbarbg="skin5"
+         data-sidebartype="full"
+         data-sidebar-position="absolute"
+         data-header-position="absolute"
+         data-boxed-layout="full">
+
+
+        <partial name="AdminNavbar" />
+
+        <partial name="AdminSidebar" />
+
+
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title"></h4>
+                        <div class="ms-auto text-end">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid" id="userData">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-0">USERS</h5>
+                            </div>
+                            <table class="table" id="usersTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Action</th>
+                                   
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr>
+                                            <th scope="row">@user.id</th>
+                                            <td>@user.Name</td>
+                                            <td>@user.email</td>
+                                            <td>@user.Title</td>
+                                            <td>@user.BlogDesc</td>
+                                            <td>
+                                                <img src="@user.ImageUrl" style="width: 50px; height: 50px;" />
+                                            
+                                            </td>
+                                            <td>@user.Type</td>
+
+                                       @*      <td>
+                                                <button data-activated="@(user.IsActivated ?? false)" onclick="toggleActivation(@user.Id, this)" class="btn btn-@(user.IsActivated == true ? "success" : "danger")">@(user.IsActivated == true ? "De-Activate" : "Activate")</button>
+                                            </td>
+
+                                            <td>
+                                                <img src="@user.ProfileImageUrl" height="70px" width="70px" />
+                                        </td> *@
+
+                                            <td>
+                                                <a asp-route-id="@user" asp-action="AddCouponToUser" asp-controller="Admin" class="btn btn-primary">Allow</a>
+                                            </td> 
+
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    </body>
+    </html>
+
+
+
+
+
+
+
+    <script src="~/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/admin/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/admin/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/admin/assets/extra-libs/sparkline/sparkline.js"></script>
+    <script src="~/admin/dist/js/waves.js"></script>
+    <script src="~/admin/dist/js/sidebarmenu.js"></script>
+    <script src="~/admin/dist/js/custom.min.js"></script>
+    <script src="~/admin/dist/js/pages/dashboards/dashboard1.js"></script>
+    <script src="~/admin/assets/extra-libs/datatables/datatables.min.js"></script>
