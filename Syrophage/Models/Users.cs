@@ -27,7 +27,8 @@ namespace Syrophage.Models
 
         [Required(ErrorMessage = "Please Enter Password .")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", ErrorMessage = "Password Must be Strong")]
-        public string Password { get; set; }
+
+        public string? Password { get; set; }
 
 
         [Required(ErrorMessage = "Please Enter Password .")]

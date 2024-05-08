@@ -20,6 +20,11 @@ namespace Syrophage.Repository
             return _db.Users.Count();
         }
 
+        public Users GetByemail(string Email)
+        {
+            return _db.Users.FirstOrDefault(u => u.Email == Email);
+        }
+
         public Users GetById(int Id)
         {
             return _db.Users.Find(Id);

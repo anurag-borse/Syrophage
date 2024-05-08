@@ -9,7 +9,7 @@ namespace Syrophage.Repository.IRepository
 
         Users GetByname(string Name);
 
-
+        Users GetByemail(string Email);
         void Update(Users obj);
 
         

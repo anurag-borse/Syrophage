@@ -45,7 +45,29 @@ namespace Syrophage.Controllers
         {
 
             string wwwRootPath = _webHostEnvironment.WebRootPath;
-            if (file != null)
+            var user1 = unitofworks.User.GetByemail(obj.Email);
+            if (file == null)
+            {
+               
+                var user = unitofworks.User.GetById(obj.Id);
+
+                user.Name = obj.Name;
+                user.Email = obj.Email;
+                user.Phone = obj.Phone;
+                user.Address = obj.Address;
+                user.ProfileImageUrl = user1.ProfileImageUrl;
+
+
+                unitofworks.User.Update(user);
+                unitofworks.Save();
+
+
+
+                TempData["Success"] = "user updated Successfully";
+                return RedirectToAction("Profile", "User");
+            }
+
+            else
             {
                 string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                 string productPath = Path.Combine(wwwRootPath, @"UserProfilePic");
@@ -56,7 +78,6 @@ namespace Syrophage.Controllers
                 {
                     file.CopyTo(fileStream);
                 }
-
                 var user = unitofworks.User.GetById(obj.Id);
 
                 user.Name = obj.Name;
@@ -69,15 +90,10 @@ namespace Syrophage.Controllers
                 unitofworks.User.Update(user);
                 unitofworks.Save();
 
-
-
                 TempData["Success"] = "user updated Successfully";
                 return RedirectToAction("Profile", "User");
+
             }
-
-
-            TempData["Error"] = "user Not Updated";
-            return RedirectToAction("Profile", "User");
         }
 
 

@@ -148,7 +148,7 @@ namespace Syrophage.Controllers
 
 
 
-            if (model.Password != model.ConfirmPassword)
+            if (model.Password == model.ConfirmPassword)
 
 
                 if (model != null)
@@ -189,7 +189,7 @@ namespace Syrophage.Controllers
                     return RedirectToAction("Register", "Login");
                 }
 
-            TempData["Error"] = "Someting Error Happen";
+            TempData["Error"] = "Confirm Password Did not Match";
             return RedirectToAction("Register", "Login");
 
         }

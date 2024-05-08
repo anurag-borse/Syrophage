@@ -1,4 +1,5 @@
 ﻿  @model List<Syrophage.Models.Blog>
+  @using System.Text.RegularExpressions
 
 
 
@@ -13,7 +14,7 @@
 
 
 
-
+<body>
 <div id="preloader">
     <div id="status">
         <div class="spinner">
@@ -50,7 +51,7 @@
                 <div class="col-md-4">
                     <article class="post blog-post">
                         <div class="post-preview">
-                            <a href="#"><img src="@blog.ImageUrl" alt="" class="img-fluid mx-auto d-block"></a>
+                            <a href="#"><img src="@blog.ImageUrl" alt="" class="mx-auto d-block" height="300px" width="500px"></a>
                         </div>
 
                         <div class="post-header">
@@ -62,16 +63,19 @@
                                     <a href="#"> <small>@blog.Type</small></a>
                                 </li>
                             </ul>
-
-                            <div class="post-content">
+                            <div class="post-content col-sm-8 col-md-10 col-lg-12">
                                 @{
-                                    // Split the blog description by newline characters
-                                    var lines = blog.BlogDesc.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-                                    // Take only the first 3-4 lines of the description
-                                    var truncatedDesc = string.Join("<br>", lines.Take(3)); // Change 3 to 4 if you want 4 lines
+                                    // Split the blog description into words while preserving line breaks
+                                    var words = Regex.Split(blog.BlogDesc, @"\s+");
+                                    // Take only the first 15-20 words of the description
+                                    var truncatedDesc = string.Join(" ", words.Take(15)); // Change 15 to 20 if you want 20 words
                                 }
-                                <p class="text-muted">@Html.Raw(truncatedDesc)</p>
+                                <p class="text-muted">@Html.Raw(truncatedDesc)...</p>
                             </div>
+
+
+
+
 
                             <span class="bar"></span>
 
@@ -103,7 +107,7 @@
 
 <section class="section">
     <div class="container">
-        <h1>Add you Blog</h1>
+        <h1>Add your Blog</h1>
         <span class="bar"></span>
 
         <div class="mt-4">
@@ -171,3 +175,75 @@
     </div>
 
 </section>
+</body>
+
+
+
+
+@if (TempData["Success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Success"]');
+    </script>
+}
+
+@if (TempData["Error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+
+        // Display the Toastr notification
+        toastr.success('@TempData["Error"]');
+    </script>
+}
+
+
+
+
+
+     
