@@ -16,6 +16,17 @@
     </div>
 </div>
 
+<style>
+    #video-player {
+        width: 450px; /* Set width */
+        height: 300px; /* Set height */
+        position: fixed; /* Position fixed to keep it centered */
+        top: 50%; /* Position from top */
+        left: 50%; /* Position from left */
+        transform: translate(-50%, -50%); /* Center the video */
+        z-index: 9999; /* Ensure it's above other content */
+    }
+</style>
 
 
 @* -------------------------------------- *@
@@ -54,18 +65,18 @@
                         <div class="title-heading text-center">
                             <h1 class="">Revolutionize Your Business Experience</h1>
                             <p class="text-white-50 mx-auto">From HR to Gifts to Supplies: Your All-in-one Business Partner</p>
-                            <div class="mt-3">
-                                <a href="#" class="btn btn-custom mr-3">Contact Us</a>
-                                <a href="#" class="btn btn-outline-white">About Us</a>
+                                    <div class="mt-3">
+                                <a asp-action="Contact" class="btn btn-custom mr-3">Contact Us</a>
+                                <a asp-action="About" class="btn btn-outline-white">About Us</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-<!-- HOME END-->
+        </section>
+        <!-- HOME END--> 
 
 
 
@@ -140,13 +151,7 @@
                 <div class="about-pic">
                     <img src="~/assets/images/about/about-pic.jpg" class="img-fluid" alt="">
                             <div class="watch-video about-video text-center">
-                                <div class="project-video">
-                                    <div class="project-video-border">
-                                        <div class="project-video-icon">
-                                            <a href="" class="video-play-icon text-white text-center" title="Watch Now"><i class="mdi mdi-play play-icon play h2 mb-0 mx-auto"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
+                              
                             </div>
                         </div>
                     </div>
@@ -282,7 +287,8 @@
                             <div class="project-video">
                                 <div class="project-video-border">
                                     <div class="project-video-icon">
-                                        <a href="" class="video-play-icon text-white text-center" title="Watch Now"><i class="mdi mdi-play play-icon play h2 mb-0 mx-auto"></i></a>
+                                <a href="~/5725953-uhd_3840_2160_30fps.mp4" class="video-play-icon text-white text-center" title="Watch Now"><i class="mdi mdi-play play-icon play h2 mb-0 mx-auto"></i>
+                                </a>
                                     </div>
                                 </div>
                             </div>
@@ -547,3 +553,5 @@
         }, false);
     });
 </script>
+
+

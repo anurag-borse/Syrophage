@@ -1,8 +1,8 @@
 ﻿namespace Syrophage.Repository.IRepository
 {
     public interface IUnitofWorks
-    {
-        IContactRepository Contact { get; }
+        {
+            IContactRepository Contact { get; }
       
 
         INewsletterRepository Newsletter { get; }
@@ -28,6 +28,15 @@
         IServicesRepository Services { get; }
 
         IAdminRepository Admin { get; }
+
+        IQuatationFixRepository QuatationFix { get; }
+
+
+        IQuatationServiceRepository QuaService { get; }
+
+        IQuatationFormRepository QuaForm { get; }
+
+        IBlogRepository Blog { get; }
 
 
         public void Save();

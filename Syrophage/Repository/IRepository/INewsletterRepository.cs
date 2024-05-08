@@ -4,7 +4,7 @@ namespace Syrophage.Repository.IRepository
 {
     public interface INewsletterRepository : IRepository<Newsletter>
     {
-
+        int Count();
         Newsletter GetById(int Id);
         List<Newsletter> Search(string searchTerm);
 

@@ -14,6 +14,11 @@ namespace Syrophage.Repository
             _db = db;
         }
 
+        public int Count()
+        {
+            return _db.Newsletters.Count();
+        }
+
         public Newsletter GetById(int Id)
         {
             return _db.Newsletters.Find(Id);

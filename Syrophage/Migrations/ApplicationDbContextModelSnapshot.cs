@@ -63,6 +63,52 @@ namespace Syrophage.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Syrophage.Models.Blog", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("BlogDesc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Comments")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Like")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("date")
+                        .HasColumnType("date");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Blogs");
+                });
+
             modelBuilder.Entity("Syrophage.Models.Categories", b =>
                 {
                     b.Property<int>("Id")
@@ -247,6 +293,31 @@ namespace Syrophage.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Syrophage.Models.Qua_Service", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("Quantity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("item")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Quatations_Services");
+                });
+
             modelBuilder.Entity("Syrophage.Models.Quatation_details_fix", b =>
                 {
                     b.Property<int>("id")
@@ -289,6 +360,79 @@ namespace Syrophage.Migrations
                             Cemail = "Syrophage@gmail.com",
                             Cname = "SYROPHAGE IN PRIVATE LIMITED"
                         });
+                });
+
+            modelBuilder.Entity("Syrophage.Models.QuotationFormData", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("AboutUs")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Contact")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactTo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailTo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Expectation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Methodology")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreparedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreparedFor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QuotationBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Term1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Term2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Term3")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Quatations_Data");
                 });
 
             modelBuilder.Entity("Syrophage.Models.Role", b =>
@@ -371,6 +515,44 @@ namespace Syrophage.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ServiceCategories");
+                });
+
+            modelBuilder.Entity("Syrophage.Models.ServiceData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AnnualCharges")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HalfYearlyCharges")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OneTimeCharges")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuotationFormDataId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Service")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuotationFormDataId");
+
+                    b.ToTable("ServiceData");
                 });
 
             modelBuilder.Entity("Syrophage.Models.Token", b =>
@@ -486,6 +668,17 @@ namespace Syrophage.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Syrophage.Models.ServiceData", b =>
+                {
+                    b.HasOne("Syrophage.Models.QuotationFormData", "QuotationFormData")
+                        .WithMany("Services")
+                        .HasForeignKey("QuotationFormDataId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuotationFormData");
+                });
+
             modelBuilder.Entity("Syrophage.Models.UserCoupon", b =>
                 {
                     b.HasOne("Syrophage.Models.Coupon", "Coupon")
@@ -508,6 +701,11 @@ namespace Syrophage.Migrations
             modelBuilder.Entity("Syrophage.Models.Coupon", b =>
                 {
                     b.Navigation("UserCoupons");
+                });
+
+            modelBuilder.Entity("Syrophage.Models.QuotationFormData", b =>
+                {
+                    b.Navigation("Services");
                 });
 
             modelBuilder.Entity("Syrophage.Models.Users", b =>
