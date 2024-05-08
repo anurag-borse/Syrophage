@@ -84,6 +84,31 @@
                     </ul>
                 </li>
 
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark"
+                       href="javascript:void(0)"
+                       aria-expanded="false">
+                        <i class="mdi mdi-pencil"></i><span class="hide-menu">Blogs </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a asp-action="AllBlog" asp-controller="Admin" class="sidebar-link">
+                                <i class="mdi mdi-note-outline"></i><span class="hide-menu"> Requested Blogs </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-action="ManageBlog" asp-controller="Admin" class="sidebar-link">
+                                <i class="mdi mdi-note-plus"></i><span class="hide-menu"> Allow Blogs</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+
+
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark"
                        href="javascript:void(0)"

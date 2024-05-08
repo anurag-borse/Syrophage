@@ -1171,6 +1171,15 @@ namespace Syrophage.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult AllBlog()
+        {
+            setAdminData();
+
+
+            return View();
+        }
+
 
     }
 }
