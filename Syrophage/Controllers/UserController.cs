@@ -89,10 +89,16 @@ namespace Syrophage.Controllers
                 unitofworks.User.Update(user);
                 unitofworks.Save();
 
-                TempData["Success"] = "user updated Successfully";
+
+
+                TempData["Success"] = "User Updated Successfully";
                 return RedirectToAction("Profile", "User");
 
             }
+
+
+            TempData["Error"] = "User Not Updated";
+            return RedirectToAction("Profile", "User");
         }
 
 

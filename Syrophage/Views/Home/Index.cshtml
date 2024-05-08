@@ -65,38 +65,18 @@
                         <div class="title-heading text-center">
                             <h1 class="">Revolutionize Your Business Experience</h1>
                             <p class="text-white-50 mx-auto">From HR to Gifts to Supplies: Your All-in-one Business Partner</p>
-                                    <div class="mt-3">
+                            <div class="mt-3">
                                 <a asp-action="Contact" class="btn btn-custom mr-3">Contact Us</a>
                                 <a asp-action="About" class="btn btn-outline-white">About Us</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- HOME END--> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        </div>
+    </div>
+</section>
+<!-- HOME END-->
 <!-- FEATURES START -->
 <section class="section-two bg-light">
     <div class="container">
@@ -150,15 +130,14 @@
             <div class="col-lg-5 col-md-6">
                 <div class="about-pic">
                     <img src="~/assets/images/about/about-pic.jpg" class="img-fluid" alt="">
-                            <div class="watch-video about-video text-center">
-                              
-                            </div>
-                        </div>
-                    </div>
                     <div class="watch-video about-video text-center">
                     </div>
                 </div>
             </div>
+
+
+
+
 
             <div class="col-lg-7 col-md-6">
                 <div class="about-section ml-lg-3 mt-sm-30">
@@ -170,6 +149,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
 </section>
 
 
@@ -283,39 +265,39 @@
             </div>
         </div>
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="watch-video text-center">
-                            <div class="project-video">
-                                <div class="project-video-border">
-                                    <div class="project-video-icon">
-                                <a href="~/5725953-uhd_3840_2160_30fps.mp4" class="video-play-icon text-white text-center" title="Watch Now"><i class="mdi mdi-play play-icon play h2 mb-0 mx-auto"></i>
-                                </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- CTA END -->
-
-        <!-- WORK START -->
-        
         <div class="row">
             <div class="col-lg-12">
                 <div class="watch-video text-center">
                     <div class="project-video">
                         <div class="project-video-border">
                             <div class="project-video-icon">
-                                <a href="https://www.pexels.com/video/a-group-of-young-professionals-are-having-a-teamwork-5725953/" class="video-play-icon text-white text-center" title="Watch Now"><i class="mdi mdi-play play-icon play h2 mb-0 mx-auto"></i></a>
+                                <a href="~/5725953-uhd_3840_2160_30fps.mp4" class="video-play-icon text-white text-center" title="Watch Now">
+                                    <i class="mdi mdi-play play-icon play h2 mb-0 mx-auto"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</section>
+<!-- CTA END -->
+<!-- WORK START -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="watch-video text-center">
+            <div class="project-video">
+                <div class="project-video-border">
+                    <div class="project-video-icon">
+                        <a href="https://www.pexels.com/video/a-group-of-young-professionals-are-having-a-teamwork-5725953/" class="video-play-icon text-white text-center" title="Watch Now"><i class="mdi mdi-play play-icon play h2 mb-0 mx-auto"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     </div>
 </section>
 <!-- CTA END -->
@@ -474,68 +456,10 @@
 </section>
 
 
-
-@if (TempData["Success"] != null)
-{
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
-    <script type="text/javascript">
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
+<partial name="_Toastr" />
 
 
-        // Display the Toastr notification
-        toastr.success('@TempData["Success"]');
-    </script>
-}
 
-@if (TempData["Error"] != null)
-{
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
-    <script type="text/javascript">
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-
-
-        // Display the Toastr notification
-        toastr.success('@TempData["Error"]');
-    </script>
-}
 <script src="~/js/video_loader.js"></script>
 <script src="~/css/video.js"></script>
 
