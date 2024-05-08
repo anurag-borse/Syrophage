@@ -1179,6 +1179,8 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult SendQuatationMail()
         {
+            setAdminData();
+
             return View();
         }
 
