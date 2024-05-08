@@ -11,12 +11,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="itext7" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Rotativa.AspNetCore" Version="1.3.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +27,7 @@
     <Folder Include="wwwroot\CouponImages\" />
     <Folder Include="wwwroot\CategoryPictures\" />
     <Folder Include="wwwroot\AdminProfileImages\" />
+    <Folder Include="wwwroot\BlogImage\" />
     <Folder Include="wwwroot\ServicesImages\" />
     <Folder Include="wwwroot\ServiceCategoryImages\" />
     <Folder Include="wwwroot\ProductImage\" />

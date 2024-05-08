@@ -29,6 +29,15 @@
 
         IAdminRepository Admin { get; }
 
+        IQuatationFixRepository QuatationFix { get; }
+
+
+        IQuatationServiceRepository QuaService { get; }
+
+        IQuatationFormRepository QuaForm { get; }
+
+        IBlogRepository Blog { get; }
+
 
         public void Save();
     }

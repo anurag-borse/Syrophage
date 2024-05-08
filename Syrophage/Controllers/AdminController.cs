@@ -8,10 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using Syrophage.Data;
 using Syrophage.Migrations;
 using Syrophage.Models;
-using Syrophage.Models.ViewModel;
 using Syrophage.Repository.IRepository;
 using Syrophage.Services;
 using Syrophage.Repository;
+using System.Reflection;
+using Newtonsoft.Json.Linq;
+using System.Net.Mail;
+using System.Net;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Rotativa.AspNetCore;
+using Newtonsoft.Json;
+using Syrophage.Models.ViewModel;
 
 namespace Syrophage.Controllers
 {
@@ -22,7 +30,6 @@ namespace Syrophage.Controllers
         private readonly IUnitofWorks unitofworks;
         private readonly IServices services;
 
-
         private readonly IWebHostEnvironment _webHostEnvironment;
 
 
@@ -32,20 +39,15 @@ namespace Syrophage.Controllers
             this.unitofworks = unitofworks;
             this.services = services;
             this._webHostEnvironment = _webHostEnvironment;
+
         }
         public void setAdminData()
         {
             var AdminId = HttpContext.Session.GetInt32("AdminId");
             var Admin = unitofworks.Admin.GetById(AdminId ?? 0);
+
             ViewData["Admin"] = Admin;
-
-
         }
-
-        [Authorize]
-      
-
-
 
 
         public IActionResult Dashboard()
@@ -53,8 +55,6 @@ namespace Syrophage.Controllers
 
 
             setAdminData();
-
-
 
 
             var newslettersCount = unitofworks.Newsletter.GetAll().Count();
@@ -1160,15 +1160,140 @@ namespace Syrophage.Controllers
 
         }
 
+        /*=============================================product==============================================================*/
 
 
+        /*=============================================Quatation==============================================================*/
         [HttpGet]
         public IActionResult Cotations()
         {
             setAdminData();
+            var Quatation = unitofworks.QuatationFix.GetAll().ToList();
 
+            var Admin = unitofworks.Admin.GetAll().ToList();
+            var model = new Tuple<List<Quatation_details_fix>, List<Admin>>(Quatation, Admin);
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult SendQuatationMail()
+        {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult SendQuatationMail(QuatationVm obj)
+        {
+
+            if (obj != null)
+            {
+                var Quatationdata = unitofworks.QuaForm.GetAlll()
+             .Include(q => q.Services) // Include Services
+             .FirstOrDefault();// Assuming you only need one QuatationFormData
+
+                if (Quatationdata != null)
+                {
+                    // Create a QuotationFormData object
+                    var Data = new QuotationFormData
+                    {
+                        CompanyName = Quatationdata.CompanyName,
+                        QuotationBy = Quatationdata.QuotationBy,
+                        PreparedBy = Quatationdata.PreparedBy,
+                        Role = Quatationdata.Role,
+                        Contact = Quatationdata.Contact,
+                        Email = Quatationdata.Email,
+                        PreparedFor = Quatationdata.PreparedFor,
+                        ContactTo = Quatationdata.ContactTo,
+                        EmailTo = Quatationdata.EmailTo,
+                        AboutUs = Quatationdata.AboutUs,
+                        Methodology = Quatationdata.Methodology,
+                        Expectation = Quatationdata.Expectation,
+                        Term1 = Quatationdata.Term1,
+                        Term2 = Quatationdata.Term2,
+                        Term3 = Quatationdata.Term3,
+                        Services = Quatationdata.Services // Assuming Services is a list of ServiceData
+                    };
+
+                    var report = new ViewAsPdf("GenerateQuotationPDF", Data)
+                    {
+                        FileName = "UnprotectedReport.pdf"
+                    };
+
+                    var binaryPdf = report.BuildFile(ControllerContext).Result;
+
+                    var stream = new MemoryStream(binaryPdf);
+                    string Subject = "Product Invoice";
+                    string Body = obj.Description;
+
+                    bool emailSent =   services.SendQuotationEmail(obj.Email, Subject, Body, stream, "Attachment.pdf");
+
+
+                    if (emailSent)
+                    {
+                        unitofworks.QuaForm.Remove(Quatationdata);
+                        unitofworks.Save();
+
+                        TempData["Success"] = "Qutation Sent";
+                        return RedirectToAction("Dashboard", "Admin");
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Some Error Occured";
+                        return RedirectToAction("Dashboard", "Admin");
+                    }
+                }
+            }
+
+            TempData["Error"] = "Some Error Occured";
+            return RedirectToAction("Dashboard", "Admin");
+        }
+
+
+
+        [HttpPost]
+        public JsonResult GenerateQuotationPDF([FromBody] QuotationFormData formData)
+        {
+            try
+            {
+                // Deserialize the JSON string back to a list of ServiceData objects
+                string servicesJson = JsonConvert.SerializeObject(formData.Services);
+
+
+                var quotationEntity = new QuotationFormData
+                {
+                    QuotationBy = formData.QuotationBy,
+                    PreparedBy = formData.PreparedBy,
+                    Role = formData.Role,
+                    Contact = formData.Contact,
+                    Email = formData.Email,
+                    CompanyName = formData.CompanyName,
+                    PreparedFor = formData.PreparedFor,
+                    ContactTo = formData.ContactTo,
+                    EmailTo = formData.EmailTo,
+                    AboutUs = formData.AboutUs,
+                    Methodology = formData.Methodology,
+                    Expectation = formData.Expectation,
+                    Services = formData.Services, // Serialize the list of services
+                    Term1 = formData.Term1,
+                    Term2 = formData.Term2,
+                    Term3 = formData.Term3
+                };
+
+
+
+                unitofworks.QuaForm.Add(quotationEntity);
+                unitofworks.Save();
+
+
+                return Json(new {success = true});
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false });
+            }
+        }
+
 
 
         [HttpGet]
@@ -1184,4 +1309,8 @@ namespace Syrophage.Controllers
     }
 }
 
-/*=============================================product==============================================================*/
+
+
+
+
+

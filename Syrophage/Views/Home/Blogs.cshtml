@@ -1,0 +1,173 @@
+﻿  @model List<Syrophage.Models.Blog>
+
+
+
+
+
+
+<style>
+    .bg-half {
+        background-image: url('../assets/images/home/bg-blog.jpg');
+    }
+</style>
+
+
+
+
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+
+<section class="bg-half">
+    <div class="bg-overlay"></div>
+    <div class="home-center">
+        <div class="home-desc-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="page-next-level text-white">
+                            <h1 class="text-uppercase">Blogs</h1>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            @foreach (var blog in Model)
+            {
+                <div class="col-md-4">
+                    <article class="post blog-post">
+                        <div class="post-preview">
+                            <a href="#"><img src="@blog.ImageUrl" alt="" class="img-fluid mx-auto d-block"></a>
+                        </div>
+
+                        <div class="post-header">
+                            <h4 class="post-title"><a href="#">@blog.Title</a></h4>
+                            <ul class="post-meta">
+                                <li><i class="mdi mdi-calendar"></i> <small>@blog.date</small></li>
+                                <li>
+                                    <i class="mdi mdi-tag-text-outline"></i>
+                                    <a href="#"> <small>@blog.Type</small></a>
+                                </li>
+                            </ul>
+
+                            <div class="post-content">
+                                @{
+                                    // Split the blog description by newline characters
+                                    var lines = blog.BlogDesc.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                                    // Take only the first 3-4 lines of the description
+                                    var truncatedDesc = string.Join("<br>", lines.Take(3)); // Change 3 to 4 if you want 4 lines
+                                }
+                                <p class="text-muted">@Html.Raw(truncatedDesc)</p>
+                            </div>
+
+                            <span class="bar"></span>
+
+                            <div class="post-footer">
+                                <div class="likes">
+                                    <ul class="post-meta">
+                                        <li><a href="#"><i class="far fa-heart mr-1"></i> <small>@blog.Like</small></a></li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="far fa-comment mr-1"></i>
+                                                <small>@blog.Comments</small>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="post-more"><a href="#">Read More <i class="mdi mdi-arrow-right"></i></a></div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<section class="section">
+    <div class="container">
+        <h1>Add you Blog</h1>
+        <span class="bar"></span>
+
+        <div class="mt-4">
+            <div class="custom-form">
+                <form asp-action="AddBlog" asp-controller="Home" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group app-label">
+                                <input id="name1" type="text" class="form-control" placeholder="Your name :" name="Name">
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group app-label">
+                                <input id="email1" type="email" class="form-control" placeholder="Your email :" name="email">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label for="city">Type:</label>
+                            <select id="city" name="Type">
+                                <option value="Finance">Finance</option>
+                                <option value="Discussion">Discussion</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Accounts">Accounts</option>
+                                <option value="Achievements">Achievements</option>
+                                <option value="Annual-report">Annual-report</option>
+                            </select>
+
+                        </div>
+
+
+
+                        <div class="col-lg-6" style="margin-bottom:10px">
+                            <input  class="form-control" type="file" id="formFile" name="file"  />
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group app-label">
+                                <input id="email1" type="text" class="form-control" placeholder="Your Blog title :" name="Title">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group app-label">
+                                <textarea id="comments1" rows="3" class="form-control" placeholder="Enter message :" name="BlogDesc"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input type="submit" id="submit1" name="send" class="submitBnt btn btn-custom" value="Submit">
+                        </div>
+                    </div>
+
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
