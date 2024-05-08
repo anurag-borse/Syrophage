@@ -71,7 +71,7 @@ namespace Syrophage.Controllers
 
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 
-                    TempData["AdminSuccess"] = "Login Successfully";
+                    TempData["Success"] = "Login Successfully";
                     return RedirectToAction("Dashboard", "Admin");
                 }
             }
@@ -133,14 +133,14 @@ namespace Syrophage.Controllers
             var existingEmail = _db.Users.FirstOrDefault(r => r.Email == model.Email);
             if (existingEmail != null)
             {
-                TempData["Message"] = "Email is Already Exists";
+                TempData["Message"] = "Email Already Exists. Please Try With New Email";
                 return RedirectToAction("Register", "Login");
             }
             // Check if the phone number already exists
             var existingPhoneUser = _db.Users.FirstOrDefault(r => r.Phone == model.Phone);
             if (existingPhoneUser != null)
             {
-                TempData["Message"] = "Phone no. is Already Exists";
+                TempData["Message"] = "Phone no. Already Exists.Please Try With New Mobile No.";
                 return RedirectToAction("Register", "Login");
             }
 
@@ -194,7 +194,18 @@ namespace Syrophage.Controllers
 
         }
 
+        [HttpGet]
 
+        public IActionResult AdminLogout()
+        {
+
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Clear();
+
+            TempData["Success"] = "Logout Successfully";
+            return RedirectToAction("Index", "Home");
+
+        }
 
 
         [HttpGet]
@@ -204,7 +215,7 @@ namespace Syrophage.Controllers
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
 
-            TempData["clear"] = "Yor Are Logout :";
+            TempData["Success"] = "Logout Successfully";
             return RedirectToAction("Index", "Home");
         }
 

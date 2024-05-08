@@ -72,7 +72,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title mb-0">Edit Order</h5>
+                                <h5 class="card-title mb-0">Edit Category</h5>
                             </div>
                             <form class="form-horizontal" method="post" asp-action="EditCategory" asp-controller="Admin" enctype="multipart/form-data">
                                 <div class="card-body">
@@ -81,14 +81,14 @@
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-end control-label col-form-label">Category Name</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="fname" value="@Model.CategoryName" asp-for="CategoryName" />
+                                            <input type="text" class="form-control" id="fname" name="CategoryName" value="@Model.CategoryName" />
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-end control-label col-form-label">CategoryDescription</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="fname" value="@Model.CategoryDescription" asp-for="CategoryDescription" />
+                                            <input type="text" class="form-control" id="fname" name="CategoryDescription" value="@Model.CategoryDescription" />
                                         </div>
                                     </div>
 
@@ -97,7 +97,7 @@
                                         <label for="lname"
                                                class="col-sm-3 text-end control-label col-form-label">Product Image</label>
                                         <div class="col-sm-9">
-                                            <input for="formFile" type="file" name="file" id="upload" class="form-control" />
+                                            <input for="formFile" type="file" name="CategoryPicture" id="upload" class="form-control" />
                                         </div>
                                     </div>
 
