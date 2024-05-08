@@ -558,7 +558,7 @@ namespace Syrophage.Controllers
         public IActionResult EditCategory(Categories obj, IFormFile file)
         {
 
-            if (ModelState.IsValid)
+            if (obj != null)
             {
                 var categories1 = unitofworks.Categories.GetById(obj.Id);
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
@@ -592,6 +592,24 @@ namespace Syrophage.Controllers
                         category.CategoryName = obj.CategoryName;
                         category.CategoryDescription = obj.CategoryDescription;
                         category.CategoryPictureUrl = @"\CategoryPictures\" + filename;
+                    }
+
+                    unitofworks.Categories.Update(category);
+                    unitofworks.Save();
+
+
+                    TempData["Success"] = "Category updated successfully";
+                    return RedirectToAction("Categories", "Admin");
+                }
+                else
+                {
+                    var category = unitofworks.Categories.GetById(obj.Id);
+
+                    if (category != null)
+                    {
+                        category.CategoryName = obj.CategoryName;
+                        category.CategoryDescription = obj.CategoryDescription;
+                        category.CategoryPictureUrl = categories1.CategoryPictureUrl;
                     }
 
                     unitofworks.Categories.Update(category);
@@ -701,7 +719,7 @@ namespace Syrophage.Controllers
         public IActionResult EditServiceCategory(ServiceCategory obj, IFormFile file)
         {
 
-            if (ModelState.IsValid)
+            if (obj != null)
             {
                 var categories1 = unitofworks.ServiceCategories.GetById(obj.Id);
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
@@ -732,6 +750,25 @@ namespace Syrophage.Controllers
                         category.CategoryName = obj.CategoryName;
                         category.CategoryDescription = obj.CategoryDescription;
                         category.CategoryPictureUrl = @"\ServiceCategoryImages\" + filename;
+                    }
+
+                    unitofworks.ServiceCategories.Update(category);
+                    unitofworks.Save();
+
+
+                    TempData["Success"] = "Category updated successfully";
+                    return RedirectToAction("Servicecategories", "Admin");
+
+                }
+                else
+                {
+                    var category = unitofworks.ServiceCategories.GetById(obj.Id);
+
+                    if (category != null)
+                    {
+                        category.CategoryName = obj.CategoryName;
+                        category.CategoryDescription = obj.CategoryDescription;
+                        category.CategoryPictureUrl = categories1.CategoryPictureUrl;
                     }
 
                     unitofworks.ServiceCategories.Update(category);
@@ -823,14 +860,12 @@ namespace Syrophage.Controllers
         public IActionResult EditService(Service obj, IFormFile file)
         {
 
-            if (ModelState.IsValid)
+            if (obj != null)
             {
                 var service1 = unitofworks.Services.GetById(obj.id);
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if (file != null)
                 {
-
-
 
 
                     string OldImagepath = service1.productImageUrl;
@@ -879,455 +914,457 @@ namespace Syrophage.Controllers
                 else
                 {
 
-                    var service = new Service
+                    var Service = unitofworks.Services.GetById(obj.id);
+
+                    if (Service != null)
                     {
-                        id = obj.id,
-                        servicename = obj.servicename,
-                        Description = obj.Description,
-                        Category = obj.Category,
-                        productImageUrl = obj.productImageUrl
-                    };
+                        Service.servicename = obj.servicename;
+                        Service.Category = obj.Category;
+                        Service.Description = obj.Description;
+                        Service.productImageUrl = service1.productImageUrl;
+
+                    }
 
                     // Update the product in the database
-                    unitofworks.Services.Update(service);
-                    unitofworks.Save();
-
-                    TempData["success"] = "Service updated successfully.";
-                    return RedirectToAction("ManageService", "Admin");
-                }
-
-            }
-            TempData["Error"] = "Service not Added";
-            return RedirectToAction("ManageService", "Admin");
-        }
-
-
-        
-        [HttpGet]
-        public IActionResult DeleteService(int id)
-        {
-            var service = unitofworks.Services.GetById(id);
-            if (service != null)
-            {
-                // Get the physical path of the file
-                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, service.productImageUrl.TrimStart('/'));
-
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.Delete(filePath);
-                }
-
-                unitofworks.Services.Remove(service);
+                    unitofworks.Services.Update(Service);
                 unitofworks.Save();
 
-
-                TempData["success"] = "Service Deleted Succesfully";
+                TempData["success"] = "Service updated successfully.";
                 return RedirectToAction("ManageService", "Admin");
             }
-            TempData["Error"] = "Service Not Deleted";
+
+        }
+        TempData["Error"] = "Service not Added";
             return RedirectToAction("ManageService", "Admin");
-        }
+    }
 
 
 
-
-
-
-
-        /*=============================================Services==============================================================*/
-
-
-
-        /*=============================================product==============================================================*/
-        [HttpGet]
-        public IActionResult Addproduct()
+    [HttpGet]
+    public IActionResult DeleteService(int id)
+    {
+        var service = unitofworks.Services.GetById(id);
+        if (service != null)
         {
-            setAdminData();
+            // Get the physical path of the file
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, service.productImageUrl.TrimStart('/'));
 
-            var categories = unitofworks.Categories.GetAll().ToList();
-            return View(categories);
-        }
-
-
-        [HttpPost]
-        public IActionResult Addproduct(Product obj, IFormFile file)
-        {
-
-            if (ModelState.IsValid)
+            if (System.IO.File.Exists(filePath))
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if (file != null)
-                {
-                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string productPath = Path.Combine(wwwRootPath, @"ProductImage");
-
-                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                    }
-
-
-
-                    var product = new Product
-                    {
-                        productname = obj.productname,
-                        Description = obj.Description,
-                        Category = obj.Category,
-                        Company = obj.Company,
-                        productImageUrl = @"\ProductImage\" + filename
-                    };
-                    unitofworks.Product.Add(product);
-                    unitofworks.Save();
-
-                    TempData["success"] = "product Added";
-                    return RedirectToAction("ManageProduct", "Admin");
-
-                }
+                System.IO.File.Delete(filePath);
             }
 
-            TempData["Error"] = "product Not Added";
-            return RedirectToAction("Addproduct", "Admin");
+            unitofworks.Services.Remove(service);
+            unitofworks.Save();
+
+
+            TempData["success"] = "Service Deleted Succesfully";
+            return RedirectToAction("ManageService", "Admin");
         }
+        TempData["Error"] = "Service Not Deleted";
+        return RedirectToAction("ManageService", "Admin");
+    }
 
-        [HttpGet]
-        public IActionResult ManageProduct()
+
+
+
+
+
+
+    /*=============================================Services==============================================================*/
+
+
+
+    /*=============================================product==============================================================*/
+    [HttpGet]
+    public IActionResult Addproduct()
+    {
+        setAdminData();
+
+        var categories = unitofworks.Categories.GetAll().ToList();
+        return View(categories);
+    }
+
+
+    [HttpPost]
+    public IActionResult Addproduct(Product obj, IFormFile file)
+    {
+
+        if (ModelState.IsValid)
         {
-            setAdminData();
-
-            var products = unitofworks.Product.GetAll().ToList();
-            return View(products);
-        }
-
-        [HttpGet]
-        public IActionResult EidtProduct(int id)
-        {
-            setAdminData();
-
-            var products = unitofworks.Product.GetById(id);
-            return View(products);
-        }
-
-
-
-        [HttpPost]
-        public IActionResult EditProduct(Product obj, IFormFile file)
-        {
-            if (obj != null)
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            if (file != null)
             {
-                var product1 = unitofworks.Product.GetById(obj.id);
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                string productPath = Path.Combine(wwwRootPath, @"ProductImage");
 
-                // Check if a new image is uploaded
-                if (file != null)
+                using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
                 {
+                    file.CopyTo(fileStream);
+                }
 
-                    string OldImagepath = product1.productImageUrl;
 
-                    // Remove the old image file if it exists
-                    string oldImagePath = Path.Combine(wwwRootPath, OldImagepath.TrimStart('\\'));
-                    if (System.IO.File.Exists(oldImagePath))
+
+                var product = new Product
+                {
+                    productname = obj.productname,
+                    Description = obj.Description,
+                    Category = obj.Category,
+                    Company = obj.Company,
+                    productImageUrl = @"\ProductImage\" + filename
+                };
+                unitofworks.Product.Add(product);
+                unitofworks.Save();
+
+                TempData["success"] = "product Added";
+                return RedirectToAction("ManageProduct", "Admin");
+
+            }
+        }
+
+        TempData["Error"] = "product Not Added";
+        return RedirectToAction("Addproduct", "Admin");
+    }
+
+    [HttpGet]
+    public IActionResult ManageProduct()
+    {
+        setAdminData();
+
+        var products = unitofworks.Product.GetAll().ToList();
+        return View(products);
+    }
+
+    [HttpGet]
+    public IActionResult EidtProduct(int id)
+    {
+        setAdminData();
+
+        var products = unitofworks.Product.GetById(id);
+        return View(products);
+    }
+
+
+
+    [HttpPost]
+    public IActionResult EditProduct(Product obj, IFormFile file)
+    {
+        if (obj != null)
+        {
+            var product1 = unitofworks.Product.GetById(obj.id);
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+            // Check if a new image is uploaded
+            if (file != null)
+            {
+
+                string OldImagepath = product1.productImageUrl;
+
+                // Remove the old image file if it exists
+                string oldImagePath = Path.Combine(wwwRootPath, OldImagepath.TrimStart('\\'));
+                if (System.IO.File.Exists(oldImagePath))
+                {
+                    System.IO.File.Delete(oldImagePath);
+                }
+
+                // Generate a unique filename for the new image
+                string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                string productPath = Path.Combine(wwwRootPath, @"ProductImage");
+
+                // Save the new image
+                using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+
+                // Update product details including the new image URL
+
+                var product = unitofworks.Product.GetById(obj.id);
+
+
+                if (product != null)
+                {
+                    product.productname = obj.productname;
+                    product.Category = obj.Category;
+                    product.Description = obj.Description;
+                    product.productImageUrl = @"\ProductImage\" + filename;
+                    product.Company = obj.Company;
+
+                }
+
+
+                // Update the product in the database
+                unitofworks.Product.Update(product);
+                unitofworks.Save();
+
+                TempData["success"] = "Product updated successfully.";
+                return RedirectToAction("ManageProduct", "Admin");
+            }
+            else
+            {
+                var product = unitofworks.Product.GetById(obj.id);
+
+
+                if (product != null)
+                {
+                    product.productname = obj.productname;
+                    product.Category = obj.Category;
+                    product.Description = obj.Description;
+                    product.productImageUrl = product1.productImageUrl;
+                    product.Company = obj.Company;
+
+                }
+
+                // Update the product in the database
+                unitofworks.Product.Update(product);
+                unitofworks.Save();
+
+                TempData["success"] = "Product updated successfully.";
+                return RedirectToAction("ManageProduct", "Admin");
+            }
+        }
+
+        TempData["Error"] = "Failed to update product.";
+        return RedirectToAction("EidtProduct", "Admin", new { id = obj.id }); // Redirect to the edit page with the product ID
+    }
+
+
+    [HttpPost]
+    public JsonResult DeleteProduct(int id)
+    {
+        var product = unitofworks.Product.GetById(id);
+        if (product != null)
+        {
+            // Get the physical path of the file
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, product.productImageUrl.TrimStart('/'));
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            unitofworks.Product.Remove(product);
+            unitofworks.Save();
+
+            return Json(new { success = true });
+        }
+        return Json(new { success = false });
+    }
+
+
+
+    [HttpGet]
+    public IActionResult MyProfile()
+    {
+        setAdminData();
+
+        var logedadmin = HttpContext.Session.GetInt32("AdminId");
+
+        var user = unitofworks.Admin.GetById(logedadmin ?? 0);
+        return View(user);
+
+    }
+
+    [HttpPost]
+    public IActionResult UpdateProfile(Admin admin)
+    {
+        if (ModelState.IsValid)
+        {
+
+            var admininDb = unitofworks.Admin.GetById(admin.Id);
+
+            if (admininDb != null)
+            {
+                admininDb.Name = admin.Name;
+                admininDb.Email = admin.Email;
+                admininDb.Contact = admin.Contact;
+                admininDb.Address = admin.Address;
+                admininDb.Password = admin.Password;
+            }
+            if (admin.ProfileImage != null)
+            {
+                if (admininDb.ProfileImageUrl != null)
+                {
+                    var filePathProfileImageUrl = Path.Combine(_webHostEnvironment.WebRootPath, admininDb.ProfileImageUrl.TrimStart('/'));
+                    if (System.IO.File.Exists(filePathProfileImageUrl))
                     {
-                        System.IO.File.Delete(oldImagePath);
+                        System.IO.File.Delete(filePathProfileImageUrl);
                     }
+                }
 
-                    // Generate a unique filename for the new image
-                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string productPath = Path.Combine(wwwRootPath, @"ProductImage");
+                var file = admin.ProfileImage;
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                var fileName = Guid.NewGuid().ToString() + file.FileName;
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "AdminProfileImages", fileName);
 
-                    // Save the new image
-                    using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                    }
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+                admininDb.ProfileImageUrl = Path.Combine("/AdminProfileImages", fileName).Replace("\\", "/");
 
-                    // Update product details including the new image URL
+            }
 
-                    var product = unitofworks.Product.GetById(obj.id);
-
-
-                    if (product != null)
-                    {
-                        product.productname = obj.productname;
-                        product.Category = obj.Category;
-                        product.Description = obj.Description;
-                        product.productImageUrl = @"\ProductImage\" + filename;
-                        product.Company = obj.Company;
-
-                    }
+            unitofworks.Admin.Update(admininDb);
+            unitofworks.Save();
 
 
-                    // Update the product in the database
-                    unitofworks.Product.Update(product);
+            TempData["Success"] = "Profile Updated Successfully";
+            return RedirectToAction("MyProfile", "Admin");
+        }
+        TempData["Error"] = "Profile Not Updated";
+        return RedirectToAction("MyProfile", "Admin");
+
+    }
+
+    /*=============================================product==============================================================*/
+
+
+    /*=============================================Quatation==============================================================*/
+    [HttpGet]
+    public IActionResult Cotations()
+    {
+        setAdminData();
+        var Quatation = unitofworks.QuatationFix.GetAll().ToList();
+
+        var Admin = unitofworks.Admin.GetAll().ToList();
+        var model = new Tuple<List<Quatation_details_fix>, List<Admin>>(Quatation, Admin);
+
+        return View(model);
+    }
+
+    [HttpGet]
+    public IActionResult SendQuatationMail()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult SendQuatationMail(QuatationVm obj)
+    {
+
+        if (obj != null)
+        {
+            var Quatationdata = unitofworks.QuaForm.GetAlll()
+         .Include(q => q.Services) // Include Services
+         .FirstOrDefault();// Assuming you only need one QuatationFormData
+
+            if (Quatationdata != null)
+            {
+                // Create a QuotationFormData object
+                var Data = new QuotationFormData
+                {
+                    CompanyName = Quatationdata.CompanyName,
+                    QuotationBy = Quatationdata.QuotationBy,
+                    PreparedBy = Quatationdata.PreparedBy,
+                    Role = Quatationdata.Role,
+                    Contact = Quatationdata.Contact,
+                    Email = Quatationdata.Email,
+                    PreparedFor = Quatationdata.PreparedFor,
+                    ContactTo = Quatationdata.ContactTo,
+                    EmailTo = Quatationdata.EmailTo,
+                    AboutUs = Quatationdata.AboutUs,
+                    Methodology = Quatationdata.Methodology,
+                    Expectation = Quatationdata.Expectation,
+                    Term1 = Quatationdata.Term1,
+                    Term2 = Quatationdata.Term2,
+                    Term3 = Quatationdata.Term3,
+                    Services = Quatationdata.Services // Assuming Services is a list of ServiceData
+                };
+
+                var report = new ViewAsPdf("GenerateQuotationPDF", Data)
+                {
+                    FileName = "UnprotectedReport.pdf"
+                };
+
+                var binaryPdf = report.BuildFile(ControllerContext).Result;
+
+                var stream = new MemoryStream(binaryPdf);
+                string Subject = "Product Invoice";
+                string Body = obj.Description;
+
+                bool emailSent = services.SendQuotationEmail(obj.Email, Subject, Body, stream, "Attachment.pdf");
+
+
+                if (emailSent)
+                {
+                    unitofworks.QuaForm.Remove(Quatationdata);
                     unitofworks.Save();
 
-                    TempData["success"] = "Product updated successfully.";
-                    return RedirectToAction("ManageProduct", "Admin");
+                    TempData["Success"] = "Qutation Sent";
+                    return RedirectToAction("Dashboard", "Admin");
                 }
                 else
                 {
-                    var product = unitofworks.Product.GetById(obj.id);
-
-
-                    if (product != null)
-                    {
-                        product.productname = obj.productname;
-                        product.Category = obj.Category;
-                        product.Description = obj.Description;
-                        product.productImageUrl = product1.productImageUrl;
-                        product.Company = obj.Company;
-
-                    }
-
-                    // Update the product in the database
-                    unitofworks.Product.Update(product);
-                    unitofworks.Save();
-
-                    TempData["success"] = "Product updated successfully.";
-                    return RedirectToAction("ManageProduct", "Admin");
+                    TempData["Error"] = "Some Error Occured";
+                    return RedirectToAction("Dashboard", "Admin");
                 }
             }
-
-            TempData["Error"] = "Failed to update product.";
-            return RedirectToAction("EidtProduct", "Admin", new { id = obj.id }); // Redirect to the edit page with the product ID
         }
 
+        TempData["Error"] = "Some Error Occured";
+        return RedirectToAction("Dashboard", "Admin");
+    }
 
-        [HttpPost]
-        public JsonResult DeleteProduct(int id)
+
+
+    [HttpPost]
+    public JsonResult GenerateQuotationPDF([FromBody] QuotationFormData formData)
+    {
+        try
         {
-            var product = unitofworks.Product.GetById(id);
-            if (product != null)
+            // Deserialize the JSON string back to a list of ServiceData objects
+            string servicesJson = JsonConvert.SerializeObject(formData.Services);
+
+
+            var quotationEntity = new QuotationFormData
             {
-                // Get the physical path of the file
-                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, product.productImageUrl.TrimStart('/'));
+                QuotationBy = formData.QuotationBy,
+                PreparedBy = formData.PreparedBy,
+                Role = formData.Role,
+                Contact = formData.Contact,
+                Email = formData.Email,
+                CompanyName = formData.CompanyName,
+                PreparedFor = formData.PreparedFor,
+                ContactTo = formData.ContactTo,
+                EmailTo = formData.EmailTo,
+                AboutUs = formData.AboutUs,
+                Methodology = formData.Methodology,
+                Expectation = formData.Expectation,
+                Services = formData.Services, // Serialize the list of services
+                Term1 = formData.Term1,
+                Term2 = formData.Term2,
+                Term3 = formData.Term3
+            };
 
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.Delete(filePath);
-                }
 
-                unitofworks.Product.Remove(product);
-                unitofworks.Save();
 
-                return Json(new { success = true });
-            }
+            unitofworks.QuaForm.Add(quotationEntity);
+            unitofworks.Save();
+
+
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
             return Json(new { success = false });
         }
+    }
 
 
 
-        [HttpGet]
-        public IActionResult MyProfile()
-        {
-            setAdminData();
+    [HttpGet]
+    public IActionResult AllBlog()
+    {
+        setAdminData();
 
-            var logedadmin = HttpContext.Session.GetInt32("AdminId");
-
-            var user = unitofworks.Admin.GetById(logedadmin ?? 0);
-            return View(user);
-
-        }
-
-        [HttpPost]
-        public IActionResult UpdateProfile(Admin admin)
-        {
-            if (ModelState.IsValid)
-            {
-
-                var admininDb = unitofworks.Admin.GetById(admin.Id);
-
-                if (admininDb != null)
-                {
-                    admininDb.Name = admin.Name;
-                    admininDb.Email = admin.Email;
-                    admininDb.Contact = admin.Contact;
-                    admininDb.Address = admin.Address;
-                    admininDb.Password = admin.Password;
-                }
-                if (admin.ProfileImage != null)
-                {
-                    if (admininDb.ProfileImageUrl != null)
-                    {
-                        var filePathProfileImageUrl = Path.Combine(_webHostEnvironment.WebRootPath, admininDb.ProfileImageUrl.TrimStart('/'));
-                        if (System.IO.File.Exists(filePathProfileImageUrl))
-                        {
-                            System.IO.File.Delete(filePathProfileImageUrl);
-                        }
-                    }
-
-                    var file = admin.ProfileImage;
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    var fileName = Guid.NewGuid().ToString() + file.FileName;
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "AdminProfileImages", fileName);
-
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                    }
-                    admininDb.ProfileImageUrl = Path.Combine("/AdminProfileImages", fileName).Replace("\\", "/");
-
-                }
-
-                unitofworks.Admin.Update(admininDb);
-                unitofworks.Save();
-
-
-                TempData["Success"] = "Profile Updated Successfully";
-                return RedirectToAction("MyProfile", "Admin");
-            }
-            TempData["Error"] = "Profile Not Updated";
-            return RedirectToAction("MyProfile", "Admin");
-
-        }
-
-        /*=============================================product==============================================================*/
-
-
-        /*=============================================Quatation==============================================================*/
-        [HttpGet]
-        public IActionResult Cotations()
-        {
-            setAdminData();
-            var Quatation = unitofworks.QuatationFix.GetAll().ToList();
-
-            var Admin = unitofworks.Admin.GetAll().ToList();
-            var model = new Tuple<List<Quatation_details_fix>, List<Admin>>(Quatation, Admin);
-
-            return View(model);
-        }
-
-        [HttpGet]
-        public IActionResult SendQuatationMail()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult SendQuatationMail(QuatationVm obj)
-        {
-
-            if (obj != null)
-            {
-                var Quatationdata = unitofworks.QuaForm.GetAlll()
-             .Include(q => q.Services) // Include Services
-             .FirstOrDefault();// Assuming you only need one QuatationFormData
-
-                if (Quatationdata != null)
-                {
-                    // Create a QuotationFormData object
-                    var Data = new QuotationFormData
-                    {
-                        CompanyName = Quatationdata.CompanyName,
-                        QuotationBy = Quatationdata.QuotationBy,
-                        PreparedBy = Quatationdata.PreparedBy,
-                        Role = Quatationdata.Role,
-                        Contact = Quatationdata.Contact,
-                        Email = Quatationdata.Email,
-                        PreparedFor = Quatationdata.PreparedFor,
-                        ContactTo = Quatationdata.ContactTo,
-                        EmailTo = Quatationdata.EmailTo,
-                        AboutUs = Quatationdata.AboutUs,
-                        Methodology = Quatationdata.Methodology,
-                        Expectation = Quatationdata.Expectation,
-                        Term1 = Quatationdata.Term1,
-                        Term2 = Quatationdata.Term2,
-                        Term3 = Quatationdata.Term3,
-                        Services = Quatationdata.Services // Assuming Services is a list of ServiceData
-                    };
-
-                    var report = new ViewAsPdf("GenerateQuotationPDF", Data)
-                    {
-                        FileName = "UnprotectedReport.pdf"
-                    };
-
-                    var binaryPdf = report.BuildFile(ControllerContext).Result;
-
-                    var stream = new MemoryStream(binaryPdf);
-                    string Subject = "Product Invoice";
-                    string Body = obj.Description;
-
-                    bool emailSent =   services.SendQuotationEmail(obj.Email, Subject, Body, stream, "Attachment.pdf");
-
-
-                    if (emailSent)
-                    {
-                        unitofworks.QuaForm.Remove(Quatationdata);
-                        unitofworks.Save();
-
-                        TempData["Success"] = "Qutation Sent";
-                        return RedirectToAction("Dashboard", "Admin");
-                    }
-                    else
-                    {
-                        TempData["Error"] = "Some Error Occured";
-                        return RedirectToAction("Dashboard", "Admin");
-                    }
-                }
-            }
-
-            TempData["Error"] = "Some Error Occured";
-            return RedirectToAction("Dashboard", "Admin");
-        }
-
-
-
-        [HttpPost]
-        public JsonResult GenerateQuotationPDF([FromBody] QuotationFormData formData)
-        {
-            try
-            {
-                // Deserialize the JSON string back to a list of ServiceData objects
-                string servicesJson = JsonConvert.SerializeObject(formData.Services);
-
-
-                var quotationEntity = new QuotationFormData
-                {
-                    QuotationBy = formData.QuotationBy,
-                    PreparedBy = formData.PreparedBy,
-                    Role = formData.Role,
-                    Contact = formData.Contact,
-                    Email = formData.Email,
-                    CompanyName = formData.CompanyName,
-                    PreparedFor = formData.PreparedFor,
-                    ContactTo = formData.ContactTo,
-                    EmailTo = formData.EmailTo,
-                    AboutUs = formData.AboutUs,
-                    Methodology = formData.Methodology,
-                    Expectation = formData.Expectation,
-                    Services = formData.Services, // Serialize the list of services
-                    Term1 = formData.Term1,
-                    Term2 = formData.Term2,
-                    Term3 = formData.Term3
-                };
-
-
-
-                unitofworks.QuaForm.Add(quotationEntity);
-                unitofworks.Save();
-
-
-                return Json(new {success = true});
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false });
-            }
-        }
-
-
-
-        [HttpGet]
-        public IActionResult AllBlog()
-        {
-            setAdminData();
-
-            var blogs = unitofworks.Blog.GetAll().ToList();
-            return View(blogs);
-
-        }
-
+        var blogs = unitofworks.Blog.GetAll().ToList();
+        return View(blogs);
 
     }
+
+
+}
 }
 
 
