@@ -15,168 +15,168 @@
 
 
 <body>
-<div id="preloader">
-    <div id="status">
-        <div class="spinner">
-            <div class="double-bounce1"></div>
-            <div class="double-bounce2"></div>
+    <div id="preloader">
+        <div id="status">
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
         </div>
     </div>
-</div>
 
-<section class="bg-half">
-    <div class="bg-overlay"></div>
-    <div class="home-center">
-        <div class="home-desc-center">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-12">
-                        <div class="page-next-level text-white">
-                            <h1 class="text-uppercase">Blogs</h1>
+    <section class="bg-half">
+        <div class="bg-overlay"></div>
+        <div class="home-center">
+            <div class="home-desc-center">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="page-next-level text-white">
+                                <h1 class="text-uppercase">Blogs</h1>
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
-<section class="section">
-    <div class="container">
-        <div class="row">
-            @foreach (var blog in Model)
-            {
-                <div class="col-md-4">
-                    <article class="post blog-post">
-                        <div class="post-preview">
-                            <a href="#"><img src="@blog.ImageUrl" alt="" class="mx-auto d-block" height="300px" width="500px"></a>
-                        </div>
-
-                        <div class="post-header">
-                            <h4 class="post-title"><a href="#">@blog.Title</a></h4>
-                            <ul class="post-meta">
-                                <li><i class="mdi mdi-calendar"></i> <small>@blog.date</small></li>
-                                <li>
-                                    <i class="mdi mdi-tag-text-outline"></i>
-                                    <a href="#"> <small>@blog.Type</small></a>
-                                </li>
-                            </ul>
-                            <div class="post-content col-sm-8 col-md-10 col-lg-12">
-                                @{
-                                    // Split the blog description into words while preserving line breaks
-                                    var words = Regex.Split(blog.BlogDesc, @"\s+");
-                                    // Take only the first 15-20 words of the description
-                                    var truncatedDesc = string.Join(" ", words.Take(15)); // Change 15 to 20 if you want 20 words
-                                }
-                                <p class="text-muted">@Html.Raw(truncatedDesc)...</p>
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                @foreach (var blog in Model)
+                {
+                    <div class="col-md-4">
+                        <article class="post blog-post">
+                            <div class="post-preview">
+                                <a href="#"><img src="@blog.ImageUrl" alt="" class="mx-auto d-block" height="300px" width="500px"></a>
                             </div>
 
-
-
-
-
-                            <span class="bar"></span>
-
-                            <div class="post-footer">
-                                <div class="likes">
-                                    <ul class="post-meta">
-                                        <li><a href="#"><i class="far fa-heart mr-1"></i> <small>@blog.Like</small></a></li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="far fa-comment mr-1"></i>
-                                                <small>@blog.Comments</small>
-                                            </a>
-                                        </li>
-                                    </ul>
+                            <div class="post-header">
+                                <h4 class="post-title"><a href="#">@blog.Title</a></h4>
+                                <ul class="post-meta">
+                                    <li><i class="mdi mdi-calendar"></i> <small>@blog.date</small></li>
+                                    <li>
+                                        <i class="mdi mdi-tag-text-outline"></i>
+                                        <a href="#"> <small>@blog.Type</small></a>
+                                    </li>
+                                </ul>
+                                <div class="post-content col-sm-8 col-md-10 col-lg-12">
+                                    @{
+                                        // Split the blog description into words while preserving line breaks
+                                        var words = Regex.Split(blog.BlogDesc, @"\s+");
+                                        // Take only the first 15-20 words of the description
+                                        var truncatedDesc = string.Join(" ", words.Take(15)); // Change 15 to 20 if you want 20 words
+                                    }
+                                    <p class="text-muted">@Html.Raw(truncatedDesc)...</p>
                                 </div>
-                                <div class="post-more"><a href="#">Read More <i class="mdi mdi-arrow-right"></i></a></div>
+
+
+
+
+
+                                <span class="bar"></span>
+
+                                <div class="post-footer">
+                                    <div class="likes">
+                                        <ul class="post-meta">
+                                            <li><a href="#"><i class="far fa-heart mr-1"></i> <small>@blog.Like</small></a></li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="far fa-comment mr-1"></i>
+                                                    <small>@blog.Comments</small>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="post-more"><a href="#">Read More <i class="mdi mdi-arrow-right"></i></a></div>
+                                </div>
                             </div>
-                        </div>
-                    </article>
-                </div>
-            }
-        </div>
-    </div>
-</section>
-
-
-
-
-
-<section class="section">
-    <div class="container">
-        <h1>Add your Blog</h1>
-        <span class="bar"></span>
-
-        <div class="mt-4">
-            <div class="custom-form">
-                <form asp-action="AddBlog" asp-controller="Home" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group app-label">
-                                <input id="name1" type="text" class="form-control" placeholder="Your name :" name="Name">
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-6">
-                            <div class="form-group app-label">
-                                <input id="email1" type="email" class="form-control" placeholder="Your email :" name="email">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <label for="city">Type:</label>
-                            <select id="city" name="Type">
-                                <option value="Finance">Finance</option>
-                                <option value="Discussion">Discussion</option>
-                                <option value="Marketing">Marketing</option>
-                                <option value="Accounts">Accounts</option>
-                                <option value="Achievements">Achievements</option>
-                                <option value="Annual-report">Annual-report</option>
-                            </select>
-
-                        </div>
-
-
-
-                        <div class="col-lg-6" style="margin-bottom:10px">
-                            <input  class="form-control" type="file" id="formFile" name="file"  />
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group app-label">
-                                <input id="email1" type="text" class="form-control" placeholder="Your Blog title :" name="Title">
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group app-label">
-                                <textarea id="comments1" rows="3" class="form-control" placeholder="Enter message :" name="BlogDesc"></textarea>
-                            </div>
-                        </div>
+                        </article>
                     </div>
-
-
-
-
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <input type="submit" id="submit1" name="send" class="submitBnt btn btn-custom" value="Submit">
-                        </div>
-                    </div>
-
-
-
-                </form>
+                }
             </div>
         </div>
-    </div>
-
-</section>
+    </section>
 
 
+
+
+
+    <section class="section">
+        <div class="container">
+            <h1>Add your Blog</h1>
+            <span class="bar"></span>
+
+            <div class="mt-4">
+                <div class="custom-form">
+                    <form asp-action="AddBlog" asp-controller="Home" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group app-label">
+                                    <input id="name1" type="text" class="form-control" placeholder="Your name :" name="Name">
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                                <div class="form-group app-label">
+                                    <input id="email1" type="email" class="form-control" placeholder="Your email :" name="email">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label for="city">Type:</label>
+                                <select id="city" name="Type">
+                                    <option value="Finance">Finance</option>
+                                    <option value="Discussion">Discussion</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Accounts">Accounts</option>
+                                    <option value="Achievements">Achievements</option>
+                                    <option value="Annual-report">Annual-report</option>
+                                </select>
+
+                            </div>
+
+
+
+                            <div class="col-lg-6" style="margin-bottom:10px">
+                                <input class="form-control" type="file" id="formFile" name="file" />
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group app-label">
+                                    <input id="email1" type="text" class="form-control" placeholder="Your Blog title :" name="Title">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group app-label">
+                                    <textarea id="comments1" rows="3" class="form-control" placeholder="Enter message :" name="BlogDesc"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="submit" id="submit1" name="send" class="submitBnt btn btn-custom" value="Submit">
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</body>
 <script src="https://cdn.tiny.cloud/1/xcxpej3c8vgx3kt5pgkj052gguxrol392wpvq739a37glrf0/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
 <script>

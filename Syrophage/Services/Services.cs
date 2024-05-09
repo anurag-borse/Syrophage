@@ -1,5 +1,6 @@
 ﻿using System.Net.Mail;
 using System.Net;
+using Syrophage.Repository;
 
 namespace Syrophage.Services
 {
@@ -173,10 +174,6 @@ namespace Syrophage.Services
 
             return regId;
         }
-
-
-
-
         public bool SendQuotationEmail(string email, string subject, string body, Stream attachmentStream, string attachmentFileName)
         {
             var fromEmail = new MailAddress("syrophage@gmail.com", "SYROPHAGE");
@@ -218,7 +215,7 @@ namespace Syrophage.Services
             }
         }
 
-
+     
 
     }
 }

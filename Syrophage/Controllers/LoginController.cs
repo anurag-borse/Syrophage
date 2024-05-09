@@ -31,7 +31,7 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            SetLayoutModel();
+          
             return View();
         }
 
@@ -198,12 +198,15 @@ namespace Syrophage.Controllers
 
         public IActionResult AdminLogout()
         {
+            // only clear the session values of admin ie AdminId and AdminEmail
 
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Session.Clear();
+            HttpContext.Session.Remove("AdminId");
+            HttpContext.Session.Remove("AdminEmail");
+          //  HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+           // HttpContext.Session.Clear();
 
             TempData["Success"] = "Logout Successfully";
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Login");
 
         }
 
@@ -212,8 +215,11 @@ namespace Syrophage.Controllers
         public IActionResult Logout()
         {
 
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Session.Clear();
+         //   HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            //HttpContext.Session.Clear();
+            HttpContext.Session.Remove("UserId");
+            HttpContext.Session.Remove("UserEmail");
+            HttpContext.Session.Remove("UserName");
 
             TempData["Success"] = "Logout Successfully";
             return RedirectToAction("Index", "Home");

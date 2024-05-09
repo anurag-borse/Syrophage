@@ -53,6 +53,10 @@ namespace Syrophage.Controllers
         public IActionResult Dashboard()
         {
 
+            if (HttpContext.Session.GetInt32("AdminId") == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
 
             setAdminData();
 
@@ -664,6 +668,7 @@ namespace Syrophage.Controllers
 
                     var cate = new ServiceCategory
                     {
+
                         ServiceCategoryName = obj.ServiceCategoryName,
                         ServiceCategoryDescription = obj.ServiceCategoryDescription,
                         ServiceCategoryPictureUrl = @"\ServiceCategoryImages\" + filename
@@ -728,7 +733,15 @@ namespace Syrophage.Controllers
                 {
                     categoryinDb.ServiceCategoryName = obj.ServiceCategoryName;
                     categoryinDb.ServiceCategoryDescription = obj.ServiceCategoryDescription;
-                    categoryinDb.ServiceCategoryPictureUrl = obj.ServiceCategoryPictureUrl;
+                    if(obj.ServiceCategoryPictureUrl != null)
+                    {
+                        categoryinDb.ServiceCategoryPictureUrl = obj.ServiceCategoryPictureUrl;
+                    }
+                    else
+                    {
+                        categoryinDb.ServiceCategoryPictureUrl = categoryinDb.ServiceCategoryPictureUrl;
+                    }
+
                 }
 
                 unitofworks.ServiceCategories.Update(categoryinDb);
