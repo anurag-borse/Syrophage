@@ -244,6 +244,41 @@ namespace Syrophage.Controllers
         }
 
 
+
+
+
+
+
+
+
+
+        [HttpGet]
+        public IActionResult viewBlog(int id)
+        {
+
+            var blog = unitofworks.Blog.GetById(id);
+            return View(blog);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         private string ExtractPlainTextFromHtml(string htmlContent)
         {
             // Remove HTML tags and decode HTML entities to get plain text

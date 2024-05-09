@@ -1,5 +1,6 @@
 ﻿using System.Net.Mail;
 using System.Net;
+using Syrophage.Models.ViewModel;
 
 namespace Syrophage.Services
 {
@@ -215,6 +216,60 @@ namespace Syrophage.Services
                     // Handle exception or log error
                     return false;
                 }
+            }
+        }
+
+        public void SendJobAddedEmail(string email, MailVm obj)
+        {
+            try
+            {
+                var smtpServer = "smtp.gmail.com";
+                var smtpPort = 587;
+                var smtpEnableSsl = true;
+                var smtpUsername = "syrophage@gmail.com";
+                var smtpPassword = "unrjpaiutcscfree";
+
+                using (var smtpClient = new System.Net.Mail.SmtpClient(smtpServer, smtpPort))
+                {
+                    smtpClient.EnableSsl = smtpEnableSsl;
+                    smtpClient.Credentials = new System.Net.NetworkCredential(smtpUsername, smtpPassword);
+
+                    var message = new System.Net.Mail.MailMessage();
+                    message.From = new System.Net.Mail.MailAddress(smtpUsername);
+                    message.To.Add(email);
+                    message.Subject = "New Entity Added";
+
+                    // Determine which property is not null and construct the email body accordingly
+                    if (obj.Productvm != null)
+                    {
+                        message.Body = $"A new Product has been added in Syrophage\n\nEntity: {obj.Productvm.productname}\nDescription: {obj.Productvm.Description}";
+                    }
+                    else if (obj.Servicevm != null)
+                    {
+                        message.Body = $"A new Service has been added in Syrophage\n\nEntity: {obj.Servicevm.servicename}\nDescription: {obj.Servicevm.Description}";
+                    }
+                    else if (obj.ProductCatVm != null)
+                    {
+                        message.Body = $"A new Product Category has been added in Syrophage\n\nEntity: {obj.ProductCatVm.CategoryName}\nDescription: {obj.ProductCatVm.CategoryDescription}";
+                    }
+                    else if (obj.SerCatVm != null)
+                    {
+                        message.Body = $"A new Service category has been added in Syrophage\n\nEntity: {obj.SerCatVm.ServiceCategoryName}\nDescription: {obj.SerCatVm.ServiceCategoryDescription}";
+                    }
+                    else
+                    {
+                        // Handle the case when all properties are null
+                        message.Body = "A new job has been added in JOBPORTAL";
+                    }
+
+                    smtpClient.Send(message);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle email sending errors (e.g., log the error, send a notification, etc.)
+                Console.WriteLine($"Failed to send email: {ex.Message}");
+                throw; // Rethrow the exception or handle it as appropriate
             }
         }
 

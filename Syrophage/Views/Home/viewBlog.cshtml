@@ -1,0 +1,118 @@
+﻿@model Syrophage.Models.Blog
+
+
+
+
+<link href="~/css/site.css" rel="stylesheet" />
+
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+
+<section class="bg-half" id="Order">
+    <div class="bg-overlay"></div>
+    <div class="home-center">
+        <div class="home-desc-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="page-next-level text-white">
+                            <h1 class="text-uppercase">Blog</h1>
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <img src="@Model.ImageUrl" alt="" class="rounded mx-auto d-block" height="500px" width="600px" >
+            </div>
+
+            <div class="col-md-4">
+                <div class="project-info p-30 mt-sm-30">
+                    <div class="section-title mb-0">
+                        <h4 class="pb-0 font-20">Blog Info :</h4>
+                    </div>
+                    <div class="mt-2">
+                        <ul class="list-unstyled">
+                            <li>
+                                <i class="mdi mdi-account"></i>
+                                <span class="text-muted"> Writed By : </span>
+                                <span class="float-right">@Model.Name</span>
+                            </li>
+
+
+                            <li>
+                                <i class="mdi mdi-calendar-range"></i>
+                                <span class="text-muted"> Date : </span>
+                                <span class="float-right">@Model.date</span>
+                            </li>
+
+                            <li>
+                                <i class="mdi mdi-poll"></i>
+                                <span class="text-muted"> Catogories : </span>
+                                <span class="float-right">@Model.Type</span>
+                            </li>
+
+
+
+                            <li>
+                                <i class="mdi mdi-earth"></i>
+                                <span class="text-muted"> Email : </span>
+                                <span class="float-right">@Model.email</span>
+                            </li>
+
+
+                        </ul>
+                    </div>
+
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="section-title mt-30">
+                    <h4 class="pb-0 font-20">Blog details</h4>
+                    <div class="spacer-15"></div>
+                </div>
+
+                <div class="project-desc">
+                    <h5 class="mb-3 font-18">Title : &nbsp;&nbsp;@Model.Title</h5>
+
+
+                    <p class="text-muted">@Model.BlogDesc</p>
+
+                   
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bar mb-3"></div>
+                <div class="">
+                    <ul class="list-unstyled social-icon">
+                        <li class="list-inline-item">Share : </li>
+                        <li class="list-inline-item"><a href="#"><i class="mdi mdi-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="mdi mdi-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="mdi mdi-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="mdi mdi-dribbble"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="mdi mdi-google"></i></a></li>
+                    </ul>
+                </div>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </div>
+</section>
