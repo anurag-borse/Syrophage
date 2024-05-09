@@ -572,16 +572,16 @@ namespace Syrophage.Controllers
 
 
         [HttpPost]
-        public IActionResult EditCategory(Categories category)
+        public IActionResult EditCategory(Categories obj)
         {
 
-            if (category != null)
+            if (obj != null)
             {
-                var categoryinDb = unitofworks.Categories.GetById(category.Id);
+                var categoryinDb = unitofworks.Categories.GetById(obj.Id);
 
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
 
-                if (category.CategoryPicture != null)
+                if (obj.CategoryPicture != null)
                 {
 
                     if (categoryinDb.CategoryPictureUrl != null)
@@ -594,22 +594,29 @@ namespace Syrophage.Controllers
                         }
                     }
 
-                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(category.CategoryPicture.FileName);
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(obj.CategoryPicture.FileName);
                     string productPath = Path.Combine(wwwRootPath, @"CategoryPictures");
 
                     using (var fileStream = new FileStream(Path.Combine(productPath, filename), FileMode.Create))
                     {
-                        category.CategoryPicture.CopyTo(fileStream);
+                        obj.CategoryPicture.CopyTo(fileStream);
                     }
 
-                    category.CategoryPictureUrl = Path.Combine("/CategoryPictures", filename).Replace("\\", "/"); ;
+                    obj.CategoryPictureUrl = Path.Combine("/CategoryPictures", filename).Replace("\\", "/"); ;
 
                 }
-                if (category != null)
+                if (obj != null)
                 {
-                    categoryinDb.CategoryName = category.CategoryName;
-                    categoryinDb.CategoryDescription = category.CategoryDescription;
-                    categoryinDb.CategoryPictureUrl = category.CategoryPictureUrl;
+                    categoryinDb.CategoryName = obj.CategoryName;
+                    categoryinDb.CategoryDescription = obj.CategoryDescription;
+                     if(obj.CategoryPictureUrl != null)
+                    {
+                        categoryinDb.CategoryPictureUrl = obj.CategoryPictureUrl;
+                    }
+                    else
+                    {
+                        categoryinDb.CategoryPictureUrl = categoryinDb.CategoryPictureUrl;
+                    }
                 }
 
                 unitofworks.Categories.Update(categoryinDb);
