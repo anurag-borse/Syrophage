@@ -183,6 +183,7 @@ namespace Syrophage.Controllers
         [HttpGet]
         public IActionResult EditToken(int id)
         {
+            setAdminData();
             var token = unitofworks.Token.GetById(id);
             return View(token);
         }
